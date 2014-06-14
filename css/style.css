@@ -1,0 +1,15 @@
+/* Empty. Add your own CSS if you like */
+.roundTxt{
+    border-radius:20px !important;
+    height:50px !important;
+    background-color:#fff !important;
+    padding-left:15px !important;
+}
+.bgTransparent{
+    background-color:transparent !important;
+    border:0px !important;
+}
+
+.roundButton{
+ border-radius:20px !important;
+}
