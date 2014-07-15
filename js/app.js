@@ -1,13 +1,25 @@
+var baseURL = "http://beta.databeat.net/dbp8wcf/iSignage.svc/";
+
+var protocol = window.location.protocol;
+// alert( protocol);
+
+if (window.location.hostname === "localhost") {
+    baseURL = "http://localhost:57051/iSignage.svc/";
+} else {
+    baseURL = protocol + "//beta.databeat.net/dbp8wcf/iSignage.svc/"; //dbp8
+    // baseURL = protocol + "//beta.databeat.net/ims8qcwcf/iSignage.svc/"; //ims8qc
+    //baseURL = protocol + "//beta.databeat.net/ims8wcf/iSignage.svc/"; //ims8
+}
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+// 'IMS8Alert' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+// 'IMS8Alert.services' is found in services.js
+// 'IMS8Alert.controllers' is found in controllers.js
+angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.services', 'IMS8Alert.directives'])
 
-.run(function ($ionicPlatform) {
+.run(function ($ionicPlatform, $rootScope, $window, $location) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -19,15 +31,51 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             StatusBar.styleDefault();
         }
     });
+    $rootScope.$on("$routeChangeSuccess", function () {
+        $rootScope.loading = false;
+    });
+    $rootScope.$on('$routeChangeStart', function (scope, next, current) {
+        $rootScope.loading = true;
+        if (!$window.sessionStorage.token) {
+            $location.path("/page/login");
+        }
+    });
 })
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
-    // Ionic uses AngularUI Router which uses the concept of states
-    // Learn more here: https://github.com/angular-ui/ui-router
-    // Set up the various states which the app can be in.
-    // Each state's controller can be found in controllers.js
     $stateProvider
+         .state('page', {
+             url: "/page",
+             abstract: true,
+             templateUrl: "templates/page.html"
+         })
+      // Each tab has its own nav history stack:
+         .state('page.login', {
+             url: '/login',
+             templateUrl: 'templates/page-login.html',
+             controller: 'LoginCtrl'
+         })
+         .state('page.home', {
+             url: '/home',
+             templateUrl: 'templates/page-home.html',
+             controller: 'HomeCtrl'
+         })
+          .state('page.locations', {
+              url: '/locations',
+              templateUrl: 'templates/page-locations.html',
+              controller: 'LocationsCtrl'
+          })
+           .state('page.edit-contact', {
+               url: '/edit-contact',
+               templateUrl: 'templates/page-edit-contact.html',
+               controller: 'OpeninghourCtrl'
+           })
+            //.state('page.visitaddress', {
+            //    url: '/visitaddress',
+            //    templateUrl: 'templates/page-visitaddress.html',
+            //    controller: 'VisitAddressCtrl'
+            //})
 
       // setup an abstract state for the tabs directive
       .state('tab', {
@@ -36,12 +84,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           templateUrl: "templates/tabs.html"
       })
 
-      // Each tab has its own nav history stack:
-         .state('login', {
-             url: '/login',
-             templateUrl: 'templates/tab-login.html',
-             controller: 'DashCtrl'
-         })
       .state('tab.dash', {
           url: '/dash',
           views: {
@@ -79,10 +121,58 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                   controller: 'AccountCtrl'
               }
           }
+      }).state('tab.contacts', {
+          url: '/contacts',
+          views: {
+              'tab-contacts': {
+                  templateUrl: 'templates/tab-contacts.html',
+                  controller: 'ContactCtrl'
+              }
+          }
       })
+        .state('tab.contact-details', {
+            url: '/contact-details',
+            views: {
+                'tab-contacts': {
+                    templateUrl: 'templates/tab-contact-details.html',
+                    controller: 'ContactDetailCtrl'
+                }
+            }
+        })
 
+        .state('tab.channels', {
+            url: '/channels',
+            views: {
+                'tab-channels': {
+                    templateUrl: 'templates/tab-channels.html',
+                    controller: 'ChannelsCtrl'
+                }
+            }
+        })
+          .state('tab.address', {
+              url: '/address',
+              views: {
+                  'tab-address': {
+                      templateUrl: 'templates/tab-address.html',
+                      controller: 'AddressCtrl'
+                  }
+              }
+          })
+
+        .state('tab.openinghour', {
+            url: '/openinghour',
+            views: {
+                'tab-opening': {
+                    templateUrl: 'templates/tab-openinghour.html',
+                    controller: 'OpeninghourCtrl'
+                }
+            }
+        })
+    
+    
+ 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/page/login');
 
 });
 

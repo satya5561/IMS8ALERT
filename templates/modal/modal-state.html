@@ -1,0 +1,19 @@
+<div class="modal"  style="animation:slide-left-right !important">
+    <ion-header-bar align-title="center" class="bar-stable nav-title-slide-ios7 bar bar-header nav-bar">
+        <h1 class="title">Select State</h1>
+    </ion-header-bar>
+    <ion-content class="pane1">
+        <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="search" placeholder="Search State" ng-model="searchText">
+        </label>
+        <div class="list">
+            <ion-list>
+                <ion-item ng-repeat="state in states | filter:searchText " type="item-text-wrap" class="listcol" ng-click="applyModalState(state.name)">
+                    {{state.name}}
+                </ion-item>
+            </ion-list>
+        </div>
+    </ion-content>
+</div>
+

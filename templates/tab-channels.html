@@ -1,0 +1,32 @@
+﻿<ion-view title="Channels" hide-nav-bar="true">
+    <ion-header-bar align-title="center" class="bar-stable nav-title-slide-ios7 bar bar-header nav-bar ">
+        <div class="row addrhdr">
+            <div class="col col33" style=" padding: 0px;" ng-click="goBack()">
+                <span class="ion-chevron-left yellow"></span>
+                <span class="yellow">Back</span>
+            </div>
+            <div class="col col10" style="text-align:center;padding:0px;">
+                <span>Channels</span>
+            </div>
+            <div class="col col33" style="padding:0px;">
+                <i class="yellow icon ion-plus-round" style="float: right;" ng-click="openModalContact()"> </i>
+            </div>
+        </div>
+    </ion-header-bar>
+    <img-header id="cbAlertMode" ng-model="alertChecked" ng-checked="false" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(alertChecked)"></img-header>
+    <ion-content class="has-header" style=" margin-top:165px">
+        <div class="list">
+            <div class="item listcol item-icon-right row" style="padding: 5px 0px 0px 15px; font-size:15px; font-weight:bold;" ng-repeat=" channel in channels" ng-click="showActionsheet()">
+                <div class="ion-android-playstore yellow" style="padding: 8px 5px 0px 0px; font-size: 30px; "></div>
+                <div class="col">
+                    <span>
+                        <span>{{channel.name}}</span>
+                        <span class="itemValue">{{channel.player}}</span>
+                    </span>
+
+                    <p>{{channel.description}}</p>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

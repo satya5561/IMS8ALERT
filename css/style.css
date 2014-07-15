@@ -1,15 +1,324 @@
 /* Empty. Add your own CSS if you like */
-.roundTxt{
-    border-radius:20px !important;
-    height:50px !important;
-    background-color:#fff !important;
-    padding-left:15px !important;
-}
-.bgTransparent{
-    background-color:transparent !important;
-    border:0px !important;
+.roundTxt {
+    border-radius: 25px !important;
+    height: 50px !important;
+    background-color: #fff !important;
+    padding-left: 15px !important;
 }
 
-.roundButton{
- border-radius:20px !important;
+.bgTransparent {
+    background-color: transparent !important;
+    border: 0px !important;
 }
+
+.roundButton {
+    border-radius: 25px !important;
+    border: 2px white solid !important;
+}
+
+.rounddiv {
+    background-color: #3F4753 !important;
+    border-radius: 30px !important;
+    color: white !important;
+    height: 50px !important;
+    border-width: 0px !important;
+    margin-top: 10px !important;
+    margin-bottom: 50px;
+}
+
+.coltext {
+    color: white !important;
+}
+
+.iconLeft.item::before {
+    float: right !important;
+    margin-top: 2px !important;
+}
+
+.roundItem {
+    border-radius: 25px !important;
+    border: 2px white solid !important;
+    margin-bottom: 10px;
+}
+
+.itemValue {
+    float: right;
+    margin-right: 10px;
+    color:#797f8b;
+}
+
+.yellow {
+    color: #fec93c !important;
+}
+
+.page-footer {
+    background-color: #353d4a !important;
+    color: #aeb0b4 !important;
+}
+
+    .page-footer .title {
+        color: #aeb0b4 !important;
+    }
+
+.itemDays {
+    padding: 5px !important;
+    font-size: 12px !important;
+    font-weight: Bold !important;
+    background-color: #0F1015 !important;
+    color: white !important;
+}
+
+.circle {
+    display: block;
+    width: 85px;
+    height: 85px;
+    margin: 1em 1em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-border-radius: 99em;
+    -moz-border-radius: 99em;
+    border-radius: 99em;
+    border: 6px solid #5f6670;
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.2);
+    background-image: url(../img/test.jpg);
+}
+
+.pane1 {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #353d4a;
+    overflow: hidden;
+}
+
+.listcol {
+    background-color: #0F1015 !important;
+    color: white !important;
+    border-color: #333030 !important;
+}
+
+.textCenter {
+    display: block;
+    margin: 1em auto;
+    text-align: center;
+}
+
+
+    .textCenter b {
+        text-transform: uppercase;
+        color: #797f8b;
+        font-size: 14px;
+    }
+
+    .textCenter h1 {
+        color: #ffffff;
+    }
+
+.textCenter1 {
+    display: block;
+    margin: 0em auto;
+    text-align: center;
+}
+
+
+    .textCenter1 b {
+        text-transform: uppercase;
+        color: #797f8b;
+        font-size: 14px;
+    }
+
+    .textCenter1 div {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom:10px;
+    }
+
+.listContact {
+    background-color: transparent !important;
+    border-left: 0px;
+    border-right: 0px;
+    border-color: #797f8b;
+    color: #fff !important;
+}
+
+.listContactEdit {
+    background-color: #18191e;
+    border: 2px solid #1b1b23;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+    .listContactEdit span {
+        color: #fff !important;
+    }
+
+    .listContactEdit text {
+        color: #4f585d !important;
+    }
+
+.addr {
+    padding: 2px 5px 7px 10px !important;
+    font-size: 15px !important;
+    font-weight: Bold !important;
+    background-color: #353d4a !important;
+    color: white !important;
+}
+
+.logo {
+    display: block;
+    width: 260px;
+    height: 125px;
+    margin: 1em auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url("../img/iadmin-logo.png");
+}
+
+.facebook-like {
+    width: 200px;
+    display: block;
+    margin: 3em auto;
+    padding-left: 10px;
+    z-index: 10;
+}
+
+    .facebook-like span {
+        font-size: 16px;
+        position: absolute;
+        margin: 13px 10px 0px;
+    }
+
+@media (min-width: 680px) {
+    .facebook-like {
+        left: 41%;
+    }
+}
+
+
+.alertheader {
+    background-color: #f74a33 !important;
+    color: #ffffff;
+}
+
+    .alertheader a {
+        color: #ffffff;
+    }
+
+
+.alertHeading {
+    line-height: 30px;
+}
+
+.alertheaderOff {
+    background-color: #2c3037 !important;
+    color: #ffffff !important;
+}
+
+    .alertheaderOff a {
+        color: #ffffff;
+    }
+
+.selected {
+    border: 3px solid #f5b50c !important;
+    background-color: #b58913 !important;
+    color: #ffffff;
+    padding: 14px 15px;
+}
+
+    .selected h4 {
+        color: #ffffff;
+    }
+
+    .selected:after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 3;
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 20px solid #f5b50c;
+        border-left: 20px solid transparent;
+        content: "";
+    }
+
+    .selected:before {
+        position: absolute;
+        top: -5px;
+        font-size: 9px;
+        right: 1px;
+        z-index: 4;
+        font-family: 'Ionicons';
+        color: #FFFFFF;
+        content: "\f121";
+    }
+
+.addrimg {
+    background-image: url(../img/test.jpg);
+    background-repeat: no-repeat;
+    height: 120px;
+}
+
+.edithdr {
+    background-position: center center;
+    background-image: url(../img/edit.png);
+    background-repeat: no-repeat;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    float: right;
+}
+
+.addrtxt {
+    color: #545C65;
+    font-size: 18px;
+}
+
+.padcmb {
+    padding: 15px 15px 15px 10px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+
+.txtareaph {
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+
+.inputrtxt {
+    color: #4D515A !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    text-align: right;
+}
+
+
+.addrhdr {
+    font-size: 14px !important;
+    font-weight: bold !important;
+    padding: 5px !important;
+}
+
+.locbtn {
+    margin-top: 50px !important;
+    width: 85% !important;
+    margin-left: 7.5% !important;
+}
+
+.frwdarrow {
+    color: #797f8b !important;
+}
+
+.serhrs {
+padding:0px 5px 0px 10px !important;
+font-size:15px !important;
+font-weight:bold !important;
+
+}
+
