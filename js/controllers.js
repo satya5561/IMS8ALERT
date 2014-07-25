@@ -1,6 +1,6 @@
 angular.module('IMS8Alert.controllers', [])
 
-.controller('OpeninghourCtrl', function ($scope, $ionicPopup) {
+.controller('OpeninghourCtrl', function ($scope, $ionicPopup, $ionicModal) {
      $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -17,7 +17,15 @@ angular.module('IMS8Alert.controllers', [])
                 $("#cbAlertMode").prop('checked', $scope.alertChecked);
             });
         }
-    };
+     };
+     $ionicModal.fromTemplateUrl('templates/modal/modal-time.html', {
+         scope: $scope,
+         animation: 'slide-left-right',//'slide-left-right', 'slide-in-up', 'slide-right-left'
+         focusFirstInput: true
+     }).then(function (modal) { $scope.mdltime = modal; });
+     $scope.openModalTime = function () {
+         $scope.mdltime.show();
+     };
 
 })
 
@@ -40,6 +48,7 @@ angular.module('IMS8Alert.controllers', [])
                 console.log('CANCELLED');
             },
             buttonClicked: function (index) {
+                var txt = 'first';
                 console.log('BUTTON CLICKED', index);
                 return true;
             },
