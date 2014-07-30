@@ -11,7 +11,7 @@ var protocol = window.location.protocol;
     
 //}
 
-baseURL = protocol + "//beta.databeat.net/ims8wcf/iSignage.svc/"; //ims8
+baseURL = "http://beta.databeat.net/ims8wcf/iSignage.svc/"; //ims8
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
