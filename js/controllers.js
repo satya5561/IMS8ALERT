@@ -148,8 +148,9 @@ angular.module('IMS8Alert.controllers', [])
     function getLocationContacts(customerId, groupId, memberId) {
         iAdminServiceClient.getLocationContacts(customerId, groupId, memberId, 0)
             .success(function (data) {
-                if (data.Location_GetLocationContactsResult != null) 
-                    $scope.contacts = data.Location_GetLocationContactsResult;
+                var result = data.Location_GetLocationContactsResult;
+                if (result)
+                    $scope.contacts = result;
             })
 
            .error(function (error, data) {
@@ -229,22 +230,8 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
     $scope.address = {};
-
-    getLocationAddresses($rootScope.CustomerID, $rootScope.groupID, $rootScope.MemberID, $rootScope.LocationId);
-    function getLocationAddresses(customerId, groupId, memberId, locationId) {
-        iAdminServiceClient.getLocationAddresses(customerId, groupId, memberId, locationId)
-            .success(function (data) {
-                var result = data.Location_GetLocationAddressesResult;
-                if (result) {
-                    $scope.locations = data.Location_GetLocationAddressesResult;
-
-                    $scope.visitAddress = _.where($scope.locations, { AddressType: 'Visit' });
-                    $scope.invoiceAddress = _.where($scope.locations, { AddressType: 'Invoice' });
-                }
-            })
-         .error(function (error, data) {
-         });
-    }
+    $scope.visitAddress = $rootScope.visitAddress;
+    $scope.invoiceAddress = $rootScope.invoiceAddress;
 
     $scope.showConfirm = function (m) {
         if (!m) {
@@ -532,9 +519,9 @@ angular.module('IMS8Alert.controllers', [])
     function getLocationAddresses(customerId, groupId, memberId) {
         iAdminServiceClient.getLocationAddresses(customerId, groupId, memberId, 0)
             .success(function (data) {
-                var result = data.Location_GetLocationAddressesResult;
+                    var result = data.Location_GetLocationAddressesResult;
                 if (result)
-                    $scope.locations = data.Location_GetLocationAddressesResult;
+                    $scope.locations = result;
 
             })
          .error(function (error, data) {
@@ -553,6 +540,8 @@ angular.module('IMS8Alert.controllers', [])
             $scope.selectedId = loc.LocationId;
             $rootScope.LocationId = $scope.selectedId;
             $rootScope.LocationName = loc.LocationName;
+            $rootScope.visitAddress = _.where($scope.locations, { AddressType: 'Visit', LocationId: $scope.selectedId });
+            $rootScope.invoiceAddress = _.where($scope.locations, { AddressType: 'Invoice', LocationId: $scope.selectedId });
         }
     }
 });

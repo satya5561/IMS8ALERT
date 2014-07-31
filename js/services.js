@@ -201,7 +201,7 @@ angular.module('IMS8Alert.services', [])
     iAdminServiceClient.getGroups = function (customerId) {
         if (isValidToken(token)) {
             urlBase = baseURL + "location_getgroups?nc=" + Math.random();
-            jsonParam = { authToken: token, customerId: customerId };
+            jsonParam = JSON.stringify({ authToken: token, customerId: customerId });
             return $.ajax({
                 type: "POST",
                 url: urlBase,
@@ -215,7 +215,7 @@ angular.module('IMS8Alert.services', [])
     iAdminServiceClient.groupMembersGet = function (groupId, customerId) {
         if (isValidToken(token)) {
             urlBase = baseURL + "location_getgroupmembers?nc=" + Math.random();
-            jsonParam = { authToken: token, groupId: groupId, customerId: customerId };
+            jsonParam = JSON.stringify({ authToken: token, groupId: groupId, customerId: customerId });
             return $.ajax({
                 type: "POST",
                 url: urlBase,
@@ -242,7 +242,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.lookupsGet = function (lookupType) {
         urlBase = baseURL + "location_lookupsget?nc=" + Math.random();
-        jsonParam = { lookupType: lookupType };
+        jsonParam = JSON.stringify({ lookupType: lookupType });
         return $.ajax({
             type: "POST",
             url: urlBase,
@@ -254,7 +254,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.getPODetail = function (zipCode, countryId) {
         urlBase = baseURL + "user_getpocodedetail?nc=" + Math.random();
-        jsonParam = { zipCode: zipCode, countryId: countryId };
+        jsonParam = JSON.stringify({ zipCode: zipCode, countryId: countryId });
         return $.ajax({
             type: "POST",
             url: urlBase,
