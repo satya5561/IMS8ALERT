@@ -43,6 +43,7 @@ angular.module('IMS8Alert.directives', [])
 .directive('imgHeader', function () {
     return {
         restrict: 'E',
+        scope:true,
          template: ' <div class="bar bar-subheader " style="padding: 5px 0px 0px;" ng-class="{alertheader:alertChecked ,alertheaderOff:!alertChecked}">' +
     '<a class="button button-icon icon ion-information-circled title-left"><span class="alertHeading"> Alert Mode (12 of 12)</span></a>' +
     ' <span class="itemValue">' +
@@ -51,9 +52,9 @@ angular.module('IMS8Alert.directives', [])
     '<div class="row addrimg" style="margin-top: 5px;">' +
     '<div class="circle "></div>' +
     ' <div class="coltext " style="margin-top: 10px;">' +
-    '  <div style="font-size: 20px; font-weight: bolder;">{{location.name}}</div>' +
+    '  <div style="font-size: 20px; font-weight: bolder;">{{headerimg.locName}}</div>' +
     ' <div style="font-size: small;">NOLETV001SHD</div>' +
-    '<div><span style="font-weight: bold;">Group: </span><span>{{location.group}}</span></div>' +
+    '<div><span style="font-weight: bold;">Group: </span><span>{{headerimg.groupName}}</span></div>' +
     ' <div><span style="font-weight: bold;">Region: </span><span>South</span></div>' +
     ' <div><span style="font-weight: bold;">Store type: </span><span>MegaStore</span></div>' +
     ' </div>' +
@@ -63,6 +64,43 @@ angular.module('IMS8Alert.directives', [])
 
 
     };
+})
+.directive('inputevent', function($timeout){
+    return {
+        restrict: 'A',
+        scope: {
+            'returnClose': '=',
+            'onReturn': '&',
+            'onFocus': '&',
+            'onBlur': '&'
+        },
+        link: function(scope, element, attr){
+            element.bind('focus', function(e){
+                if(scope.onFocus){
+                    $timeout(function(){
+                        scope.onFocus();
+                    });
+                }        
+            });
+            element.bind('blur', function(e){
+                if(scope.onBlur){
+                    $timeout(function(){
+                        scope.onBlur();
+                    });
+                }
+            });
+            element.bind('keydown', function(e){
+                if(e.which == 13){
+                    if(scope.returnClose) element[0].blur();
+                    if(scope.onReturn){
+                        $timeout(function(){
+                            scope.onReturn();
+                        });                        
+                    }
+                } 
+            });   
+        }
+    }
 })
 .directive('appVersion', ['version', function (version) {
     return function (scope, elm, attrs) {

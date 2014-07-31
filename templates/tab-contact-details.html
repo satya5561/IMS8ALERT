@@ -20,26 +20,26 @@
     </div>
     <div class="list">
         <div class="item textCenter1 bgTransparent">
-            <div>{{contact.name}}</div>
-            <b style="font-size:14px;">{{contact.position}}</b>
+            <div>{{contact.Name}}</div>
+            <b style="font-size:14px;">{{contact.Role}}</b>
         </div>
     </div>
     <div class="list ">
         <a class="item item-icon-left listContact ">
             <i class="icon ion-ios7-location"></i>
-            Elkjop Slependen
+            {{contact.LocationName}}
         </a>
         <a class="item item-icon-left  listContact " href="tel:{{contact.phone}}">
             <i class="icon ion-ios7-telephone"></i>
-            {{contact.phone}}
+            {{contact.Cell}}
         </a>
         <a class="item item-icon-left listContact" href="mailto:{{contact.email}}">
             <i class="icon ion-email"></i>
-            {{contact.email}}
+            {{contact.Email}}
         </a>
         <a class="item item-icon-left listContact ">
             <i class="icon ion-person"></i>
-            {{contact.role}}
+            {{contact.Role}}
         </a>
     </div>
 </ion-content>

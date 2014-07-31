@@ -3,17 +3,15 @@ var baseURL = "http://beta.databeat.net/dbp8wcf/iSignage.svc/";
 var protocol = window.location.protocol;
 // alert( protocol);
 
-//if (window.location.hostname === "localhost") {
-//    baseURL = "http://localhost:57051/iSignage.svc/";
-//} else {
-//    baseURL = protocol + "//beta.databeat.net/dbp8wcf/iSignage.svc/"; //dbp8
-//    // baseURL = protocol + "//beta.databeat.net/ims8qcwcf/iSignage.svc/"; //ims8qc
-    
-//}
-
-baseURL = "http://beta.databeat.net/ims8wcf/iSignage.svc/"; //ims8
+if (window.location.hostname === "localhost") {
+    baseURL = "http://localhost:57051/iSignage.svc/";
+} else {
+    baseURL = protocol + "//beta.databeat.net/dbp8wcf/iSignage.svc/"; //dbp8
+    // baseURL = protocol + "//beta.databeat.net/ims8qcwcf/iSignage.svc/"; //ims8qc
+    //baseURL = protocol + "//beta.databeat.net/ims8wcf/iSignage.svc/"; //ims8
+}
 // Ionic Starter App
-
+baseURL = "http://beta.databeat.net/ims8wcf/iSignage.svc/"; //dbp8
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'IMS8Alert' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
@@ -44,8 +42,13 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
     });
 })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    //Enable cross domain calls
+    $httpProvider.defaults.useXDomain = true;
 
+    //Remove the header containing XMLHttpRequest used to identify ajax call 
+    //that would prevent CORS from working
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
     $stateProvider
          .state('page', {
              url: "/page",

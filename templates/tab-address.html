@@ -7,16 +7,16 @@
         </div>
 
         <div class="row itemDays">
-            <div class="col col-90 addrtxt">{{location.visitstreet}} , {{location.visitcity}} , {{location.visitzip}}</div>
-            <div class="col col-10" style="float:right"><a ng-click="openModalAddress('visit')"><i class="edithdr yellow" style="width: 50px;">Visit</i></a></div>
+             <div class="col col-90 addrtxt">{{visitAddress[0].Street}} , {{visitAddress[0].City}} , {{visitAddress[0].Zip}}</div>
+            <div class="col col-10" style="float:right"><a ng-click="openModalAddress('visit')"><i class="edithdr yellow" style="width: 50px;"></i></a></div>
         </div>
 
         <div class="row addr">
             INVOICE ADDRESS
         </div>
         <div class="itemDays row">
-            <div class="col col-90 addrtxt">{{location.invoicestreet}} , {{location.invoicecity}} , {{location.invoicezip}}</div>
-            <div class="col col-10" style="float:right"><a ng-click="openModalAddress('invoice')"><i class="edithdr yellow" style="width: 50px;">Invoice</i></a></div>
+            <div class="col col-90 addrtxt">{{invoiceAddress[0].Street}} , {{invoiceAddress[0].City}} , {{invoiceAddress[0].Zip}}</div>
+            <div class="col col-10" style="float:right"><a ng-click="openModalAddress('invoice')"><i class="edithdr yellow" style="width: 50px;"></i></a></div>
         </div>
     </ion-content>
 </ion-view>

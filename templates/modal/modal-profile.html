@@ -9,7 +9,7 @@
         </label>
         <div class="list">
             <ion-list>
-                <ion-item ng-repeat=" pro in profiles | filter:searchText " type="item-text-wrap" class="listcol" ng-click="applyModalPro(pro.Name)">
+                <ion-item ng-repeat=" pro in profiles | filter:searchText " type="item-text-wrap" class="listcol" ng-click="applyModalPro(pro)">
                     {{pro.Name}}
                 </ion-item>
             </ion-list>

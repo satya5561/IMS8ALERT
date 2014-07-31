@@ -72,8 +72,8 @@ angular.module('IMS8Alert.services', [])
             return locations;
         },
         getlocation: function (locationId) {
-            
-            return locations[locationId-1];
+
+            return locations[locationId - 1];
         },
         setlocation: function (location) {
             for (i in locations) {
@@ -81,15 +81,15 @@ angular.module('IMS8Alert.services', [])
                     locations[i] = location;
                 }
             }
-            
+
         },
         getid: function () {
-           
+
             return id;
         },
         setid: function (locationId) {
-           
-            id= locationId;
+
+            id = locationId;
         },
         allCustomers: function () {
             return customers;
@@ -154,12 +154,12 @@ angular.module('IMS8Alert.services', [])
         },
     }
 })
-.factory('iAdminServiceClient', function ( $http, $window) {
+.factory('iAdminServiceClient', function ($http, $window) {
     var token = ($window.sessionStorage.token) ? $window.sessionStorage.token : -1;
     var urlBase;
     var jsonParam;
     var iAdminServiceClient = {};
-  
+
     function isValidToken(token) {
         if (token < 0 || token == false || token != $window.sessionStorage.token) {
             token = setToken();
@@ -173,23 +173,28 @@ angular.module('IMS8Alert.services', [])
 
     iAdminServiceClient.authorize = function (userinfo) {
         jsonParam = JSON.stringify({ username: userinfo.username, password: userinfo.password });
-        urlBase = baseURL + "db_rad_authorize2?nc=" + Math.random();
-        return $http({
+        urlBase = baseURL + "db_rad_authorize2";
+        return $.ajax({
+            type: "POST",
             url: urlBase,
+            crossDomain: true,
             data: jsonParam,
-            method: "POST",
-            headers: { "Content-Type": "application/json" }
+            dataType: "json",
+            contentType: "application/json"
         });
+
     };
     iAdminServiceClient.getCustomers = function () {
         if (isValidToken(token)) {
             urlBase = baseURL + "user_getcustomers?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token });
-            return $http({
+            return $.ajax({
+                type: "POST",
                 url: urlBase,
+                crossDomain: true,
                 data: jsonParam,
-                method: "POST",
-                headers: { "Content-Type": "application/json" }
+                dataType: "json",
+                contentType: "application/json"
             });
         }
     };
@@ -197,11 +202,13 @@ angular.module('IMS8Alert.services', [])
         if (isValidToken(token)) {
             urlBase = baseURL + "location_getgroups?nc=" + Math.random();
             jsonParam = { authToken: token, customerId: customerId };
-            return $http({
+            return $.ajax({
+                type: "POST",
                 url: urlBase,
+                crossDomain: true,
                 data: jsonParam,
-                method: "POST",
-                headers: { "Content-Type": "application/json" }
+                dataType: "json",
+                contentType: "application/json"
             });
         }
     };
@@ -209,13 +216,82 @@ angular.module('IMS8Alert.services', [])
         if (isValidToken(token)) {
             urlBase = baseURL + "location_getgroupmembers?nc=" + Math.random();
             jsonParam = { authToken: token, groupId: groupId, customerId: customerId };
-            return $http({
+            return $.ajax({
+                type: "POST",
                 url: urlBase,
+                crossDomain: true,
                 data: jsonParam,
-                method: "POST",
-                headers: { "Content-Type": "application/json" }
+                dataType: "json",
+                contentType: "application/json"
             });
         }
     };
+    iAdminServiceClient.getLocationAddresses = function (customerId, groupId, memberId, locationId) {
+        if (isValidToken(token)) {
+            urlBase = baseURL + "location_getlocationaddresses?nc=" + Math.random();
+            jsonParam = JSON.stringify({ authToken: token, customerId: customerId, groupId: groupId, memberId: memberId, locationId: locationId });
+            return $.ajax({
+                type: "POST",
+                url: urlBase,
+                crossDomain: true,
+                data: jsonParam,
+                dataType: "json",
+                contentType: "application/json"
+            });
+        }
+    };
+    iAdminServiceClient.lookupsGet = function (lookupType) {
+        urlBase = baseURL + "location_lookupsget?nc=" + Math.random();
+        jsonParam = { lookupType: lookupType };
+        return $.ajax({
+            type: "POST",
+            url: urlBase,
+            crossDomain: true,
+            data: jsonParam,
+            dataType: "json",
+            contentType: "application/json"
+        });
+    };
+    iAdminServiceClient.getPODetail = function (zipCode, countryId) {
+        urlBase = baseURL + "user_getpocodedetail?nc=" + Math.random();
+        jsonParam = { zipCode: zipCode, countryId: countryId };
+        return $.ajax({
+            type: "POST",
+            url: urlBase,
+            crossDomain: true,
+            data: jsonParam,
+            dataType: "json",
+            contentType: "application/json"
+        });
+    };
+    iAdminServiceClient.getLocationContacts = function (customerId, groupId, memberId, locationId) {
+        if (isValidToken(token)) {
+            urlBase = baseURL + "location_getlocationcontacts?nc=" + Math.random();
+            jsonParam = JSON.stringify({ authToken: token, customerId: customerId, groupId: groupId, memberId: memberId, locationId: locationId });
+            return $.ajax({
+                type: "POST",
+                url: urlBase,
+                crossDomain: true,
+                data: jsonParam,
+                dataType: "json",
+                contentType: "application/json"
+            });
+        }
+    };
+    iAdminServiceClient.getLocationMplayerList = function (locationId) {
+        if (isValidToken(token)) {
+            urlBase = baseURL + "location_locationplayersget?nc=" + Math.random();
+            jsonParam = JSON.stringify({ authToken: token, locationId: locationId });
+            return $.ajax({
+                type: "POST",
+                url: urlBase,
+                crossDomain: true,
+                data: jsonParam,
+                dataType: "json",
+                contentType: "application/json"
+            });
+        }
+    };
+ 
     return iAdminServiceClient;
 });

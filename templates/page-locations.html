@@ -6,8 +6,8 @@
         </label>
         <div class="list" >
             <a class="item listcol" ng-repeat="loc in locations | filter:searchText " ng-class="{ 'selected': $index == selectedLocationIndex }" ng-click="selectlocation(loc, $index)">
-                <span>{{loc.name}} /</span>
-                <span>{{loc.visitcity}} , {{loc.visitzip}}</span>
+                <span>{{loc.LocationName}} /</span>
+                <span>{{loc.City}} , {{loc.Zip}}</span>
              </a>
         </div>
         <button class="button button-block button-energized item-input roundButton locbtn" ng-click="doNext()">

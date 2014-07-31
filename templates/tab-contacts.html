@@ -18,12 +18,12 @@
     <div class="list">
             <div class="item listcol item-icon-right" style="padding: 5px 0px 0px 15px; font-size:15px; font-weight:bold;" ng-repeat=" contact in contacts">
                 <span>
-                    {{contact.name}}
+                    {{contact.Name}}
                 </span>
-                <p>{{contact.position}}</p>
-                <i class="icon ion-ios7-arrow-forward frwdarrow" ng-click="openContact(contact.id)"> </i>
-                <a class="listContact icon ion-ios7-email" style="text-decoration:none; margin-right:50px;" href="mailto:{{contact.email}}"></a>
-                <a class="listContact icon ion-ios7-telephone" style="text-decoration: none; margin-right: 100px;" href="tel:{{contact.phone}}"></a>
+                <p>{{contact.Role}}</p>
+                <i class="icon ion-ios7-arrow-forward frwdarrow" ng-click="openContact(contact)"> </i>
+                <a class="listContact icon ion-ios7-email" style="text-decoration:none; margin-right:50px;" href="mailto:{{contact.Email}}"></a>
+                <a class="listContact icon ion-ios7-telephone" style="text-decoration: none; margin-right: 100px;" href="tel:{{contact.Cell}}"></a>
             </div>
         </div>
     </ion-content>

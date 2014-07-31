@@ -37,7 +37,7 @@
             </a>
             <label class="item item-input listcol">
                 <span class="input-label coltext">zip</span>
-                <input class="inputrtxt" type="text" ng-model="address.zip">
+                <input class="inputrtxt" type="text" ng-model="address.zip" inputevent on-blur="onZipChanged(address.country, address.zip)">
             </label>
             <label class="item item-input listcol">
                 <span class="input-label coltext">city</span>
