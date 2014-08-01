@@ -485,30 +485,38 @@ angular.module('IMS8Alert.controllers', [])
 
     $scope.userAgent = navigator.userAgent;
 })
-.controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup) {
+.controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup,$ionicLoading) {
     $scope.userinfo = {};
 
     $scope.doLogin = function () {
-
+        $ionicLoading.show({
+            content: 'Loading',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
         iAdminServiceClient.authorize($scope.userinfo)
                   .success(function (data, status) {
                       var resultToken = data.DB_Rad_Authorize2Result;
-                      if (resultToken > 0) {
-                          $window.sessionStorage.token = resultToken;
-                          $state.go("page.home");
-                      }
-                      else {
-                          var confirmPopup = $ionicPopup.alert({
-                              title: 'Alert Mode',
-                              template: 'Wrong username/password'
-                          });
-                      }
+                      //if (resultToken > 0) {
+                      //    $window.sessionStorage.token = resultToken;
+                      //    $state.go("page.home");
+                      //}
+                      //else {
+                      //    var confirmPopup = $ionicPopup.alert({
+                      //        title: 'Alert Mode',
+                      //        template: 'Wrong username/password'
+                      //    });
+                      //}
+                      //$ionicLoading.hide();
                   })
                   .error(function (error, status) {
                       var confirmPopup = $ionicPopup.alert({
                           title: 'Alert Mode',
                           template: 'Error in authentication'
                       });
+                      $ionicLoading.hide();
                   });
 
 

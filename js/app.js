@@ -11,7 +11,7 @@ if (window.location.hostname === "localhost") {
     //baseURL = protocol + "//beta.databeat.net/ims8wcf/iSignage.svc/"; //ims8
 }
 // Ionic Starter App
-baseURL = "http://beta.databeat.net/ims8wcf/iSignage.svc/"; //dbp8
+baseURL = "http://beta.databeat.net/dbp8wcf/iSignage.svc/"; //dbp8
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'IMS8Alert' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
