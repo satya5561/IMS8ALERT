@@ -1,6 +1,6 @@
 angular.module('IMS8Alert.controllers', [])
 
-.controller('OpeninghourCtrl', function ($scope, $ionicPopup, $ionicModal, $rootScope) {
+.controller('OpeninghourCtrl', function ($scope, $ionicPopup, $ionicModal, $rootScope, $ionicLoading) {
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
@@ -33,19 +33,22 @@ angular.module('IMS8Alert.controllers', [])
 
 })
 
-.controller('ChannelsCtrl', function ($scope, list, $ionicPopup, $ionicActionSheet, $ionicNavBarDelegate, $rootScope, iAdminServiceClient) {
+.controller('ChannelsCtrl', function ($scope, $ionicPopup, $ionicActionSheet, $ionicNavBarDelegate, $rootScope, iAdminServiceClient, $ionicLoading) {
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
     getLocationChannels($rootScope.LocationId);
     function getLocationChannels(LocationId) {
+        $ionicLoading.show();
         iAdminServiceClient.getLocationMplayerList(LocationId)
         .success(function (data) {
+            $ionicLoading.hide();
             if (data.Location_LocationPlayersGetResult != null)
                 $scope.channels = data.Location_LocationPlayersGetResult;
-       })
+        })
         .error(function (error, data) {
-      
+            $ionicLoading.hide();
+
         });
     }
 
@@ -92,9 +95,9 @@ angular.module('IMS8Alert.controllers', [])
     };
 })
 
-.controller('ContactDetailCtrl', function ($scope, $state, list, $rootScope, $ionicModal, $ionicPopup, $ionicNavBarDelegate) {
+.controller('ContactDetailCtrl', function ($scope, $state, list, $rootScope, $ionicModal, $ionicPopup, $ionicNavBarDelegate, $ionicLoading) {
 
-   
+
     $scope.contact = $rootScope.contact;
 
     $scope.goBack = function () {
@@ -140,24 +143,26 @@ angular.module('IMS8Alert.controllers', [])
     };
 })
 
-.controller('ContactCtrl', function ($scope, list, $state, $ionicModal, $ionicPopup, $ionicNavBarDelegate, $rootScope,iAdminServiceClient) {
+.controller('ContactCtrl', function ($scope, list, $state, $ionicModal, $ionicPopup, $ionicNavBarDelegate, $rootScope, iAdminServiceClient,  $ionicLoading) {
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
     getLocationContacts($rootScope.CustomerID, $rootScope.groupID, $rootScope.MemberID);
     function getLocationContacts(customerId, groupId, memberId) {
+        $ionicLoading.show();
         iAdminServiceClient.getLocationContacts(customerId, groupId, memberId, 0)
             .success(function (data) {
                 var result = data.Location_GetLocationContactsResult;
+                $ionicLoading.hide();
                 if (result)
                     $scope.contacts = result;
             })
 
            .error(function (error, data) {
-             
-            });
+               $ionicLoading.hide();
+           });
     }
-      $scope.openContact = function (contact) {
+    $scope.openContact = function (contact) {
         $rootScope.contact = contact;
         $state.go("tab.contact-details");
     };
@@ -224,7 +229,7 @@ angular.module('IMS8Alert.controllers', [])
     };
 })
 
-.controller('AddressCtrl', function ($scope, $state, list, $rootScope, iAdminServiceClient, $ionicModal, $ionicPopup) {
+.controller('AddressCtrl', function ($scope, $state, list, $rootScope, iAdminServiceClient, $ionicModal, $ionicPopup, $ionicLoading) {
 
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
@@ -258,48 +263,28 @@ angular.module('IMS8Alert.controllers', [])
     }).then(function (modal) { $scope.mdladdress = modal; });
 
     $scope.openModalAddress = function (type) {
+        $ionicLoading.show();
         $scope.type = type;
-        if ($scope.type == "visit") {
+        if ($scope.type == "visit" && $scope.visitAddress) {
             $scope.header = "Visit Address";
-            $scope.address.street = $scope.visitAddress[0].Street;
-            $scope.address.from = $scope.visitAddress[0].AddressFrom;
-            $scope.address.to = $scope.visitAddress[0].AddressTo;
-            $scope.address.country = $scope.visitAddress[0].Country;
-            $scope.address.state = $scope.visitAddress[0].State;
-            $scope.address.zip = $scope.visitAddress[0].Zip;
-            $scope.address.city = $scope.visitAddress[0].City;
-        }
-        else if ($scope.type == "invoice") {
+            $scope.address = $scope.visitAddress;
+          }
+        else if ($scope.type == "invoice" && $scope.invoiceAddress) {
             $scope.header = "Invoice Address";
-            $scope.address.street = $scope.invoiceAddress[0].Street;
-            $scope.address.from = $scope.invoiceAddress[0].AddressFrom;
-            $scope.address.to = $scope.invoiceAddress[0].AddressTo;
-            $scope.address.country = $scope.invoiceAddress[0].Country;
-            $scope.address.state = $scope.invoiceAddress[0].State;
-            $scope.address.zip = $scope.invoiceAddress[0].Zip;
-            $scope.address.city = $scope.invoiceAddress[0].City;
+            $scope.address = $scope.invoiceAddress;
         }
+        $ionicLoading.hide();
         $scope.mdladdress.show();
     };
     $scope.saveAddress = function () {
+        $ionicLoading.show();
         if ($scope.type == "visit") {
-            $scope.visitAddress[0].Street = $scope.address.street;
-            $scope.visitAddress[0].AddressFrom = $scope.address.from;
-            $scope.visitAddress[0].AddressTo = $scope.address.to;
-            $scope.visitAddress[0].Country = $scope.address.country;
-            $scope.visitAddress[0].State = $scope.address.state;
-            $scope.visitAddress[0].Zip = $scope.address.zip;
-            $scope.visitAddress[0].City = $scope.address.city;
+            $scope.visitAddress = $scope.address;
         }
         else if ($scope.type == "invoice") {
-            $scope.invoiceAddress[0].Street = $scope.address.street;
-            $scope.invoiceAddress[0].AddressFrom = $scope.address.from;
-            $scope.invoiceAddress[0].AddressTo = $scope.address.to;
-            $scope.invoiceAddress[0].Country = $scope.address.country;
-            $scope.invoiceAddress[0].State = $scope.address.state;
-            $scope.invoiceAddress[0].Zip = $scope.address.zip;
-            $scope.invoiceAddress[0].City = $scope.address.city;
+            $scope.invoiceAddress=$scope.address;
         }
+        $ionicLoading.hide();
         $scope.mdladdress.hide();
     };
 
@@ -308,25 +293,30 @@ angular.module('IMS8Alert.controllers', [])
     };
     getCountries();
     function getCountries() {
+        $ionicLoading.show();
         iAdminServiceClient.lookupsGet('COUNTRY')
                .success(function (data) {
+                   $ionicLoading.hide();
                    $scope.countries = data.Location_LookupsGetResult;
-                })
+               })
                 .error(function (error, data) {
+                    $ionicLoading.hide();
                 });
     }
     $scope.onZipChanged = function (country, zip) {
         var _countryid = _.find($scope.countries, function (t) { return t.Name == country }).Id;
         if (zip && _countryid) {
+            $ionicLoading.show();
             iAdminServiceClient.getPODetail(zip, _countryid)
            .success(function (data) {
                var poDetail = data.User_GetPOCodeDetailResult;
-               if (poDetail.CountryName == $scope.address.country) {
-                   $scope.address.city = (poDetail == null) ? "" : angular.uppercase(poDetail.POName);
+               $ionicLoading.hide();
+               if (poDetail.CountryName == $scope.address.Country) {
+                   $scope.address.City = (poDetail == null) ? "" : angular.uppercase(poDetail.POName);
                }
            })
             .error(function (error, data) {
-
+                $ionicLoading.hide();
             });
         }
     };
@@ -340,14 +330,14 @@ angular.module('IMS8Alert.controllers', [])
         $scope.mdlcountry.show();
     };
     $scope.applyModalCountry = function (itmcountry) {
-        $scope.address.country = itmcountry;
-        $scope.onZipChanged($scope.address.country, $scope.address.zip);
+        $scope.address.Country = itmcountry;
+        $scope.onZipChanged($scope.address.Country, $scope.address.Zip);
         $scope.mdlcountry.hide();
     };
 
     // Model for state list
     $scope.states = list.allStates();
-    
+
     $ionicModal.fromTemplateUrl('templates/modal/modal-state.html', {
         scope: $scope,
         animation: 'slide-left-right',//'slide-left-right', 'slide-in-up', 'slide-right-left'
@@ -357,57 +347,82 @@ angular.module('IMS8Alert.controllers', [])
         $scope.mdlstate.show();
     };
     $scope.applyModalState = function (itmstate) {
-        $scope.address.state = itmstate;
+        $scope.address.State = itmstate;
         $scope.mdlstate.hide();
 
     };
 })
 
-.controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, list, iAdminServiceClient) {
+.controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading) {
 
-    getCustomers();
+     getCustomers();
+     if ($rootScope.CustomerName) {
+         $scope.selectedcstomer = $rootScope.CustomerName;
+         getGroups($rootScope.CustomerID);
+     }
+     else
+         $scope.selectedcstomer = "";
+    if ($rootScope.groupName)
+    {
+        $scope.selectedgrp = $rootScope.groupName;
+        getGroupMember($rootScope.GroupId, $rootScope.CustomerID);
+    }
+    else
+        $scope.selectedgrp = "";
+    if ($rootScope.proName)
+    {
+        $scope.selectedpro = $rootScope.proName;
+    }
+    else
+        $scope.selectedpro = "";
     $scope.doNext = function () {
         if ($scope.selectedcstomer && $scope.selectedgrp && $scope.selectedpro)
             $state.go("page.locations");
     }
 
     function getCustomers() {
+        $ionicLoading.show();
         iAdminServiceClient.getCustomers()
                        .success(function (data, status) {
                            var result = data.User_GetCustomersResult;
+                           $ionicLoading.hide();
                            if (result) {
                                $scope.customers = result;
                            }
                        })
                        .error(function (error, status) {
+                           $ionicLoading.hide();
                        });
     }
     function getGroups(customerId) {
+        $ionicLoading.show();
         iAdminServiceClient.getGroups(customerId)
                        .success(function (data, status) {
                            var result = data.Location_GetGroupsResult;
+                           $ionicLoading.hide();
                            if (result) {
                                $scope.groups = result;
                            }
                        })
                        .error(function (error, status) {
+                           $ionicLoading.hide();
                        });
     }
     function getGroupMember(groupId, customerId) {
+        $ionicLoading.show();
         iAdminServiceClient.groupMembersGet(groupId, customerId)
                        .success(function (data, status) {
                            var result = data.Location_GetGroupMembersResult;
+                           $ionicLoading.hide();
                            if (result) {
                                $scope.profiles = result;
                            }
                        })
                        .error(function (error, status) {
+                           $ionicLoading.hide();
                        });
     }
-
-
-    //$scope.customers = list.allCustomers();
-    $scope.selectedcstomer = "";
+  
     $ionicModal.fromTemplateUrl('templates/modal/modal-customer.html', {
         scope: $scope,
         animation: 'slide-left-right',//'slide-left-right', 'slide-in-up', 'slide-right-left'
@@ -417,15 +432,20 @@ angular.module('IMS8Alert.controllers', [])
         $scope.mdlcust.show();
     };
     $scope.applyModalCust = function (itmcust) {
-        $scope.selectedcstomer = itmcust;
-        $rootScope.CustomerID = $scope.selectedcstomer.CustomerID;
-        getGroups($scope.selectedcstomer.CustomerID);
+        $scope.selectedcstomer = itmcust.CustomerName;
+        if ($rootScope.CustomerID != itmcust.CustomerID)
+        {
+            $scope.selectedgrp = $rootScope.groupName="";
+            $scope.selectedpro = $rootScope.proName = "";
+        }
+        $rootScope.CustomerID = itmcust.CustomerID;
+        $rootScope.CustomerName = $scope.selectedcstomer;
+        getGroups(itmcust.CustomerID);
         $scope.mdlcust.hide();
     };
 
-    // Model for Group list
-    //$scope.groups = list.allGroups();
-    $scope.selectedgrp = "";
+    // Model for Group 
+    
     $ionicModal.fromTemplateUrl('templates/modal/modal-group.html', {
         scope: $scope,
         animation: 'slide-left-right',//'slide-left-right', 'slide-in-up', 'slide-right-left'
@@ -435,16 +455,15 @@ angular.module('IMS8Alert.controllers', [])
         $scope.mdlgrp.show();
     };
     $scope.applyModalGrp = function (itmgrp) {
-        $scope.selectedgrp = itmgrp;
-        $rootScope.groupID = $scope.selectedgrp.GroupId;
-        $rootScope.groupName = $scope.selectedgrp.Name;
-        getGroupMember($scope.selectedgrp.GroupId, $scope.selectedcstomer.CustomerID);
+        $scope.selectedgrp = itmgrp.Name;
+        $rootScope.groupID = itmgrp.GroupId;
+        $rootScope.groupName = $scope.selectedgrp;
+        getGroupMember(itmgrp.GroupId, $rootScope.CustomerID);
         $scope.mdlgrp.hide();
 
     };
-    // Model for Profile list
-    //$scope.profiles = list.allProfiles();
-    $scope.selectedpro = "";
+    // Model for Profile 
+    
     $ionicModal.fromTemplateUrl('templates/modal/modal-profile.html', {
         scope: $scope,
         animation: 'slide-left-right',//'slide-left-right', 'slide-in-up', 'slide-right-left'
@@ -454,24 +473,10 @@ angular.module('IMS8Alert.controllers', [])
         $scope.mdlpro.show();
     };
     $scope.applyModalPro = function (itmpro) {
-        $scope.selectedpro = itmpro;
-        $rootScope.MemberID = $scope.selectedpro.GroupMemberId;
+        $scope.selectedpro = itmpro.Name;
+        $rootScope.proName = itmpro.Name;
+        $rootScope.MemberID = itmpro.GroupMemberId;
         $scope.mdlpro.hide();
-    };
-    // Model for Language list
-    $scope.languages = list.allLanguages();
-    $scope.selectedlang = "";
-    $ionicModal.fromTemplateUrl('templates/modal/modal-language.html', {
-        scope: $scope,
-        animation: 'slide-left-right',//'slide-left-right', 'slide-in-up', 'slide-right-left'
-        focusFirstInput: true
-    }).then(function (modal) { $scope.mdllang = modal; });
-    $scope.openModalLang = function () {
-        $scope.mdllang.show();
-    };
-    $scope.applyModalLang = function (itmlang) {
-        $scope.selectedlang = itmlang;
-        $scope.mdllang.hide();
     };
 })
 
@@ -485,31 +490,25 @@ angular.module('IMS8Alert.controllers', [])
 
     $scope.userAgent = navigator.userAgent;
 })
-.controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup,$ionicLoading) {
+.controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading) {
     $scope.userinfo = {};
 
     $scope.doLogin = function () {
-        $ionicLoading.show({
-            content: 'Loading',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
+        $ionicLoading.show();
         iAdminServiceClient.authorize($scope.userinfo)
                   .success(function (data, status) {
                       var resultToken = data.DB_Rad_Authorize2Result;
-                      //if (resultToken > 0) {
-                      //    $window.sessionStorage.token = resultToken;
-                      //    $state.go("page.home");
-                      //}
-                      //else {
-                      //    var confirmPopup = $ionicPopup.alert({
-                      //        title: 'Alert Mode',
-                      //        template: 'Wrong username/password'
-                      //    });
-                      //}
-                      //$ionicLoading.hide();
+                      if (resultToken > 0) {
+                          $window.sessionStorage.token = resultToken;
+                          $state.go("page.home");
+                      }
+                      else {
+                          var confirmPopup = $ionicPopup.alert({
+                              title: 'Alert Mode',
+                              template: 'Wrong username/password'
+                          });
+                      }
+                      $ionicLoading.hide();
                   })
                   .error(function (error, status) {
                       var confirmPopup = $ionicPopup.alert({
@@ -522,18 +521,20 @@ angular.module('IMS8Alert.controllers', [])
 
     }
 })
-.controller('LocationsCtrl', function ($scope, list, $state, $rootScope, iAdminServiceClient) {
+.controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading) {
     getLocationAddresses($rootScope.CustomerID, $rootScope.groupID, $rootScope.MemberID);
     function getLocationAddresses(customerId, groupId, memberId) {
+        $ionicLoading.show();
         iAdminServiceClient.getLocationAddresses(customerId, groupId, memberId, 0)
             .success(function (data) {
-                    var result = data.Location_GetLocationAddressesResult;
+                var result = data.Location_GetLocationAddressesResult;
+                $ionicLoading.hide();
                 if (result)
                     $scope.locations = result;
 
             })
          .error(function (error, data) {
-           
+             $ionicLoading.hide();
          });
     }
 
@@ -548,8 +549,8 @@ angular.module('IMS8Alert.controllers', [])
             $scope.selectedId = loc.LocationId;
             $rootScope.LocationId = $scope.selectedId;
             $rootScope.LocationName = loc.LocationName;
-            $rootScope.visitAddress = _.where($scope.locations, { AddressType: 'Visit', LocationId: $scope.selectedId });
-            $rootScope.invoiceAddress = _.where($scope.locations, { AddressType: 'Invoice', LocationId: $scope.selectedId });
+            $rootScope.visitAddress = _.where($scope.locations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
+            $rootScope.invoiceAddress = _.where($scope.locations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
         }
     }
 });

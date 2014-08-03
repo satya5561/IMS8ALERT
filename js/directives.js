@@ -3,7 +3,7 @@
 function forEach(obj, iterator, context) {
     var key;
     if (obj) {
-        if (isFunction(obj)) {
+        if (angular.isFunction(obj)) {
             for (key in obj) {
                 // Need to check if hasOwnProperty exists,
                 // as on IE8 the result of querySelectorAll is an object without a hasOwnProperty function
@@ -13,7 +13,7 @@ function forEach(obj, iterator, context) {
             }
         } else if (obj.forEach && obj.forEach !== forEach) {
             obj.forEach(iterator, context);
-        } else if (isArrayLike(obj)) {
+        } else if (angular.isArray(obj)) {
             for (key = 0; key < obj.length; key++)
                 iterator.call(context, obj[key], key);
         } else {
@@ -43,29 +43,29 @@ angular.module('IMS8Alert.directives', [])
 .directive('imgHeader', function () {
     return {
         restrict: 'E',
-        scope:true,
-         template: ' <div class="bar bar-subheader " style="padding: 5px 0px 0px;" ng-class="{alertheader:alertChecked ,alertheaderOff:!alertChecked}">' +
-    '<a class="button button-icon icon ion-information-circled title-left"><span class="alertHeading"> Alert Mode (12 of 12)</span></a>' +
-    ' <span class="itemValue">' +
-   '      <dbr-toggle id="cbAlertMode" ng-model="alertChecked" ng-checked="false" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(alertChecked)"></dbr-toggle> '+
-    ' </span>' +
-    '<div class="row addrimg" style="margin-top: 5px;">' +
-    '<div class="circle "></div>' +
-    ' <div class="coltext " style="margin-top: 10px;">' +
-    '  <div style="font-size: 20px; font-weight: bolder;">{{headerimg.locName}}</div>' +
-    ' <div style="font-size: small;">NOLETV001SHD</div>' +
-    '<div><span style="font-weight: bold;">Group: </span><span>{{headerimg.groupName}}</span></div>' +
-    ' <div><span style="font-weight: bold;">Region: </span><span>South</span></div>' +
-    ' <div><span style="font-weight: bold;">Store type: </span><span>MegaStore</span></div>' +
-    ' </div>' +
-        '</div>' +
-   '</div>'
-       
+        scope: true,
+        template: ' <div class="bar bar-subheader " style="padding: 5px 0px 0px;" ng-class="{alertheader:alertChecked ,alertheaderOff:!alertChecked}">' +
+   '<a class="button button-icon icon ion-information-circled title-left"><span class="alertHeading"> Alert Mode (12 of 12)</span></a>' +
+   ' <span class="itemValue">' +
+  '      <dbr-toggle id="cbAlertMode" ng-model="alertChecked" ng-checked="false" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(alertChecked)"></dbr-toggle> ' +
+   ' </span>' +
+   '<div class="row addrimg" style="margin-top: 5px;">' +
+   '<div class="circle "></div>' +
+   ' <div class="coltext " style="margin-top: 10px;">' +
+   '  <div style="font-size: 20px; font-weight: bolder;">{{headerimg.locName}}</div>' +
+   ' <div style="font-size: small;">NOLETV001SHD</div>' +
+   '<div><span style="font-weight: bold;">Group: </span><span>{{headerimg.groupName}}</span></div>' +
+   ' <div><span style="font-weight: bold;">Region: </span><span>South</span></div>' +
+   ' <div><span style="font-weight: bold;">Store type: </span><span>MegaStore</span></div>' +
+   ' </div>' +
+       '</div>' +
+  '</div>'
+
 
 
     };
 })
-.directive('inputevent', function($timeout){
+.directive('inputevent', function ($timeout) {
     return {
         restrict: 'A',
         scope: {
@@ -74,31 +74,31 @@ angular.module('IMS8Alert.directives', [])
             'onFocus': '&',
             'onBlur': '&'
         },
-        link: function(scope, element, attr){
-            element.bind('focus', function(e){
-                if(scope.onFocus){
-                    $timeout(function(){
+        link: function (scope, element, attr) {
+            element.bind('focus', function (e) {
+                if (scope.onFocus) {
+                    $timeout(function () {
                         scope.onFocus();
                     });
-                }        
+                }
             });
-            element.bind('blur', function(e){
-                if(scope.onBlur){
-                    $timeout(function(){
+            element.bind('blur', function (e) {
+                if (scope.onBlur) {
+                    $timeout(function () {
                         scope.onBlur();
                     });
                 }
             });
-            element.bind('keydown', function(e){
-                if(e.which == 13){
-                    if(scope.returnClose) element[0].blur();
-                    if(scope.onReturn){
-                        $timeout(function(){
+            element.bind('keydown', function (e) {
+                if (e.which == 13) {
+                    if (scope.returnClose) element[0].blur();
+                    if (scope.onReturn) {
+                        $timeout(function () {
                             scope.onReturn();
-                        });                        
+                        });
                     }
-                } 
-            });   
+                }
+            });
         }
     }
 })
@@ -131,7 +131,7 @@ angular.module('IMS8Alert.directives', [])
                 'ng-false-value': attr.ngFalseValue,
                 'ng-change': attr.ngChange
             }, function (value, name) {
-                if (isDefined(value)) {
+                if (angular.isDefined(value)) {
                     input.attr(name, value);
                 }
             });

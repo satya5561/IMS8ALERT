@@ -10,8 +10,9 @@ if (window.location.hostname === "localhost") {
     // baseURL = protocol + "//beta.databeat.net/ims8qcwcf/iSignage.svc/"; //ims8qc
     //baseURL = protocol + "//beta.databeat.net/ims8wcf/iSignage.svc/"; //ims8
 }
+function isEmptyValue(value) { if (value == "" || value == 0 || value == undefined || value == null) { return true; } else { return false; } }
 // Ionic Starter App
-baseURL = "http://beta.databeat.net/dbp8wcf/iSignage.svc/"; //dbp8
+baseURL = "http://beta.databeat.net/ims8wcf/iSignage.svc/"; //dbp8
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'IMS8Alert' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
@@ -31,15 +32,29 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
             StatusBar.styleDefault();
         }
     });
+
     $rootScope.$on("$routeChangeSuccess", function () {
         $rootScope.loading = false;
     });
+
     $rootScope.$on('$routeChangeStart', function (scope, next, current) {
         $rootScope.loading = true;
         if (!$window.sessionStorage.token) {
             $location.path("/page/login");
         }
     });
+
+    $rootScope.safeApply = function (fn) {
+        var phase = this.$root.$$phase;
+        if (phase == '$apply' || phase == '$digest') {
+            if (fn && (typeof (fn) === 'function')) {
+                fn();
+            }
+        } else {
+            this.$apply(fn);
+        }
+    };
+
 })
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -173,9 +188,9 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
                 }
             }
         })
-    
-    
- 
+
+
+
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/page/login');
 

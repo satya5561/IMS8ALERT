@@ -4338,11 +4338,11 @@ a.subdued {
     z-index: 11;
     padding: 20px;
     border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.7);
+    /*background-color: rgba(0, 0, 0, 0.7);*/
     color: #fff;
     text-align: center;
     text-overflow: ellipsis;
-    font-size: 15px;
+    font-size: 25px !important;
 }
 
     .loading.visible {
