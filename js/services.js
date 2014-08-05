@@ -169,6 +169,29 @@ angular.module('IMS8Alert.services', [])
             });
         }
     };
- 
+    iAdminServiceClient.updateLocationAddresses = function (visitAddress,invoiceAddress) {
+        if (isValidToken(token)) {
+            urlBase = baseURL + "Location_UpdateLocationAddress?nc=" + Math.random();
+            jsonParam = JSON.stringify({ authToken: token, invoiceAddress: invoiceAddress, visitAddress: visitAddress });
+            return $.ajax({
+                url: urlBase,
+                data: jsonParam,
+                method: "POST",
+                headers: { "Content-Type": "application/json" }
+            });
+        }
+    };
+    iAdminServiceClient.saveLocationContacts = function (contact, doDelete) {
+        if (isValidToken(token)) {
+            urlBase = baseURL + "location_savelocationcontact?nc=" + Math.random();
+            jsonParam = JSON.stringify({ authToken: token, contact: contact, doDelete: doDelete });
+            return $.ajax({
+                url: urlBase,
+                data: jsonParam,
+                method: "POST",
+                headers: { "Content-Type": "application/json" }
+            });
+        }
+    };
     return iAdminServiceClient;
 });

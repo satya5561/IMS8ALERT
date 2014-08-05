@@ -306,7 +306,7 @@
 }
 
 .locbtn {
-    margin-top: 50px !important;
+    /*margin-top: 50px !important;*/
     width: 85% !important;
     margin-left: 7.5% !important;
 }
@@ -321,4 +321,17 @@ font-size:15px !important;
 font-weight:bold !important;
 
 }
+
+/*.slider-bounce {
+  transition-duration:0.5s;
+  transition-timing-function: ease-out;
+  transition-property: all;
+}
+
+.horizontal-slider {
+  width: 500px;
+  position: relative;
+  left:0px;
+  translate3d(0px,0,0);
+}*/
 

@@ -1,15 +1,16 @@
 <div class="modal"  style="animation:slide-left-right !important">
     <ion-header-bar align-title="center" class="bar-stable nav-title-slide-ios7 bar bar-header nav-bar">
         <h1 class="title">Select Country</h1>
-    </ion-header-bar>
-    <ion-content class="pane1">
-        <label class="item item-input">
+         <label class="item item-input" style="top:44px; width:100%;">
             <i class="icon ion-search placeholder-icon"></i>
-            <input type="search" placeholder="Search Country" ng-model="searchText">
+            <input type="search" placeholder="Search Country" ng-model="mdlcountry.searchText">
         </label>
+    </ion-header-bar>
+    <ion-content class="pane1" style="top:88px;">
+     
         <div class="list">
             <ion-list>
-                <ion-item ng-repeat="country in countries | filter:searchText " type="item-text-wrap" class="listcol" ng-click="applyModalCountry(country.Name)">
+                <ion-item ng-repeat="country in countries | filter:mdlcountry.searchText " type="item-text-wrap" class="listcol" ng-click="applyModalCountry(country.Name)">
                     {{country.Name}}
                 </ion-item>
             </ion-list>

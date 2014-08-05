@@ -1,22 +1,30 @@
 ﻿<ion-view title="Select Location">
-    <ion-content class="has-header">
-        <label class="item item-input">
+    <div class="bar bar-subheader">
+  <label class="item item-input" style="padding:0px;">
             <i class="icon ion-search placeholder-icon"></i>
             <input type="search" placeholder="Name or zip/city" ng-model="searchText" style="align-self:center;">
         </label>
-        <div class="list">
-            <ion-scroll direction="y"  style=" height:300px">
-                <a class="item listcol" ng-repeat="loc in locations | filter:searchText" ng-class="{ 'selected': $index == selectedLocationIndex }" ng-click="selectlocation(loc, $index)">
-                    <span>{{loc.LocationName}} /</span>
-                    <span>{{loc.City}} , {{loc.Zip}}</span>
-                </a>
-            </ion-scroll>
+</div>
+    <ion-content class="has-header " style="top:88px;">
+       
+        <div horizontal-slider class="list horizontal-slider" >
+            <a class="item listcol" ng-repeat="loc in locations | filter:searchText" ng-class="{ 'selected': $index == selectedLocationIndex }" ng-click="selectlocation(loc, $index)">
+                <span>{{loc.LocationName}} /</span>
+                <span>{{loc.City}} , {{loc.Zip}}</span>
+             </a>
         </div>
-        <button class="button button-block button-energized item-input roundButton locbtn" ng-click="doNext()">
+    
+    </ion-content>
+    <div class="bar bar-footer " style="bottom:44px; height:120px; background-color: #353d4a">
+        <div class="col">
+<button class="button button-energized item-input roundButton locbtn" style="height:40%" ng-click="doNext()">
             NEXT
         </button>
-        <div class="facebook-like">
+            <div class="facebook-like col" style="height:50%; margin-left:44%;margin-top:10px; width:12%">
             <a class=" fa fa-facebook-square fa-3x" style="color:#fff;"><span style="font-size:15px;">LIKE ON FACEBOOK</span></a>
         </div>
-    </ion-content>
+        </div>
+      
+       
+</div>
 </ion-view>
