@@ -1,10 +1,54 @@
 angular.module('IMS8Alert.controllers', [])
 
-.controller('OpeninghourCtrl', function ($scope, $ionicPopup, $ionicModal, $rootScope, $ionicLoading) {
+.controller('OpeninghourCtrl', function ($scope, $ionicPopup, $ionicModal, $rootScope, $ionicLoading, iAdminServiceClient) {
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
+    getLocationServiceHour();
+    function getLocationServiceHour() {
+        $ionicLoading.show();
+        iAdminServiceClient.getLocationServiceHour($rootScope.LocationId)
+            .success(function (data) {
+                if (data.Location_LocationServiceHoursGetResult != null) {
+                    $scope.serviceHour = data.Location_LocationServiceHoursGetResult;
+                    if ($scope.serviceHour.MonOpenTime != null)
+                        $scope.serviceHour.MonOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.MonOpenTime)).substring(2, 7);
+                    if ($scope.serviceHour.MonCloseTime != null)
+                        $scope.serviceHour.MonCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.MonCloseTime)).substring(2, 7);
+                    if ($scope.serviceHour.TueOpenTime != null)
+                        $scope.serviceHour.TueOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.TueOpenTime)).substring(2, 7);
+                    if ($scope.serviceHour.TueCloseTime != null)
+                        $scope.serviceHour.TueCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.TueCloseTime)).substring(2, 7);
+                    if ($scope.serviceHour.WedOpenTime != null)
+                        $scope.serviceHour.WedOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.WedOpenTime)).substring(2, 7);
+                    if ($scope.serviceHour.WedCloseTime != null)
+                        $scope.serviceHour.WedCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.WedCloseTime)).substring(2, 7);
+                    if ($scope.serviceHour.ThuOpenTime != null)
+                        $scope.serviceHour.ThuOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.ThuOpenTime)).substring(2, 7);
+                    if ($scope.serviceHour.ThuCloseTime != null)
+                        $scope.serviceHour.ThuCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.ThuCloseTime)).substring(2, 7);
+                    if ($scope.serviceHour.FriOpenTime != null)
+                        $scope.serviceHour.FriOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.FriOpenTime)).substring(2, 7);
+                    if ($scope.serviceHour.FriCloseTime != null)
+                        $scope.serviceHour.FriCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.FriCloseTime)).substring(2, 7);
+                    if ($scope.serviceHour.SatOpenTime != null)
+                        $scope.serviceHour.SatOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SatOpenTime)).substring(2, 7);
+                    if ($scope.serviceHour.SatCloseTime != null)
+                        $scope.serviceHour.SatCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SatCloseTime)).substring(2, 7);
+                    if ($scope.serviceHour.SunOpenTime != null)
+                        $scope.serviceHour.SunOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SunOpenTime)).substring(2, 7);
+                    if ($scope.serviceHour.SunCloseTime != null)
+                        $scope.serviceHour.SunCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SunCloseTime)).substring(2, 7);
+                }
 
+                    $ionicLoading.hide();
+
+            })
+            .error(function (error, data) {
+                $ionicLoading.hide();
+
+            });
+}
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -30,7 +74,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.openModalTime = function () {
         $scope.mdltime.show();
     };
-    $(function () {
+    $scope.$on('modal.shown', function (event, modal) {
         var curr = new Date().getFullYear();
         var opt = { 'time': { preset: 'time' } };
         $('.demo-test-time').scroller('destroy').scroller($.extend(opt['time'], {
@@ -39,8 +83,8 @@ angular.module('IMS8Alert.controllers', [])
             display: 'inline',
             animate: 'slidevertical'
         }));
-
     });
+
 })
 
 .controller('ChannelsCtrl', function ($scope, $ionicPopup, $ionicActionSheet, $ionicNavBarDelegate, $rootScope, iAdminServiceClient, $ionicLoading) {
@@ -109,7 +153,7 @@ angular.module('IMS8Alert.controllers', [])
 
 
     $scope.contact = $rootScope.contact;
-    
+
     $scope.goBack = function () {
         $ionicNavBarDelegate.back();
     };
@@ -279,7 +323,7 @@ angular.module('IMS8Alert.controllers', [])
     };
 })
 
-.controller('AddressCtrl', function ($scope, $state, list,$ionicNavBarDelegate , $rootScope, iAdminServiceClient, $ionicModal, $ionicPopup, $ionicLoading) {
+.controller('AddressCtrl', function ($scope, $state, list, $ionicNavBarDelegate, $rootScope, iAdminServiceClient, $ionicModal, $ionicPopup, $ionicLoading) {
 
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
@@ -522,7 +566,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.openModalCust = function () {
         $scope.mdlcust.searchText = "";
         $scope.mdlcust.show();
-        
+
     };
     $scope.applyModalCust = function (itmcust) {
         $scope.selectedcstomer = itmcust.CustomerName;
@@ -586,6 +630,8 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading) {
     $scope.userinfo = {};
+    if ($window.sessionStorage.token)
+        $state.go("page.home");
 
     $scope.doLogin = function () {
         $ionicLoading.show();
@@ -616,7 +662,7 @@ angular.module('IMS8Alert.controllers', [])
     }
 })
 .controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading) {
-   
+
     getLocationAddresses($rootScope.CustomerID, $rootScope.groupID, $rootScope.MemberID);
     function getLocationAddresses(customerId, groupId, memberId) {
         $ionicLoading.show();

@@ -5,13 +5,14 @@
 }
 /* Wheel container wrapper */
 .dwc {
-    max-width: 100%;
+    width: 100%;
     vertical-align: middle;
     display: inline-block;
     overflow: hidden;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    color:#fff;
 }
 /* Wheel label */
 .dwl {

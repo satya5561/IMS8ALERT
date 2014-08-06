@@ -174,10 +174,12 @@ angular.module('IMS8Alert.services', [])
             urlBase = baseURL + "Location_UpdateLocationAddress?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, invoiceAddress: invoiceAddress, visitAddress: visitAddress });
             return $.ajax({
+                type: "POST",
                 url: urlBase,
+                crossDomain: true,
                 data: jsonParam,
-                method: "POST",
-                headers: { "Content-Type": "application/json" }
+                dataType: "json",
+                contentType: "application/json"
             });
         }
     };
@@ -186,10 +188,26 @@ angular.module('IMS8Alert.services', [])
             urlBase = baseURL + "location_savelocationcontact?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, contact: contact, doDelete: doDelete });
             return $.ajax({
+                type: "POST",
                 url: urlBase,
+                crossDomain: true,
                 data: jsonParam,
-                method: "POST",
-                headers: { "Content-Type": "application/json" }
+                dataType: "json",
+                contentType: "application/json"
+            });
+        }
+    };
+    iAdminServiceClient.getLocationServiceHour = function (locationId) {
+        if (isValidToken(token)) {
+            urlBase = baseURL + "location_locationservicehoursget?nc=" + Math.random();
+            jsonParam = JSON.stringify({ authToken: token, locationId: locationId });
+            return $.ajax({
+                type: "POST",
+                url: urlBase,
+                crossDomain: true,
+                data: jsonParam,
+                dataType: "json",
+                contentType: "application/json"
             });
         }
     };

@@ -11,6 +11,7 @@ if (window.location.hostname === "localhost") {
     //baseURL = protocol + "//beta.databeat.net/ims8wcf/iSignage.svc/"; //ims8
 }
 function isEmptyValue(value) { if (value == "" || value == 0 || value == undefined || value == null) { return true; } else { return false; } }
+
 // Ionic Starter App
 baseURL = "http://beta.databeat.net/ims8wcf/iSignage.svc/"; //dbp8
 // angular.module is a global place for creating, registering and retrieving Angular modules
