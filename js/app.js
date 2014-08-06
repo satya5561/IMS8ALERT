@@ -34,17 +34,8 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
         }
     });
 
-    $rootScope.$on("$routeChangeSuccess", function () {
-        $rootScope.loading = false;
-    });
-
-    $rootScope.$on('$routeChangeStart', function (scope, next, current) {
-        $rootScope.loading = true;
-        if (!$window.sessionStorage.token) {
-            $location.path("/page/login");
-        }
-    });
-
+    $rootScope.loading = false;
+   
     $rootScope.safeApply = function (fn) {
         var phase = this.$root.$$phase;
         if (phase == '$apply' || phase == '$digest') {
@@ -59,12 +50,7 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
 })
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-    //Enable cross domain calls
-    $httpProvider.defaults.useXDomain = true;
-
-    //Remove the header containing XMLHttpRequest used to identify ajax call 
-    //that would prevent CORS from working
-    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+   
     $stateProvider
          .state('page', {
              url: "/page",
@@ -189,9 +175,6 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
                 }
             }
         })
-
-
-
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/page/login');
 
