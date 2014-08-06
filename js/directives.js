@@ -140,7 +140,7 @@ angular.module('IMS8Alert.directives', [])
     return function (scope, elm, attrs) {
         elm.text(version);
     };
-}]).value('version', 'iAlert v 1.1.0.1 Databeat.Net 2014')
+}]).value('version', 'iAlert v 1.1.0.5 Databeat.Net 2014')
 .directive('dbCheckbox', function () {
     return {
         restrict: 'E',
