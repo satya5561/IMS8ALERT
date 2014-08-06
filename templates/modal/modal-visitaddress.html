@@ -1,0 +1,57 @@
+<div class="modal" style="animation: slide-left-right !important">
+    <ion-header-bar align-title="center" class="bar-stable nav-title-slide-ios7 bar bar-header nav-bar ">
+        <div class="row addrhdr">
+            <div class="col col33">
+                <span class="yellow" style="float: left;" ng-click="cancelAddress()">Cancel</span>
+            </div>
+            <div class="col col33" style="text-align:center;">
+                <span>{{header}}</span>
+            </div>
+            <div class="col col33">
+                <span class="yellow" style="float: right;" ng-click="saveAddress()">Save</span>
+            </div>
+        </div>
+    </ion-header-bar>
+    <ion-content class="pane1">
+        <div class="list" style="margin-top:30px;">
+            <label class="item item-input listcol">
+                <textarea class="listcol coltext txtareaph" placeholder="Street" style="height:80px;" ng-model="address.Street" />
+            </label>
+            <label class="item item-input listcol">
+                <span class="input-label coltext">From</span>
+                <input class="inputrtxt" type="text" ng-model="address.AddressFrom">
+            </label>
+            <label class="item item-input listcol">
+                <span class="input-label coltext">To</span>
+                <input class="inputrtxt" type="text" ng-model="address.AddressTo">
+            </label>
+            <a class="item ion-chevron-right iconLeft padcmb listcol" ng-click="openModalCountry()">
+                <span>Country</span>
+                <span class="itemValue">{{address.Country}}</span>
+            </a>
+
+        <!--    <a class="item ion-chevron-right iconLeft padcmb listcol" ng-click="openModalState()">
+                <span>State</span>
+                <span class="itemValue">{{address.State}}</span>
+            </a>-->
+           
+            <label class="item item-input listcol">
+                <span class="input-label coltext">zip</span>
+                <input class="inputrtxt" type="text" ng-model="address.Zip" inputevent on-blur="onZipChanged(address.Country, address.Zip)">
+            </label>
+               <label class="item item-input listcol" ng-show="address.Country=='USA'">
+                <span class="input-label coltext">State</span>
+                   <span class="inputrtxt" style="width:100%; padding-right:24px;">{{address.State}}</span>
+               <!-- <input class="inputrtxt" type="text" ng-model="address.State">-->
+            </label>
+            <label class="item item-input listcol">
+                <span class="input-label coltext">city</span>
+                <input class="inputrtxt" type="text" ng-model="address.City">
+            </label>
+           
+        </div>
+    </ion-content>
+</div>
+
+
+

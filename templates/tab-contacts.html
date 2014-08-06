@@ -1,0 +1,30 @@
+﻿<ion-view title="Contacts" hide-nav-bar="true">
+    <ion-header-bar align-title="center" class="bar-stable nav-title-slide-ios7 bar bar-header nav-bar ">
+        <div class="row addrhdr">
+            <div class="col col33" ng-click="goBack()">
+                <span class="ion-chevron-left yellow"></span>
+                <span class="yellow">Back</span>
+            </div>
+            <div class="col col10" style="text-align:center;padding:0px;">
+                <span>Contact</span>
+            </div>
+            <div class="col col33" style="padding:0px;">
+                <a class="yellow listContact icon ion-plus-round" style="text-decoration: none; float: right; width: 80px;" ng-click="openModalContact()"></a>
+            </div>
+        </div>
+    </ion-header-bar>
+    <img-header id="cbAlertMode" ng-model="alertChecked" ng-checked="false" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(alertChecked)"></img-header>
+    <ion-content class="has-header" style=" margin-top:165px">
+    <div class="list">
+            <div class="item listcol item-icon-right" style="padding: 5px 0px 0px 15px; font-size:15px; font-weight:bold;" ng-repeat=" contact in contacts">
+                <span>
+                    {{contact.Name}}
+                </span>
+                <p>{{contact.Role}}</p>
+                <i class="icon ion-ios7-arrow-forward frwdarrow" ng-click="openContact(contact)"> </i>
+                <a class="listContact icon ion-ios7-email" style="text-decoration:none; margin-right:50px;" href="mailto:{{contact.Email}}"></a>
+                <a class="listContact icon ion-ios7-telephone" style="text-decoration: none; margin-right: 100px;" href="tel:{{contact.Cell}}"></a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
