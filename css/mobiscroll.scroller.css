@@ -143,7 +143,7 @@
 .dwwol {
     position: absolute;
     z-index: 1;
-    top: 50%;
+    top: 42%;
     left: 0;
     width: 100%;
     pointer-events: none;
@@ -212,7 +212,7 @@
 }
 
 .mbsc-mobiscroll .dwfl {
-    padding: .5em .25em;
+    /*padding: .5em .25em;*/
 }
 
 .mbsc-mobiscroll .dw-li {
@@ -224,8 +224,8 @@
 }
 
 .mbsc-mobiscroll .dwwol {
-    border-top: 1px solid #4eccc4;
-    border-bottom: 1px solid #4eccc4;
+    border-top: 1px solid #505865;
+    border-bottom: 1px solid #505865;
 }
 /* Clickpick mode */
 .mbsc-mobiscroll .dwpm .dwwol {
@@ -233,7 +233,7 @@
 }
 
 .mbsc-mobiscroll .dwwb {
-    color: #4eccc4;
+    color: #505865;
     background: #f7f7f7;
 }
 

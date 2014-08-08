@@ -211,5 +211,33 @@ angular.module('IMS8Alert.services', [])
             });
         }
     };
+    iAdminServiceClient.location_AlertService = function (locationAlertDTO, isSave) {
+        if (isValidToken(token)) {
+            urlBase = baseURL + "location_alertservice?nc=" + Math.random();
+            jsonParam = JSON.stringify({ authToken: token, locationAlertDTO: locationAlertDTO, isSave: isSave });
+            return $.ajax({
+                type: "POST",
+                url: urlBase,
+                crossDomain: true,
+                data: jsonParam,
+                dataType: "json",
+                contentType: "application/json"
+            });
+        }
+    };
+    iAdminServiceClient.saveLocationServiceHour = function (locationId, serviceHour) {
+        if (isValidToken(token)) {
+            urlBase = baseURL + "location_locationservicehourssave?nc=" + Math.random();
+            jsonParam = JSON.stringify({ authToken: token, locationId: locationId, serviceHour: serviceHour });
+            return $.ajax({
+                type: "POST",
+                url: urlBase,
+                crossDomain: true,
+                data: jsonParam,
+                dataType: "json",
+                contentType: "application/json"
+            });
+        }
+    };
     return iAdminServiceClient;
 });

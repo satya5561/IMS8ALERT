@@ -1,5 +1,5 @@
 ﻿  <ion-view title="Opening Hours" hide-nav-bar="false">
-      <img-header id="cbAlertMode" ng-model="alertChecked" ng-checked="false" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(alertChecked)"></img-header>
+      <img-header></img-header>
       <ion-content class="has-header" style=" margin-top:165px">
         <div class="item ion-android-clock itemDays listcol " style="padding: 0px 10px 10px 0px; font-size:15px; font-weight:bold;">
             <span>24/7</span>
@@ -7,20 +7,28 @@
                <dbr-toggle id="cbAllday" ng-model="serviceHour.Is24_7" ng-checked="false" data-on="ON" data-off="OFF" data-trackcss="track yellow" data-handlecss="handleYellow"></dbr-toggle>
             </span>
         </div>
-        <div class="list" ng-show="true">
-            <a class="item itemDays listcol" ng-click="openModalTime()">
+        <div class="list" ng-show="!serviceHour.Is24_7">
+
+               <a class="item itemDays listcol"  ng-repeat="hrs in testHours | filter:searchText" ng-class="{ 'selected': $index == selectedLocationIndex }" ng-click="openModalTime(hrs,$index)">
+                <div class="serhrs">
+                    <span>{{hrs.day}}</span>
+                    <span class="itemValue ">{{hrs.openTime}}<span ng-show="(hrs.openTime && hrs.closeTime)">-</span>{{hrs.closeTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
+                </div>
+            </a>
+
+          <!--  <a class="item itemDays listcol" ng-click="openModalTime('Monday',serviceHour.MonOpenTime,serviceHour.MonCloseTime)">
                 <div class="serhrs">
                     <span>Monday</span>
                     <span class="itemValue ">{{serviceHour.MonOpenTime}}-{{serviceHour.MonCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
                 </div>
             </a>
-            <a class="item  iconLeft itemDays listcol" ng-click="openModalTime()">
+            <a class="item  iconLeft itemDays listcol" ng-click="openModalTime('Tuesday',serviceHour.TueOpenTime,serviceHour.TueCloseTime)">
                 <div class="serhrs">
                     <span>Tuesday</span>
                     <span class="itemValue ">{{serviceHour.TueOpenTime}}-{{serviceHour.TueCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
                 </div>
             </a>
-            <a class="item  iconLeft itemDays listcol" href="#">
+            <a class="item  iconLeft itemDays listcol"  ng-click="openModalTime('Wednesday',serviceHour.WedOpenTime,serviceHour.WedCloseTime)">
                 <div class="serhrs">
                     <span>Wednesday</span>
                     <span class="itemValue ">{{serviceHour.WedOpenTime}}-{{serviceHour.WedCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
@@ -28,7 +36,7 @@
                 </div>
             </a>
 
-            <a class="item  iconLeft itemDays listcol" href=" #">
+            <a class="item  iconLeft itemDays listcol"  ng-click="openModalTime('Thursday',serviceHour.ThuOpenTime,serviceHour.ThuCloseTime)">
                 <div class="serhrs">
                 <span>Thursday</span>
                     <span class="itemValue ">{{serviceHour.ThuOpenTime}}-{{serviceHour.ThuCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
@@ -36,27 +44,27 @@
                 </div>
 
             </a>
-            <a class="item  iconLeft itemDays listcol" href="#">
+            <a class="item  iconLeft itemDays listcol"  ng-click="openModalTime('Friday',serviceHour.FriOpenTime,serviceHour.FriCloseTime)">
                 <div class="serhrs">
                 <span>Friday</span>
                     <span class="itemValue ">{{serviceHour.FriOpenTime}}-{{serviceHour.FriCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
 
                 </div>
             </a>
-            <a class="item  iconLeft itemDays listcol" href="#">
+            <a class="item  iconLeft itemDays listcol"  ng-click="openModalTime('Saturday',serviceHour.SatOpenTime,serviceHour.SatCloseTime)">
                 <div class="serhrs">
                 <span>Saturday</span>
                     <span class="itemValue ">{{serviceHour.SatOpenTime}}-{{serviceHour.SatCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
 
                 </div>
             </a>
-            <a class="item  iconLeft itemDays listcol" href="#">
+            <a class="item  iconLeft itemDays listcol"  ng-click="openModalTime('Sunday',serviceHour.SunOpenTime,serviceHour.SunCloseTime)">
                 <div class="serhrs">
                 <span>Sunday</span>
                     <span class="itemValue ">{{serviceHour.SunOpenTime}}-{{serviceHour.SunCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
 
                 </div>
-            </a>
+            </a>-->
 
         </div>
     </ion-content>

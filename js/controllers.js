@@ -4,56 +4,15 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
-    getLocationServiceHour();
-    function getLocationServiceHour() {
-        $ionicLoading.show();
-        iAdminServiceClient.getLocationServiceHour($rootScope.LocationId)
-            .success(function (data) {
-                if (data.Location_LocationServiceHoursGetResult != null) {
-                    $scope.serviceHour = data.Location_LocationServiceHoursGetResult;
-                    if ($scope.serviceHour.MonOpenTime != null)
-                        $scope.serviceHour.MonOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.MonOpenTime)).substring(2, 7);
-                    if ($scope.serviceHour.MonCloseTime != null)
-                        $scope.serviceHour.MonCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.MonCloseTime)).substring(2, 7);
-                    if ($scope.serviceHour.TueOpenTime != null)
-                        $scope.serviceHour.TueOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.TueOpenTime)).substring(2, 7);
-                    if ($scope.serviceHour.TueCloseTime != null)
-                        $scope.serviceHour.TueCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.TueCloseTime)).substring(2, 7);
-                    if ($scope.serviceHour.WedOpenTime != null)
-                        $scope.serviceHour.WedOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.WedOpenTime)).substring(2, 7);
-                    if ($scope.serviceHour.WedCloseTime != null)
-                        $scope.serviceHour.WedCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.WedCloseTime)).substring(2, 7);
-                    if ($scope.serviceHour.ThuOpenTime != null)
-                        $scope.serviceHour.ThuOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.ThuOpenTime)).substring(2, 7);
-                    if ($scope.serviceHour.ThuCloseTime != null)
-                        $scope.serviceHour.ThuCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.ThuCloseTime)).substring(2, 7);
-                    if ($scope.serviceHour.FriOpenTime != null)
-                        $scope.serviceHour.FriOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.FriOpenTime)).substring(2, 7);
-                    if ($scope.serviceHour.FriCloseTime != null)
-                        $scope.serviceHour.FriCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.FriCloseTime)).substring(2, 7);
-                    if ($scope.serviceHour.SatOpenTime != null)
-                        $scope.serviceHour.SatOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SatOpenTime)).substring(2, 7);
-                    if ($scope.serviceHour.SatCloseTime != null)
-                        $scope.serviceHour.SatCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SatCloseTime)).substring(2, 7);
-                    if ($scope.serviceHour.SunOpenTime != null)
-                        $scope.serviceHour.SunOpenTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SunOpenTime)).substring(2, 7);
-                    if ($scope.serviceHour.SunCloseTime != null)
-                        $scope.serviceHour.SunCloseTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SunCloseTime)).substring(2, 7);
-                }
-
-                    $ionicLoading.hide();
-
-            })
-            .error(function (error, data) {
-                $ionicLoading.hide();
-
-            });
-}
+    $scope.headerimg.playercount = $rootScope.playercount;
+    $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    $scope.alertChecked = false;
+    getLocationAlertInfo(false);
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Alert Mode',
-                template: 'WARNING! Location __ will be set in Alert mode. This will be applied to __ media players.'
+                template: 'WARNING! Location ' + $scope.headerimg.locName + ' will be set in Alert mode. This will be applied to ' + $scope.headerimg.playercount + ' media players.'
             });
             confirmPopup.then(function (res) {
                 if (!res) {
@@ -61,19 +20,166 @@ angular.module('IMS8Alert.controllers', [])
                 }
                 else {
                     $scope.alertChecked = true;
+                    getLocationAlertInfo($scope.alertChecked);
                 }
                 $("#cbAlertMode").prop('checked', $scope.alertChecked);
             });
         }
+        else {
+            $scope.alertChecked = false;
+            getLocationAlertInfo(true);
+        }
     };
+
+    function getLocationAlertInfo(isSave) {
+        var locationAlertDTO = {};
+        locationAlertDTO.LocationId = $rootScope.LocationId;
+        if (isSave) {
+            locationAlertDTO.IsAlert = $scope.alertChecked;
+        }
+        $ionicLoading.show();
+        iAdminServiceClient.location_AlertService(locationAlertDTO, isSave)
+        .success(function (data) {
+            $ionicLoading.hide();
+            if (data) {
+                $scope.headerimg.playercount = $rootScope.playercount = data.Location_AlertServiceResult.TotalPlayerCount
+                $scope.headerimg.alertplayercount = $rootScope.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
+            }
+        })
+      .error(function (error, data) {
+          $ionicLoading.hide();
+      });
+    }
+
+    getLocationServiceHour();
+
+    function getLocationServiceHour() {
+        $ionicLoading.show();
+        $scope.testHours = [
+                                      { day: 'Monday', openTime: '', closeTime: '' },
+                                      { day: 'Tuesday', openTime: '', closeTime: '' },
+                                     { day: 'Wednesday', openTime: '', closeTime: '' },
+                                     { day: 'Thursday', openTime: '', closeTime: '' },
+                                      { day: 'Friday', openTime: '', closeTime: '' },
+                                     { day: 'Saturday', openTime: '', closeTime: '' },
+                                     { day: 'Sunday', openTime: '', closeTime: '' }
+        ];
+        iAdminServiceClient.getLocationServiceHour($rootScope.LocationId)
+            .success(function (data) {
+                if (data.Location_LocationServiceHoursGetResult != null) {
+                    $scope.serviceHour = data.Location_LocationServiceHoursGetResult;
+                    if ($scope.serviceHour.IsMonOpen) {
+                        $scope.testHours[0].openTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.MonOpenTime)).substring(2, 7);
+                        $scope.testHours[0].closeTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.MonCloseTime)).substring(2, 7);
+                    }
+                    if ($scope.serviceHour.IsTueOpen) {
+                        $scope.testHours[1].openTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.TueOpenTime)).substring(2, 7);
+                        $scope.testHours[1].closeTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.TueCloseTime)).substring(2, 7);
+                    }
+                    if ($scope.serviceHour.IsWedOpen) {
+                        $scope.testHours[2].openTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.WedOpenTime)).substring(2, 7);
+                        $scope.testHours[2].closeTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.WedCloseTime)).substring(2, 7);
+                    }
+                    if ($scope.serviceHour.IsThuOpen) {
+                        $scope.testHours[3].openTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.ThuOpenTime)).substring(2, 7);
+                        $scope.testHours[3].closeTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.ThuCloseTime)).substring(2, 7);
+                    }
+                    if ($scope.serviceHour.IsFriOpen) {
+                        $scope.testHours[4].openTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.FriOpenTime)).substring(2, 7);
+                        $scope.testHours[4].closeTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.FriCloseTime)).substring(2, 7);
+                    }
+                    if ($scope.serviceHour.IsSatOpen) {
+                        $scope.testHours[5].openTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SatOpenTime)).substring(2, 7);
+                        $scope.testHours[5].closeTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SatCloseTime)).substring(2, 7);
+                    }
+                    if ($scope.serviceHour.IsSunOpen) {
+                        $scope.testHours[6].openTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SunOpenTime)).substring(2, 7);
+                        $scope.testHours[6].closeTime = centisecsToSCORM12Duration(ISODurationToCentisec($scope.serviceHour.SunCloseTime)).substring(2, 7);
+                    }
+                }
+
+                $ionicLoading.hide();
+
+            })
+            .error(function (error, data) {
+                $ionicLoading.hide();
+
+            });
+    }
+    $scope.SaveServiceHour = function () {
+        if ($scope.time.id == 0) {
+            $scope.serviceHour.IsMonOpen = true;
+            $scope.serviceHour.MonOpenTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.openTime.concat(":00")), true);
+            $scope.serviceHour.MonCloseTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.closeTime.concat(":00")), true);
+        }
+
+        if ($scope.time.id == 1) {
+            $scope.serviceHour.IsTueOpen = true;
+            $scope.serviceHour.TueOpenTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.openTime.concat(":00")), true);
+            $scope.serviceHour.TueCloseTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.closeTime.concat(":00")), true);
+        }
+        if ($scope.time.id == 2) {
+            $scope.serviceHour.IsWedOpen = true;
+            $scope.serviceHour.WedOpenTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.openTime.concat(":00")), true);
+            $scope.serviceHour.WedCloseTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.closeTime.concat(":00")), true);
+        }
+        if ($scope.time.id == 3) {
+            $scope.serviceHour.IsThuOpen = true;
+            $scope.serviceHour.ThuOpenTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.openTime.concat(":00")), true);
+            $scope.serviceHour.ThuCloseTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.closeTime.concat(":00")), true);
+        }
+        if ($scope.time.id == 4) {
+            $scope.serviceHour.IsFriOpen = true;
+            $scope.serviceHour.FriOpenTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.openTime.concat(":00")), true);
+            $scope.serviceHour.FriCloseTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.closeTime.concat(":00")), true);
+        }
+        if ($scope.time.id == 5) {
+            $scope.serviceHour.IsSatOpen = true;
+            $scope.serviceHour.SatOpenTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.openTime.concat(":00")), true);
+            $scope.serviceHour.SatCloseTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.closeTime.concat(":00")), true);
+        }
+        if ($scope.time.id == 6) {
+            $scope.serviceHour.IsSunOpen = true;
+            $scope.serviceHour.SunOpenTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.openTime.concat(":00")), true);
+            $scope.serviceHour.SunCloseTime = centisecsToISODuration(SCORM12DurationToCs($scope.time.closeTime.concat(":00")), true);
+        }
+        $ionicLoading.show();
+        iAdminServiceClient.saveLocationServiceHour($rootScope.LocationId, $scope.serviceHour)
+           .success(function (data) {
+               $ionicLoading.hide();
+               $scope.mdltime.hide();
+               if (data.Location_LocationServiceHoursSaveResult != null) {
+                   getLocationServiceHour();
+               }
+           })
+           .error(function (error, data) {
+               $ionicLoading.hide();
+           });
+
+
+    };
+
     $ionicModal.fromTemplateUrl('templates/modal/modal-time.html', {
         scope: $scope,
         animation: 'slide-left-right',//'slide-left-right', 'slide-in-up', 'slide-right-left'
         focusFirstInput: true
     }).then(function (modal) { $scope.mdltime = modal; });
-    $scope.openModalTime = function () {
+    $scope.time = {};
+    $scope.openModalTime = function (hrs, idx) {
+        $scope.header = hrs.day;
+        $scope.time.openTime = hrs.openTime;
+        $scope.time.closeTime = hrs.closeTime;
+        $scope.time.id = idx;
+        $scope.selectedTime = "";
         $scope.mdltime.show();
     };
+    $scope.cancel = function () {
+        $scope.mdltime.hide();
+    };
+    $scope.selectTime = function (type) {
+        $scope.timeType = type;
+    };
+
     $scope.$on('modal.shown', function (event, modal) {
         var curr = new Date().getFullYear();
         var opt = { 'time': { preset: 'time' } };
@@ -84,6 +190,12 @@ angular.module('IMS8Alert.controllers', [])
             animate: 'slidevertical'
         }));
     });
+    $scope.$watch('time.selectedTime', function () {
+        if ($scope.timeType=='from')
+            $scope.time.openTime=$scope.time.selectedTime;
+        else if ($scope.timeType == 'to')
+            $scope.time.closeTime = $scope.time.selectedTime;
+    });
 
 })
 
@@ -91,6 +203,53 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
+    $scope.headerimg.playercount = $rootScope.playercount;
+    $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    $scope.alertChecked = false;
+    getLocationAlertInfo(false);
+    $scope.showConfirm = function (m) {
+        if (!m) {
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Alert Mode',
+                template: 'WARNING! Location ' + $scope.headerimg.locName + ' will be set in Alert mode. This will be applied to ' + $scope.headerimg.playercount + ' media players.'
+            });
+            confirmPopup.then(function (res) {
+                if (!res) {
+                    $scope.alertChecked = false;
+                }
+                else {
+                    $scope.alertChecked = true;
+                    getLocationAlertInfo($scope.alertChecked);
+                }
+                $("#cbAlertMode").prop('checked', $scope.alertChecked);
+            });
+        }
+        else {
+            $scope.alertChecked = false;
+            getLocationAlertInfo(true);
+        }
+    };
+
+    function getLocationAlertInfo(isSave) {
+        var locationAlertDTO = {};
+        locationAlertDTO.LocationId = $rootScope.LocationId;
+        if (isSave) {
+            locationAlertDTO.IsAlert = $scope.alertChecked;
+        }
+        $ionicLoading.show();
+        iAdminServiceClient.location_AlertService(locationAlertDTO, isSave)
+        .success(function (data) {
+            $ionicLoading.hide();
+            if (data) {
+                $scope.headerimg.playercount = $rootScope.playercount = data.Location_AlertServiceResult.TotalPlayerCount
+                $scope.headerimg.alertplayercount = $rootScope.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
+            }
+        })
+      .error(function (error, data) {
+          $ionicLoading.hide();
+      });
+    }
+
     getLocationChannels($rootScope.LocationId);
     function getLocationChannels(LocationId) {
         $ionicLoading.show();
@@ -130,23 +289,6 @@ angular.module('IMS8Alert.controllers', [])
         });
     };
 
-    $scope.showConfirm = function (m) {
-        if (!m) {
-            var confirmPopup = $ionicPopup.confirm({
-                title: 'Alert Mode',
-                template: 'WARNING! Location __ will be set in Alert mode. This will be applied to __ media players.'
-            });
-            confirmPopup.then(function (res) {
-                if (!res) {
-                    $scope.alertChecked = false;
-                }
-                else {
-                    $scope.alertChecked = true;
-                }
-                $("#cbAlertMode").prop('checked', $scope.alertChecked);
-            });
-        }
-    };
 })
 
 .controller('ContactDetailCtrl', function ($scope, $state, list, $rootScope, $ionicModal, $ionicPopup, $ionicNavBarDelegate, $ionicLoading, iAdminServiceClient) {
@@ -228,6 +370,53 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
+    $scope.headerimg.playercount = $rootScope.playercount;
+    $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    $scope.alertChecked = false;
+    getLocationAlertInfo(false);
+    $scope.showConfirm = function (m) {
+        if (!m) {
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Alert Mode',
+                template: 'WARNING! Location ' + $scope.headerimg.locName + ' will be set in Alert mode. This will be applied to ' + $scope.headerimg.playercount + ' media players.'
+            });
+            confirmPopup.then(function (res) {
+                if (!res) {
+                    $scope.alertChecked = false;
+                }
+                else {
+                    $scope.alertChecked = true;
+                    getLocationAlertInfo($scope.alertChecked);
+                }
+                $("#cbAlertMode").prop('checked', $scope.alertChecked);
+            });
+        }
+        else {
+            $scope.alertChecked = false;
+            getLocationAlertInfo(true);
+        }
+    };
+
+    function getLocationAlertInfo(isSave) {
+        var locationAlertDTO = {};
+        locationAlertDTO.LocationId = $rootScope.LocationId;
+        if (isSave) {
+            locationAlertDTO.IsAlert = $scope.alertChecked;
+        }
+        $ionicLoading.show();
+        iAdminServiceClient.location_AlertService(locationAlertDTO, isSave)
+        .success(function (data) {
+            $ionicLoading.hide();
+            if (data) {
+                $scope.headerimg.playercount = $rootScope.playercount = data.Location_AlertServiceResult.TotalPlayerCount
+                $scope.headerimg.alertplayercount = $rootScope.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
+            }
+        })
+      .error(function (error, data) {
+          $ionicLoading.hide();
+      });
+    }
+
     getLocationContacts($rootScope.CustomerID, $rootScope.groupID, $rootScope.MemberID);
     function getLocationContacts(customerId, groupId, memberId) {
         $ionicLoading.show();
@@ -304,39 +493,26 @@ angular.module('IMS8Alert.controllers', [])
     };
 
 
-    $scope.showConfirm = function (m) {
-        if (!m) {
-            var confirmPopup = $ionicPopup.confirm({
-                title: 'Alert Mode',
-                template: 'WARNING! Location __ will be set in Alert mode. This will be applied to __ media players.'
-            });
-            confirmPopup.then(function (res) {
-                if (!res) {
-                    $scope.alertChecked = false;
-                }
-                else {
-                    $scope.alertChecked = true;
-                }
-                $("#cbAlertMode").prop('checked', $scope.alertChecked);
-            });
-        }
-    };
 })
 
 .controller('AddressCtrl', function ($scope, $state, list, $ionicNavBarDelegate, $rootScope, iAdminServiceClient, $ionicModal, $ionicPopup, $ionicLoading) {
 
-    $scope.headerimg = {};
-    $scope.headerimg.locName = $rootScope.LocationName;
-    $scope.headerimg.groupName = $rootScope.groupName;
     $scope.address = {};
     $scope.visitAddress = $rootScope.visitAddress;
     $scope.invoiceAddress = $rootScope.invoiceAddress;
 
+    $scope.headerimg = {};
+    $scope.headerimg.locName = $rootScope.LocationName;
+    $scope.headerimg.groupName = $rootScope.groupName;
+    $scope.headerimg.playercount = $rootScope.playercount;
+    $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    $scope.alertChecked = false;
+    getLocationAlertInfo(false);
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Alert Mode',
-                template: 'WARNING! Location __ will be set in Alert mode. This will be applied to __ media players.'
+                template: 'WARNING! Location ' + $scope.headerimg.locName + ' will be set in Alert mode. This will be applied to ' + $scope.headerimg.playercount + ' media players.'
             });
             confirmPopup.then(function (res) {
                 if (!res) {
@@ -344,11 +520,37 @@ angular.module('IMS8Alert.controllers', [])
                 }
                 else {
                     $scope.alertChecked = true;
+                    getLocationAlertInfo($scope.alertChecked);
                 }
                 $("#cbAlertMode").prop('checked', $scope.alertChecked);
             });
         }
+        else {
+            $scope.alertChecked = false;
+            getLocationAlertInfo(true);
+        }
     };
+
+    function getLocationAlertInfo(isSave) {
+        var locationAlertDTO = {};
+        locationAlertDTO.LocationId = $rootScope.LocationId;
+        if (isSave) {
+            locationAlertDTO.IsAlert = $scope.alertChecked;
+        }
+        $ionicLoading.show();
+        iAdminServiceClient.location_AlertService(locationAlertDTO, isSave)
+        .success(function (data) {
+            $ionicLoading.hide();
+            if (data) {
+                $scope.headerimg.playercount = $rootScope.playercount = data.Location_AlertServiceResult.TotalPlayerCount
+                $scope.headerimg.alertplayercount = $rootScope.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
+            }
+        })
+      .error(function (error, data) {
+          $ionicLoading.hide();
+      });
+    }
+
 
     $scope.goBack = function () {
         $ionicNavBarDelegate.back();
@@ -670,10 +872,11 @@ angular.module('IMS8Alert.controllers', [])
             .success(function (data) {
                 var result = data.Location_GetLocationAddressesResult;
                 $ionicLoading.hide();
-                if (result)
-                    $scope.locations = result;
-
-
+                if (result) {
+                    $scope.allLocations = result;
+                    $scope.locations = _.where($scope.allLocations, { AddressType: 'Visit' });
+                }
+                $ionicLoading.hide();
             })
          .error(function (error, data) {
              $ionicLoading.hide();
@@ -691,8 +894,9 @@ angular.module('IMS8Alert.controllers', [])
             $scope.selectedId = loc.LocationId;
             $rootScope.LocationId = $scope.selectedId;
             $rootScope.LocationName = loc.LocationName;
-            $rootScope.visitAddress = _.where($scope.locations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
-            $rootScope.invoiceAddress = _.where($scope.locations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
+            $rootScope.visitAddress = _.where($scope.allLocations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
+            $rootScope.invoiceAddress = _.where($scope.allLocations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
+
         }
     }
 });

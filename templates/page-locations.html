@@ -1,4 +1,18 @@
-﻿<ion-view title="Select Location">
+﻿<ion-view title="Select Location" hide-nav-bar="true">
+     <ion-header-bar align-title="center" class="bar-stable nav-title-slide-ios7 bar bar-header nav-bar ">
+        <div class="row addrhdr">
+            <div class="col col33" ng-click="goBack()">
+                <span class="ion-chevron-left yellow"></span>
+                <span class="yellow">Back</span>
+            </div>
+            <div class="col col10" style="text-align:center;padding:0px;">
+                <span>Select Location</span>
+            </div>
+            <div class="col col33" style="padding:0px;">
+              
+            </div>
+        </div>
+    </ion-header-bar>
     <div class="bar bar-subheader">
   <label class="item item-input" style="padding:0px;">
             <i class="icon ion-search placeholder-icon"></i>
@@ -7,10 +21,10 @@
 </div>
     <ion-content class="has-header " style="top:88px;">
        
-        <div horizontal-slider class="list horizontal-slider" >
+        <div class="list" >
             <a class="item listcol" ng-repeat="loc in locations | filter:searchText" ng-class="{ 'selected': $index == selectedLocationIndex }" ng-click="selectlocation(loc, $index)">
-                <span>{{loc.LocationName}} /</span>
-                <span>{{loc.City}} , {{loc.Zip}}</span>
+
+                <span>{{loc.LocationName}} / {{loc.City}} , {{loc.Zip}}</span>
              </a>
         </div>
     
