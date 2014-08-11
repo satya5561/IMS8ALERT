@@ -47,7 +47,7 @@ angular.module('IMS8Alert.directives', [])
               template: ' <div class="bar bar-subheader " style="padding: 5px 0px 0px;" ng-class="{alertheader:alertChecked ,alertheaderOff:!alertChecked}">' +
    '<a class="button button-icon icon ion-information-circled title-left"><span class="alertHeading"> Alert Mode ({{headerimg.alertplayercount}} of {{headerimg.playercount}})</span></a>' +
    ' <span class="itemValue">' +
-  '      <dbr-toggle id="cbAlertMode" ng-model="alertChecked" ng-checked="false" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(alertChecked)"></dbr-toggle> ' +
+  '      <dbr-toggle id="cbAlertMode" ng-model="alertChecked" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(alertChecked)"></dbr-toggle> ' +
    ' </span>' +
    '<div class="row addrimg" style="margin-top: 5px;">' +
    '<div class="circle "></div>' +

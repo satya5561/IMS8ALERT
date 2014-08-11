@@ -6,8 +6,11 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.groupName = $rootScope.groupName;
     $scope.headerimg.playercount = $rootScope.playercount;
     $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
-    $scope.alertChecked = false;
-    getLocationAlertInfo(false);
+    if (!$scope.headerimg.playercount)
+        getLocationAlertInfo(false);
+    else
+        $scope.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -22,7 +25,6 @@ angular.module('IMS8Alert.controllers', [])
                     $scope.alertChecked = true;
                     getLocationAlertInfo($scope.alertChecked);
                 }
-                $("#cbAlertMode").prop('checked', $scope.alertChecked);
             });
         }
         else {
@@ -44,6 +46,7 @@ angular.module('IMS8Alert.controllers', [])
             if (data) {
                 $scope.headerimg.playercount = $rootScope.playercount = data.Location_AlertServiceResult.TotalPlayerCount
                 $scope.headerimg.alertplayercount = $rootScope.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
+                $scope.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
             }
         })
       .error(function (error, data) {
@@ -205,8 +208,11 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.groupName = $rootScope.groupName;
     $scope.headerimg.playercount = $rootScope.playercount;
     $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
-    $scope.alertChecked = false;
-    getLocationAlertInfo(false);
+    if (!$scope.headerimg.playercount)
+        getLocationAlertInfo(false);
+    else
+        $scope.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -221,7 +227,6 @@ angular.module('IMS8Alert.controllers', [])
                     $scope.alertChecked = true;
                     getLocationAlertInfo($scope.alertChecked);
                 }
-                $("#cbAlertMode").prop('checked', $scope.alertChecked);
             });
         }
         else {
@@ -243,6 +248,7 @@ angular.module('IMS8Alert.controllers', [])
             if (data) {
                 $scope.headerimg.playercount = $rootScope.playercount = data.Location_AlertServiceResult.TotalPlayerCount
                 $scope.headerimg.alertplayercount = $rootScope.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
+                $scope.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
             }
         })
       .error(function (error, data) {
@@ -372,8 +378,11 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.groupName = $rootScope.groupName;
     $scope.headerimg.playercount = $rootScope.playercount;
     $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
-    $scope.alertChecked = false;
-    getLocationAlertInfo(false);
+    if (!$scope.headerimg.playercount)
+        getLocationAlertInfo(false);
+    else
+        $scope.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -388,7 +397,6 @@ angular.module('IMS8Alert.controllers', [])
                     $scope.alertChecked = true;
                     getLocationAlertInfo($scope.alertChecked);
                 }
-                $("#cbAlertMode").prop('checked', $scope.alertChecked);
             });
         }
         else {
@@ -410,6 +418,7 @@ angular.module('IMS8Alert.controllers', [])
             if (data) {
                 $scope.headerimg.playercount = $rootScope.playercount = data.Location_AlertServiceResult.TotalPlayerCount
                 $scope.headerimg.alertplayercount = $rootScope.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
+                $scope.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
             }
         })
       .error(function (error, data) {
@@ -506,8 +515,11 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.groupName = $rootScope.groupName;
     $scope.headerimg.playercount = $rootScope.playercount;
     $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
-    $scope.alertChecked = false;
-    getLocationAlertInfo(false);
+    if (!$scope.headerimg.playercount)
+        getLocationAlertInfo(false);
+    else
+        $scope.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
+   
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -522,7 +534,6 @@ angular.module('IMS8Alert.controllers', [])
                     $scope.alertChecked = true;
                     getLocationAlertInfo($scope.alertChecked);
                 }
-                $("#cbAlertMode").prop('checked', $scope.alertChecked);
             });
         }
         else {
@@ -544,6 +555,7 @@ angular.module('IMS8Alert.controllers', [])
             if (data) {
                 $scope.headerimg.playercount = $rootScope.playercount = data.Location_AlertServiceResult.TotalPlayerCount
                 $scope.headerimg.alertplayercount = $rootScope.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
+                $scope.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
             }
         })
       .error(function (error, data) {
@@ -864,7 +876,10 @@ angular.module('IMS8Alert.controllers', [])
     }
 })
 .controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading) {
-
+    if ($rootScope.playercount) {
+       delete $rootScope.playercount;
+       delete $rootScope.alertplayercount;
+    }
     getLocationAddresses($rootScope.CustomerID, $rootScope.groupID, $rootScope.MemberID);
     function getLocationAddresses(customerId, groupId, memberId) {
         $ionicLoading.show();

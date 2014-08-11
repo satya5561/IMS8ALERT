@@ -3255,7 +3255,7 @@ a.subdued {
   border-style: solid;
   border-top: 1px solid transparent;
   border-bottom: 1px solid #ddd;*/
-    background-color: white;
+    /*background-color: white;*/
     /* border-width: 1px will actually create 2 device pixels on retina */
     /* this nifty trick sets an actual 1px border on hi-res displays */
     background-size: 0;
@@ -3263,11 +3263,11 @@ a.subdued {
 
 @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .bar {
-        border: none;
+        /*border: none;
         background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
         background-position: bottom;
         background-size: 100% 1px;
-        background-repeat: no-repeat;
+        background-repeat: no-repeat;*/
     }
 }
 
@@ -4191,7 +4191,7 @@ a.subdued {
     overflow: hidden;
     min-height: 100%;
     width: 100%;
-    background-color: #fff;
+    /*background-color: #fff;*/
 }
 
 @media (min-width: 680px) {
@@ -5786,9 +5786,9 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
     padding: 5px;
 }
 
-    .toggle input:checked + .track {
-        border-color: #4a87ee;
-        background-color: #4a87ee;
+    .toggle input:checked + .yellow {
+        border: 2px solid #fec93c !important;
+          color:#fec93c !important;
     }
 
     .toggle input:checked + .white {
@@ -5896,7 +5896,8 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
     }
 
     .toggle .yellow {
-        border: 2px solid #fec93c !important;
+        border: 2px solid #797f8b !important;
+        color:#797f8b !important;
     }
 
     .toggle .white {

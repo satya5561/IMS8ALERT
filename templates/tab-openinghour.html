@@ -8,64 +8,12 @@
             </span>
         </div>
         <div class="list" ng-show="!serviceHour.Is24_7">
-
                <a class="item itemDays listcol"  ng-repeat="hrs in testHours | filter:searchText" ng-class="{ 'selected': $index == selectedLocationIndex }" ng-click="openModalTime(hrs,$index)">
                 <div class="serhrs">
                     <span>{{hrs.day}}</span>
                     <span class="itemValue ">{{hrs.openTime}}<span ng-show="(hrs.openTime && hrs.closeTime)">-</span>{{hrs.closeTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
                 </div>
             </a>
-
-          <!--  <a class="item itemDays listcol" ng-click="openModalTime('Monday',serviceHour.MonOpenTime,serviceHour.MonCloseTime)">
-                <div class="serhrs">
-                    <span>Monday</span>
-                    <span class="itemValue ">{{serviceHour.MonOpenTime}}-{{serviceHour.MonCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
-                </div>
-            </a>
-            <a class="item  iconLeft itemDays listcol" ng-click="openModalTime('Tuesday',serviceHour.TueOpenTime,serviceHour.TueCloseTime)">
-                <div class="serhrs">
-                    <span>Tuesday</span>
-                    <span class="itemValue ">{{serviceHour.TueOpenTime}}-{{serviceHour.TueCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
-                </div>
-            </a>
-            <a class="item  iconLeft itemDays listcol"  ng-click="openModalTime('Wednesday',serviceHour.WedOpenTime,serviceHour.WedCloseTime)">
-                <div class="serhrs">
-                    <span>Wednesday</span>
-                    <span class="itemValue ">{{serviceHour.WedOpenTime}}-{{serviceHour.WedCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
-
-                </div>
-            </a>
-
-            <a class="item  iconLeft itemDays listcol"  ng-click="openModalTime('Thursday',serviceHour.ThuOpenTime,serviceHour.ThuCloseTime)">
-                <div class="serhrs">
-                <span>Thursday</span>
-                    <span class="itemValue ">{{serviceHour.ThuOpenTime}}-{{serviceHour.ThuCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
-
-                </div>
-
-            </a>
-            <a class="item  iconLeft itemDays listcol"  ng-click="openModalTime('Friday',serviceHour.FriOpenTime,serviceHour.FriCloseTime)">
-                <div class="serhrs">
-                <span>Friday</span>
-                    <span class="itemValue ">{{serviceHour.FriOpenTime}}-{{serviceHour.FriCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
-
-                </div>
-            </a>
-            <a class="item  iconLeft itemDays listcol"  ng-click="openModalTime('Saturday',serviceHour.SatOpenTime,serviceHour.SatCloseTime)">
-                <div class="serhrs">
-                <span>Saturday</span>
-                    <span class="itemValue ">{{serviceHour.SatOpenTime}}-{{serviceHour.SatCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
-
-                </div>
-            </a>
-            <a class="item  iconLeft itemDays listcol"  ng-click="openModalTime('Sunday',serviceHour.SunOpenTime,serviceHour.SunCloseTime)">
-                <div class="serhrs">
-                <span>Sunday</span>
-                    <span class="itemValue ">{{serviceHour.SunOpenTime}}-{{serviceHour.SunCloseTime}}<i class="icon ion-chevron-right" style="padding-left:10px;"> </i></span>
-
-                </div>
-            </a>-->
-
         </div>
     </ion-content>
 </ion-view>

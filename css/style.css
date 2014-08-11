@@ -328,7 +328,10 @@
     font-size: 14px;
 }
 
-
+.searchBox {
+    border-radius: 5px !important;
+    border: 2px white solid !important;
+}
 /*.slider-bounce {
   transition-duration:0.5s;
   transition-timing-function: ease-out;

@@ -14,13 +14,13 @@
     </ion-header-bar>
     <ion-content class="pane1">
         <div class="list">
-            <a class="item listcol" ng-class="{ 'selected': timeType == 'from' }" ng-click="selectTime('from')" style="padding:4px 15px 4px 15px">
+            <a class="item listcol" ng-class="{ 'selected': timeType == 'from' }" ng-click="selectTime('from')" style="padding:4px 4px 4px 15px">
                 <span class="time-label">From</span>
-                <span class="time-label itemValue coltext">{{time.openTime}}</span>
+                <span class="time-label" style="float:right">{{time.openTime}}</span>
                 </a>
-                 <a class="item listcol" ng-class="{ 'selected':  timeType == 'to' }" ng-click="selectTime('to')" style="padding:4px 15px 4px 15px">
+                 <a class="item listcol" ng-class="{ 'selected':  timeType == 'to' }" ng-click="selectTime('to')" style="padding:4px 4px 4px 15px">
                 <span class="time-label">To</span>
-                <span class="time-label itemValue coltext">{{time.closeTime}}</span>
+                <span class="time-label" style="float:right">{{time.closeTime}}</span>
             </a>
         </div>
         <div data-role="fieldcontain" class="demo demo-time " ng-show="timeType">
