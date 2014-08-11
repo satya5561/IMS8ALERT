@@ -73,8 +73,8 @@
     width: 85px;
     height: 85px;
     margin: 1em 1em;
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
     background-position: center center;
     -webkit-border-radius: 99em;
     -moz-border-radius: 99em;
@@ -197,7 +197,7 @@
 
 @media (min-width: 680px) {
     .facebook-like {
-        width: 15%;
+        width: 25%;
         left: 41%;
     }
 }
@@ -262,8 +262,9 @@
 
 .addrimg {
     background-image: url(../img/test.jpg);
-    background-repeat: no-repeat;
+    background-repeat: no-repeat !important;
     height: 120px;
+   background-size:100% 100% !important;
 }
 
 .edithdr {

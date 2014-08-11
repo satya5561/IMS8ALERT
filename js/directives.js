@@ -49,8 +49,8 @@ angular.module('IMS8Alert.directives', [])
    ' <span class="itemValue">' +
   '      <dbr-toggle id="cbAlertMode" ng-model="alertChecked" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(alertChecked)"></dbr-toggle> ' +
    ' </span>' +
-   '<div class="row addrimg" style="margin-top: 5px;">' +
-   '<div class="circle "></div>' +
+   '<div id="coverImage" class="row addrimg" style="margin-top: 5px; background-repeat: no-repeat; background: url({{headerimg.coverUrl}});">' +
+   '<div id="logoImage" class="circle " style="background-repeat: no-repeat; background: url({{headerimg.logoUrl}});"></div>' +
    ' <div class="coltext " style="margin-top: 10px;">' +
    '  <div style="font-size: 20px; font-weight: bolder;">{{headerimg.locName}}</div>' +
    ' <div style="font-size: small;">NOLETV001SHD</div>' +

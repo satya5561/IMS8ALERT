@@ -19,7 +19,7 @@
             <input type="search" placeholder="Name or zip/city" ng-model="searchText" style="align-self:center;">
         </label>
 </div>
-    <ion-content class="has-header " style="top:88px;">
+    <ion-content class="has-header " style="top:88px; bottom:164px;">
        
         <div class="list" >
             <a class="item listcol" ng-repeat="loc in locations | filter:searchText" ng-class="{ 'selected': $index == selectedLocationIndex }" ng-click="selectlocation(loc, $index)">

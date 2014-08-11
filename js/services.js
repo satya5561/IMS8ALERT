@@ -50,7 +50,7 @@ angular.module('IMS8Alert.services', [])
 
     iAdminServiceClient.authorize = function (userinfo) {
         jsonParam = JSON.stringify({ username: userinfo.username, password: userinfo.password });
-        urlBase = baseURL + "db_rad_authorize2";
+        urlBase = apiUrl + "db_rad_authorize2";
         return $.ajax({
             type: "POST",
             url: urlBase,
@@ -63,7 +63,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.getCustomers = function () {
         if (isValidToken(token)) {
-            urlBase = baseURL + "user_getcustomers?nc=" + Math.random();
+            urlBase = apiUrl + "user_getcustomers?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token });
             return $.ajax({
                 type: "POST",
@@ -77,7 +77,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.getGroups = function (customerId) {
         if (isValidToken(token)) {
-            urlBase = baseURL + "location_getgroups?nc=" + Math.random();
+            urlBase = apiUrl + "location_getgroups?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, customerId: customerId });
             return $.ajax({
                 type: "POST",
@@ -91,7 +91,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.groupMembersGet = function (groupId, customerId) {
         if (isValidToken(token)) {
-            urlBase = baseURL + "location_getgroupmembers?nc=" + Math.random();
+            urlBase = apiUrl + "location_getgroupmembers?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, groupId: groupId, customerId: customerId });
             return $.ajax({
                 type: "POST",
@@ -105,7 +105,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.getLocationAddresses = function (customerId, groupId, memberId, locationId) {
         if (isValidToken(token)) {
-            urlBase = baseURL + "location_getlocationaddresses?nc=" + Math.random();
+            urlBase = apiUrl + "location_getlocationaddresses?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, customerId: customerId, groupId: groupId, memberId: memberId, locationId: locationId });
             return $.ajax({
                 type: "POST",
@@ -118,7 +118,7 @@ angular.module('IMS8Alert.services', [])
         }
     };
     iAdminServiceClient.lookupsGet = function (lookupType) {
-        urlBase = baseURL + "location_lookupsget?nc=" + Math.random();
+        urlBase = apiUrl + "location_lookupsget?nc=" + Math.random();
         jsonParam = JSON.stringify({ lookupType: lookupType });
         return $.ajax({
             type: "POST",
@@ -130,7 +130,7 @@ angular.module('IMS8Alert.services', [])
         });
     };
     iAdminServiceClient.getPODetail = function (zipCode, countryId) {
-        urlBase = baseURL + "user_getpocodedetail?nc=" + Math.random();
+        urlBase = apiUrl + "user_getpocodedetail?nc=" + Math.random();
         jsonParam = JSON.stringify({ zipCode: zipCode, countryId: countryId });
         return $.ajax({
             type: "POST",
@@ -143,7 +143,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.getLocationContacts = function (customerId, groupId, memberId, locationId) {
         if (isValidToken(token)) {
-            urlBase = baseURL + "location_getlocationcontacts?nc=" + Math.random();
+            urlBase = apiUrl + "location_getlocationcontacts?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, customerId: customerId, groupId: groupId, memberId: memberId, locationId: locationId });
             return $.ajax({
                 type: "POST",
@@ -157,7 +157,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.getLocationMplayerList = function (locationId) {
         if (isValidToken(token)) {
-            urlBase = baseURL + "location_locationplayersget?nc=" + Math.random();
+            urlBase = apiUrl + "location_locationplayersget?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, locationId: locationId });
             return $.ajax({
                 type: "POST",
@@ -171,7 +171,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.updateLocationAddresses = function (visitAddress,invoiceAddress) {
         if (isValidToken(token)) {
-            urlBase = baseURL + "Location_UpdateLocationAddress?nc=" + Math.random();
+            urlBase = apiUrl + "Location_UpdateLocationAddress?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, invoiceAddress: invoiceAddress, visitAddress: visitAddress });
             return $.ajax({
                 type: "POST",
@@ -185,7 +185,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.saveLocationContacts = function (contact, doDelete) {
         if (isValidToken(token)) {
-            urlBase = baseURL + "location_savelocationcontact?nc=" + Math.random();
+            urlBase = apiUrl + "location_savelocationcontact?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, contact: contact, doDelete: doDelete });
             return $.ajax({
                 type: "POST",
@@ -199,7 +199,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.getLocationServiceHour = function (locationId) {
         if (isValidToken(token)) {
-            urlBase = baseURL + "location_locationservicehoursget?nc=" + Math.random();
+            urlBase = apiUrl + "location_locationservicehoursget?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, locationId: locationId });
             return $.ajax({
                 type: "POST",
@@ -213,7 +213,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.location_AlertService = function (locationAlertDTO, isSave) {
         if (isValidToken(token)) {
-            urlBase = baseURL + "location_alertservice?nc=" + Math.random();
+            urlBase = apiUrl + "location_alertservice?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, locationAlertDTO: locationAlertDTO, isSave: isSave });
             return $.ajax({
                 type: "POST",
@@ -227,7 +227,7 @@ angular.module('IMS8Alert.services', [])
     };
     iAdminServiceClient.saveLocationServiceHour = function (locationId, serviceHour) {
         if (isValidToken(token)) {
-            urlBase = baseURL + "location_locationservicehourssave?nc=" + Math.random();
+            urlBase = apiUrl + "location_locationservicehourssave?nc=" + Math.random();
             jsonParam = JSON.stringify({ authToken: token, locationId: locationId, serviceHour: serviceHour });
             return $.ajax({
                 type: "POST",

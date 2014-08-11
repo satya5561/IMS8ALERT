@@ -1,19 +1,14 @@
-var baseURL = "http://beta.databeat.net/dbp8wcf/iSignage.svc/";
+var baseURL = "http://beta.databeat.net/dbp8wcf/";//iSignage.svc/";
+baseURL = "http://beta.databeat.net/ims8wcf/"; //iSignage.svc/"; //dbp8
+apiUrl = baseURL + "iSignage.svc/";
+function getThumb(id, what, isnodef) {
+    var s = isEmptyValue(isnodef) ? '' : 1;
+    return baseURL + "thumbnailer.ashx?ID=" + id + "&WHAT=" + what + "&tmp=" + Math.floor(Math.random() * 1001) + "&nodef=" + s;
 
-var protocol = window.location.protocol;
-// alert( protocol);
-
-if (window.location.hostname === "localhost") {
-    baseURL = "http://localhost:57051/iSignage.svc/";
-} else {
-    baseURL = protocol + "//beta.databeat.net/dbp8wcf/iSignage.svc/"; //dbp8
-    // baseURL = protocol + "//beta.databeat.net/ims8qcwcf/iSignage.svc/"; //ims8qc
-    //baseURL = protocol + "//beta.databeat.net/ims8wcf/iSignage.svc/"; //ims8
 }
 function isEmptyValue(value) { if (value == "" || value == 0 || value == undefined || value == null) { return true; } else { return false; } }
 
 // Ionic Starter App
-baseURL = "http://beta.databeat.net/ims8wcf/iSignage.svc/"; //dbp8
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'IMS8Alert' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'

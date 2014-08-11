@@ -6,6 +6,8 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.groupName = $rootScope.groupName;
     $scope.headerimg.playercount = $rootScope.playercount;
     $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    $scope.headerimg.coverUrl = $rootScope.headerCoverUrl;
+    $scope.headerimg.logoUrl = $rootScope.headerLogoUrl;
     if (!$scope.headerimg.playercount)
         getLocationAlertInfo(false);
     else
@@ -194,8 +196,8 @@ angular.module('IMS8Alert.controllers', [])
         }));
     });
     $scope.$watch('time.selectedTime', function () {
-        if ($scope.timeType=='from')
-            $scope.time.openTime=$scope.time.selectedTime;
+        if ($scope.timeType == 'from')
+            $scope.time.openTime = $scope.time.selectedTime;
         else if ($scope.timeType == 'to')
             $scope.time.closeTime = $scope.time.selectedTime;
     });
@@ -208,6 +210,8 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.groupName = $rootScope.groupName;
     $scope.headerimg.playercount = $rootScope.playercount;
     $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    $scope.headerimg.coverUrl = $rootScope.headerCoverUrl;
+    $scope.headerimg.logoUrl = $rootScope.headerLogoUrl;
     if (!$scope.headerimg.playercount)
         getLocationAlertInfo(false);
     else
@@ -378,6 +382,8 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.groupName = $rootScope.groupName;
     $scope.headerimg.playercount = $rootScope.playercount;
     $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    $scope.headerimg.coverUrl = $rootScope.headerCoverUrl;
+    $scope.headerimg.logoUrl = $rootScope.headerLogoUrl;
     if (!$scope.headerimg.playercount)
         getLocationAlertInfo(false);
     else
@@ -515,11 +521,17 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.groupName = $rootScope.groupName;
     $scope.headerimg.playercount = $rootScope.playercount;
     $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    $scope.headerimg.coverUrl = $rootScope.headerCoverUrl;
+    $scope.headerimg.logoUrl = $rootScope.headerLogoUrl;
+    //document.getElementById("coverImage").style.background-image = $rootScope.headerCoverUrl;
+    //document.getElementById("logoImage").style.background-image = $rootScope.headerLogoUrl;
+
+
     if (!$scope.headerimg.playercount)
         getLocationAlertInfo(false);
     else
         $scope.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
-   
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -877,8 +889,8 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading) {
     if ($rootScope.playercount) {
-       delete $rootScope.playercount;
-       delete $rootScope.alertplayercount;
+        delete $rootScope.playercount;
+        delete $rootScope.alertplayercount;
     }
     getLocationAddresses($rootScope.CustomerID, $rootScope.groupID, $rootScope.MemberID);
     function getLocationAddresses(customerId, groupId, memberId) {
@@ -899,19 +911,22 @@ angular.module('IMS8Alert.controllers', [])
     }
 
     $scope.doNext = function () {
-        if ($scope.selectedId)
+        if ($scope.selectedId) {
+            $rootScope.LocationId = $scope.selectedId;
+            $rootScope.visitAddress = _.where($scope.allLocations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
+            $rootScope.invoiceAddress = _.where($scope.allLocations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
+            $rootScope.headerCoverUrl = getThumb($scope.selectedId, "LOCATIONCOVER",1);
+            $rootScope.headerLogoUrl = getThumb($scope.selectedId, "LOCATIONLOGO",1);
             $state.go("tab.address");
+        }
+
     }
 
     $scope.selectlocation = function (loc, idx) {
         if ($scope.selectedLocationIndex != idx) {
             $scope.selectedLocationIndex = idx;
             $scope.selectedId = loc.LocationId;
-            $rootScope.LocationId = $scope.selectedId;
             $rootScope.LocationName = loc.LocationName;
-            $rootScope.visitAddress = _.where($scope.allLocations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
-            $rootScope.invoiceAddress = _.where($scope.allLocations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
-
         }
     }
 });
