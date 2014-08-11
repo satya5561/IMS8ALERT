@@ -746,6 +746,7 @@ angular.module('IMS8Alert.controllers', [])
         iAdminServiceClient.getCustomers()
                        .success(function (data, status) {
                            var result = data.User_GetCustomersResult;
+                           result = _.where(data.User_GetCustomersResult, { Active: "Active" });
                            $ionicLoading.hide();
                            if (result) {
                                $scope.customers = result;
