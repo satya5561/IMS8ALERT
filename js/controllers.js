@@ -799,11 +799,13 @@ angular.module('IMS8Alert.controllers', [])
         $scope.selectedcstomer = itmcust.CustomerName;
         if ($rootScope.CustomerID != itmcust.CustomerID) {
             $scope.selectedgrp = $rootScope.groupName = "";
+            $rootScope.GroupID ="";
             $scope.selectedpro = $rootScope.proName = "";
+            $rootScope.MemberID = "";
+            $rootScope.CustomerID = itmcust.CustomerID;
+            $rootScope.CustomerName = $scope.selectedcstomer;
+            getGroups(itmcust.CustomerID);
         }
-        $rootScope.CustomerID = itmcust.CustomerID;
-        $rootScope.CustomerName = $scope.selectedcstomer;
-        getGroups(itmcust.CustomerID);
         $scope.mdlcust.hide();
     };
 
@@ -819,12 +821,15 @@ angular.module('IMS8Alert.controllers', [])
         $scope.mdlgrp.show();
     };
     $scope.applyModalGrp = function (itmgrp) {
-        $scope.selectedgrp = itmgrp.Name;
-        $rootScope.GroupID = itmgrp.GroupId;
-        $rootScope.groupName = $scope.selectedgrp;
-        getGroupMember(itmgrp.GroupId, $rootScope.CustomerID);
+        if ($rootScope.GroupID != itmgrp.GroupId) {
+            $scope.selectedpro = $rootScope.proName = "";
+            $rootScope.MemberID = "";
+            $scope.selectedgrp = itmgrp.Name;
+            $rootScope.GroupID = itmgrp.GroupId;
+            $rootScope.groupName = $scope.selectedgrp;
+            getGroupMember(itmgrp.GroupId, $rootScope.CustomerID);
+        }
         $scope.mdlgrp.hide();
-
     };
     // Model for Profile 
 
@@ -838,9 +843,11 @@ angular.module('IMS8Alert.controllers', [])
         $scope.mdlpro.show();
     };
     $scope.applyModalPro = function (itmpro) {
-        $scope.selectedpro = itmpro.Name;
-        $rootScope.proName = itmpro.Name;
-        $rootScope.MemberID = itmpro.GroupMemberId;
+        if ($rootScope.MemberID != itmpro.GroupMemberId) {
+            $scope.selectedpro = itmpro.Name;
+            $rootScope.proName = itmpro.Name;
+            $rootScope.MemberID = itmpro.GroupMemberId;
+        }
         $scope.mdlpro.hide();
     };
 })
@@ -916,8 +923,8 @@ angular.module('IMS8Alert.controllers', [])
             $rootScope.LocationId = $scope.selectedId;
             $rootScope.visitAddress = _.where($scope.allLocations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
             $rootScope.invoiceAddress = _.where($scope.allLocations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
-            $rootScope.headerCoverUrl = getThumb($scope.selectedId, "LOCATIONCOVER",1);
-            $rootScope.headerLogoUrl = getThumb($scope.selectedId, "LOCATIONLOGO",1);
+            $rootScope.headerCoverUrl = getThumb($scope.selectedId, "LOCATIONCOVER", 1);
+            $rootScope.headerLogoUrl = getThumb($scope.selectedId, "LOCATIONLOGO", 1);
             $state.go("tab.address");
         }
 

@@ -70,9 +70,9 @@
 
 .circle {
     display: block;
-    width: 85px;
-    height: 85px;
-    margin: 1em 1em;
+    width: 150px;
+    height: 150px;
+    margin: 2.5em 1em;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-position: center center;
@@ -261,9 +261,8 @@
     }
 
 .addrimg {
-    background-image: url(../img/test.jpg);
     background-repeat: no-repeat !important;
-    height: 120px;
+    height: 200px;
    background-size:100% 100% !important;
 }
 

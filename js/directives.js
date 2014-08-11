@@ -51,7 +51,7 @@ angular.module('IMS8Alert.directives', [])
    ' </span>' +
    '<div id="coverImage" class="row addrimg" style="margin-top: 5px; background-repeat: no-repeat; background: url({{headerimg.coverUrl}});">' +
    '<div id="logoImage" class="circle " style="background-repeat: no-repeat; background: url({{headerimg.logoUrl}});"></div>' +
-   ' <div class="coltext " style="margin-top: 10px;">' +
+   ' <div class="coltext " style="margin-top: 2.5em;">' +
    '  <div style="font-size: 20px; font-weight: bolder;">{{headerimg.locName}}</div>' +
    ' <div style="font-size: small;">NOLETV001SHD</div>' +
    '<div><span style="font-weight: bold;">Group: </span><span>{{headerimg.groupName}}</span></div>' +

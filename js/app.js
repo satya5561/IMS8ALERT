@@ -1,4 +1,4 @@
-var baseURL = "http://beta.databeat.net/dbp8wcf/";//iSignage.svc/";
+var baseURL = "";//iSignage.svc/";
 baseURL = "http://beta.databeat.net/ims8wcf/"; //iSignage.svc/"; //dbp8
 apiUrl = baseURL + "iSignage.svc/";
 function getThumb(id, what, isnodef) {
