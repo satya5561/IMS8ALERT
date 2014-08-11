@@ -13,6 +13,17 @@ angular.module('IMS8Alert.controllers', [])
     else
         $scope.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
 
+    $scope.save24_7 = function (Is24_7) {
+        if (!Is24_7) {
+            $scope.serviceHour.Is24_7 = true;
+            $scope.SaveServiceHour();
+        }
+        else {
+            $scope.serviceHour.Is24_7 = false;
+            $scope.SaveServiceHour();
+        }
+    };
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -523,9 +534,6 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
     $scope.headerimg.coverUrl = $rootScope.headerCoverUrl;
     $scope.headerimg.logoUrl = $rootScope.headerLogoUrl;
-    //document.getElementById("coverImage").style.background-image = $rootScope.headerCoverUrl;
-    //document.getElementById("logoImage").style.background-image = $rootScope.headerLogoUrl;
-
 
     if (!$scope.headerimg.playercount)
         getLocationAlertInfo(false);
