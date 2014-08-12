@@ -67,7 +67,7 @@ angular.module('IMS8Alert.controllers', [])
         }
     };
 
-
+   
 
     getLocationServiceHour();
 
@@ -337,10 +337,10 @@ angular.module('IMS8Alert.controllers', [])
 
     $scope.openModalContact = function () {
         console.log('Button clicked');
-        $scope.isEdit = true;
-        $scope.header = "Edit Contact";
+        $scope.mdleditcontact.isEdit = true;
+        $scope.mdleditcontact.header = "Edit Contact";
         try {
-            $scope.mdleditcontact.show();
+        $scope.mdleditcontact.show();
         } catch (e) {
             console.log(e.message);
         }
@@ -487,12 +487,16 @@ angular.module('IMS8Alert.controllers', [])
 
     $scope.openModalContact = function () {
         console.log('Button clicked');
-        $scope.isEdit = false;
-        $scope.header = "Add Contact";
+        $scope.mdleditcontact.isEdit = false;
+        $scope.mdleditcontact.header = "Add Contact";
         $scope.contact = {};
         $scope.contact.LocationId = $rootScope.LocationId;
         $scope.contact.LocationName = $rootScope.LocationName;
+        try {
         $scope.mdleditcontact.show();
+        } catch (e) {
+            console.log(e.message);
+        }
     };
     $scope.saveContact = function () {
         $ionicLoading.show();
@@ -550,7 +554,7 @@ angular.module('IMS8Alert.controllers', [])
         getLocationAlertInfo(false);
     else
         $scope.headerimg.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
-
+  
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({

@@ -5,7 +5,7 @@
                         <span class="yellow" style="float: left;" ng-click="cancelContact()">Cancel</span>
                     </div>
                     <div class="col col33" style="text-align: center;">
-                        <span>{{header}}</span>
+                        <span>{{mdleditcontact.header}}</span>
                     </div>
                     <div class="col col33">
                         <span class="yellow" style="float: right;" ng-click="saveContact()">Save</span>
@@ -39,7 +39,7 @@
 
                     </a>
 
-                    <a class="item" style="text-align: center; margin-top: 20px; background-color: rgb(246, 74, 50);" ng-click="deleteContact()" ng-show="isEdit">
+                    <a class="item" style="text-align: center; margin-top: 20px; background-color: rgb(246, 74, 50);" ng-click="deleteContact()" ng-show="mdleditcontact.isEdit">
                         <span>Delete Contact</span>
 
                     </a>
