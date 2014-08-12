@@ -44,8 +44,8 @@ angular.module('IMS8Alert.directives', [])
     return {
         restrict: 'E',
         scope: false,
-        template: ' <div class="bar bar-subheader " style="padding: 5px 0px 0px;" ng-class="{alertheader:alertChecked ,alertheaderOff:!alertChecked}">' +
-'<a class="button button-icon icon ion-information-circled title-left" style="width: 65%; text-align: left; float: left;"><span class="alertHeading"> Alert Mode ({{headerimg.alertplayercount}} of {{headerimg.playercount}})</span></a>' +
+        template: ' <div class="bar bar-subheader " style="padding: 5px 0px 0px; top:0px;" ng-class="{alertheader:alertChecked ,alertheaderOff:!alertChecked}">' +
+'<a class="ion-information-circled" style="font-size: 20px; margin-left: 10px;"><span class="alertHeading"> Alert Mode ({{headerimg.alertplayercount}} of {{headerimg.playercount}})</span></a>' +
 ' <span class="itemValue">' +
 '      <dbr-toggle id="cbAlertMode" ng-model="alertChecked" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(alertChecked)"></dbr-toggle> ' +
 ' </span>' +
@@ -60,9 +60,6 @@ angular.module('IMS8Alert.directives', [])
 ' </div>' +
  '</div>' +
 '</div>'
-
-
-
     };
 })
  .directive('fallbackSrc', function () {

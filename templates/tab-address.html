@@ -13,9 +13,14 @@
             </div>
         </div>
     </ion-header-bar>
+
+    <ion-content>
+        
 <img-header></img-header>
-    <ion-content class="has-header" style=" margin-top:245px">
-        <div class="row addr">
+        
+       
+        <div style="padding-top: 245px;">
+ <div class="row addr">
             <div class="col col-90">
                 VISIT ADDRESS
             </div>
@@ -35,5 +40,8 @@
             <div class="col col-90 addrtxt">{{invoiceAddress.Street}} , {{invoiceAddress.City}} , {{invoiceAddress.Zip}}</div>
             <div class="col col-10" style="float:right"><a ng-click="openModalAddress('invoice')"><i class="edithdr yellow" style="width: 50px;"></i></a></div>
         </div>
+
+        </div>
+       
     </ion-content>
 </ion-view>

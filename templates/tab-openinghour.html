@@ -13,9 +13,11 @@
             </div>
         </div>
     </ion-header-bar>
-    <img-header></img-header>
-    <ion-content class="has-header" style=" margin-top:245px">
-        <div class=" listcol ">
+
+    <ion-content>
+            <img-header></img-header>
+          <div style="padding-top: 245px;">
+ <div class=" listcol ">
             <a class="itemDays button button-icon icon ion-android-clock title-left" style="width:65%; text-align:left;"><span class="alertHeading" style="padding-left:10px;"> 24/7</span> </a>
             <span class="itemValue" style="margin-top:10px;">
                 <dbr-toggle id="cbAllday" ng-model="serviceHour.Is24_7" data-on="ON" data-off="OFF" data-trackcss="track yellow" data-handlecss="handleYellow" ng-change="save24_7(serviceHour.Is24_7)"></dbr-toggle>
@@ -29,5 +31,7 @@
                 </div>
             </a>
         </div>
+          </div>
+       
     </ion-content>
 </ion-view>

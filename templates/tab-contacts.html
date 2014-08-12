@@ -13,9 +13,10 @@
             </div>
         </div>
     </ion-header-bar>
-    <img-header></img-header>
-    <ion-content class="has-header" style=" margin-top:245px">
-    <div class="list">
+    <ion-content>
+        <img-header></img-header>
+          <div style="padding-top: 245px;">
+ <div class="list">
             <div class="item listcol item-icon-right" style="padding: 5px 0px 0px 15px; font-size:15px; font-weight:bold;" ng-repeat=" contact in contacts">
                 <span>
                     {{contact.Name}}
@@ -26,5 +27,7 @@
                 <a class="listContact icon ion-ios7-telephone" style="text-decoration: none; margin-right: 100px;" href="tel:{{contact.Cell}}"></a>
             </div>
         </div>
+          </div>
+   
     </ion-content>
 </ion-view>

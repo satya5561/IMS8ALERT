@@ -906,17 +906,13 @@ angular.module('IMS8Alert.controllers', [])
 
 })
 .controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading) {
-    if ($rootScope.playercount) {
-        delete $rootScope.playercount;
-        delete $rootScope.alertplayercount;
-    }
+
     getLocationAddresses($rootScope.CustomerID, $rootScope.groupID, $rootScope.MemberID);
     function getLocationAddresses(customerId, groupId, memberId) {
         $ionicLoading.show();
         iAdminServiceClient.getLocationAddresses(customerId, groupId, memberId, 0)
             .success(function (data) {
                 var result = data.Location_GetLocationAddressesResult;
-                $ionicLoading.hide();
                 if (result) {
                     $scope.allLocations = result;
                     $scope.locations = _.where($scope.allLocations, { AddressType: 'Visit' });
@@ -930,11 +926,17 @@ angular.module('IMS8Alert.controllers', [])
 
     $scope.doNext = function () {
         if ($scope.selectedId) {
-            $rootScope.LocationId = $scope.selectedId;
-            $rootScope.visitAddress = _.where($scope.allLocations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
-            $rootScope.invoiceAddress = _.where($scope.allLocations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
-            $rootScope.headerCoverUrl = getThumb($scope.selectedId, "LOCATIONCOVER", 1);
-            $rootScope.headerLogoUrl = getThumb($scope.selectedId, "LOCATIONLOGO", 1);
+            if ($rootScope.LocationId != $scope.selectedId) {
+                if ($rootScope.playercount) {
+                    delete $rootScope.playercount;
+                    delete $rootScope.alertplayercount;
+                }
+                $rootScope.LocationId = $scope.selectedId;
+                $rootScope.visitAddress = _.where($scope.allLocations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
+                $rootScope.invoiceAddress = _.where($scope.allLocations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
+                $rootScope.headerCoverUrl = getThumb($scope.selectedId, "LOCATIONCOVER", 1);
+                $rootScope.headerLogoUrl = getThumb($scope.selectedId, "LOCATIONLOGO", 1);
+            }
             $state.go("tab.address");
         }
 
