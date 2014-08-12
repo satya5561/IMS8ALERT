@@ -519,6 +519,7 @@ angular.module('IMS8Alert.controllers', [])
     };
 
 
+   
 })
 
 .controller('AddressCtrl', function ($scope, $state, list, $ionicNavBarDelegate, $rootScope, iAdminServiceClient, $ionicModal, $ionicPopup, $ionicLoading) {
@@ -807,7 +808,7 @@ angular.module('IMS8Alert.controllers', [])
         $scope.selectedcstomer = itmcust.CustomerName;
         if ($rootScope.CustomerID != itmcust.CustomerID) {
             $scope.selectedgrp = $rootScope.groupName = "";
-            $rootScope.GroupID ="";
+            $rootScope.GroupID = "";
             $scope.selectedpro = $rootScope.proName = "";
             $rootScope.MemberID = "";
             $rootScope.CustomerID = itmcust.CustomerID;
@@ -901,6 +902,27 @@ angular.module('IMS8Alert.controllers', [])
                   });
 
 
+    }
+
+    $scope.takePicture = function () {
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.FILE_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 100,
+            targetHeight: 100,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+            alert(imageData);
+            // Success! Image data is here
+        }, function (err) {
+            // An error occured. Show a message to the user
+        });
     }
 })
 .controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading) {
