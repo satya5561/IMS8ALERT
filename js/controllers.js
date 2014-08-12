@@ -67,7 +67,7 @@ angular.module('IMS8Alert.controllers', [])
         }
     };
 
-   
+
 
     getLocationServiceHour();
 
@@ -339,7 +339,11 @@ angular.module('IMS8Alert.controllers', [])
         console.log('Button clicked');
         $scope.isEdit = true;
         $scope.header = "Edit Contact";
-        $scope.mdleditcontact.show();
+        try {
+            $scope.mdleditcontact.show();
+        } catch (e) {
+            console.log(e.message);
+        }
     };
     $scope.saveContact = function () {
         $ionicLoading.show();
@@ -546,7 +550,7 @@ angular.module('IMS8Alert.controllers', [])
         getLocationAlertInfo(false);
     else
         $scope.headerimg.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
-  
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
