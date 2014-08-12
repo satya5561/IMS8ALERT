@@ -44,10 +44,10 @@ angular.module('IMS8Alert.directives', [])
     return {
         restrict: 'E',
         scope: false,
-        template: ' <div class="bar bar-subheader " style="padding: 5px 0px 0px; top:0px;" ng-class="{alertheader:alertChecked ,alertheaderOff:!alertChecked}">' +
+        template: ' <div class="bar bar-subheader " style="padding: 5px 0px 0px; top:0px;" ng-class="{alertheader:headerimg.alertChecked ,alertheaderOff:!headerimg.alertChecked}">' +
 '<a class="ion-information-circled" style="font-size: 20px; margin-left: 10px;"><span class="alertHeading"> Alert Mode ({{headerimg.alertplayercount}} of {{headerimg.playercount}})</span></a>' +
 ' <span class="itemValue">' +
-'      <dbr-toggle id="cbAlertMode" ng-model="alertChecked" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(alertChecked)"></dbr-toggle> ' +
+'      <dbr-toggle id="cbAlertMode" ng-model="headerimg.alertChecked" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(headerimg.alertChecked)"></dbr-toggle> ' +
 ' </span>' +
 '<div id="coverImage" class="row addrimg" style="margin-top: 5px; background-repeat: no-repeat; background: url({{headerimg.coverUrl}});">' +
 '<div id="logoImage" class="circle " style="background-repeat: no-repeat; background: url({{headerimg.logoUrl}});"></div>' +
@@ -114,7 +114,7 @@ angular.module('IMS8Alert.directives', [])
     return function (scope, elm, attrs) {
         elm.text(version);
     };
-}]).value('version', 'iAlert v 1.1.0.8 Databeat.Net 2014')
+}]).value('version', 'iAlert v 1.1.0.9 Databeat.Net 2014')
 .directive('dbCheckbox', function () {
     return {
         restrict: 'E',
@@ -232,23 +232,18 @@ function ($ionicGesture, $timeout) {
         require: 'ngModel',
         link: function (scope, elm, attrs, ctrl) {
             elm.on('click', function () {
-                navigator.camera.getPicture(function (imageURI) {
-                    scope.$apply(function () {
-                        ctrl.$setViewValue(imageURI);
+                navigator.camera.getPicture(
+                    function (imageURI) {
+                        scope.$apply(function () {
+                            ctrl.$setViewValue(imageURI);
+                        });
+                    },
+                    function (err) {
+                        ctrl.$setValidity('error', false);
+                    }, {
+                        quality: 50,
+                        destinationType: Camera.DestinationType.FILE_URI
                     });
-                }, function (err) {
-                    ctrl.$setValidity('error', false);
-                }, {
-                    quality: 50,
-                    destinationType: Camera.DestinationType.DATA_URL,
-                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                    allowEdit: true,
-                    encodingType: Camera.EncodingType.JPEG,
-                    targetWidth: 1000,
-                    targetHeight: 1000,
-                    popoverOptions: CameraPopoverOptions,
-                    saveToPhotoAlbum: false
-                })
             });
         }
     };

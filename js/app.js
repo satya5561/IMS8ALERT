@@ -14,7 +14,7 @@ function isEmptyValue(value) { if (value == "" || value == 0 || value == undefin
 // the 2nd parameter is an array of 'requires'
 // 'IMS8Alert.services' is found in services.js
 // 'IMS8Alert.controllers' is found in controllers.js
-angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.services', 'IMS8Alert.directives'])
+angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.services', 'IMS8Alert.directives','ngCordova'])
 
 .run(function ($ionicPlatform, $rootScope, $window, $location) {
     $ionicPlatform.ready(function () {

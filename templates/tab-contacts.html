@@ -1,5 +1,5 @@
-﻿<ion-view title="Contacts" hide-nav-bar="true">
-    <ion-header-bar align-title="center" class="bar-stable nav-title-slide-ios7 bar bar-header nav-bar ">
+﻿<ion-view title="Contacts" hide-nav-bar="false">
+    <ion-nav-bar align-title="center" class="bar-stable nav-title-slide-ios7 bar bar-header nav-bar ">
         <div class="row addrhdr">
             <div class="col col33" ng-click="goBack()">
                 <span class="ion-chevron-left yellow"></span>
@@ -8,11 +8,12 @@
             <div class="col col10" style="text-align:center;padding:0px;">
                 <span>Contact</span>
             </div>
-            <div class="col col33" style="padding:0px;">
-                <a class="yellow listContact icon ion-plus-round" style="text-decoration: none; float: right; width: 24px; height: 24px;" ng-click="openModalContact()"></a>
+            <div class="col col33" style="padding:0px;" ng-click="openModalContact()">
+                <!--<a class="yellow listContact icon ion-plus-round" style="text-decoration: none; float: right; width: 24px; height: 24px;" ng-click="openModalContact()"></a>-->
+                <label class="icon ion-plus-round yellow listContact" style="float:right;"></label>
             </div>
         </div>
-    </ion-header-bar>
+    </ion-nav-bar>
     <ion-content>
         <img-header></img-header>
           <div style="padding-top: 245px;">
