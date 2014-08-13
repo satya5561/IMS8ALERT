@@ -67,7 +67,7 @@ angular.module('IMS8Alert.controllers', [])
         }
     };
 
-   
+
 
     getLocationServiceHour();
 
@@ -340,7 +340,7 @@ angular.module('IMS8Alert.controllers', [])
         $scope.mdleditcontact.isEdit = true;
         $scope.mdleditcontact.header = "Edit Contact";
         try {
-        $scope.mdleditcontact.show();
+            $scope.mdleditcontact.show();
         } catch (e) {
             console.log(e.message);
         }
@@ -479,24 +479,27 @@ angular.module('IMS8Alert.controllers', [])
         $ionicNavBarDelegate.back();
     };
 
-    $ionicModal.fromTemplateUrl('templates/modal/modal-editContact.html', {
-        scope: $scope,
-        animation: 'slide-left-right',//'slide-left-right', 'slide-in-up', 'slide-right-left'
-        focusFirstInput: true
-    }).then(function (modal) { $scope.mdleditcontact = modal; });
+
 
     $scope.openModalContact = function () {
-        console.log('Button clicked');
-        $scope.mdleditcontact.isEdit = false;
-        $scope.mdleditcontact.header = "Add Contact";
-        $scope.contact = {};
-        $scope.contact.LocationId = $rootScope.LocationId;
-        $scope.contact.LocationName = $rootScope.LocationName;
-        try {
-        $scope.mdleditcontact.show();
-        } catch (e) {
-            console.log(e.message);
-        }
+        $ionicModal.fromTemplateUrl('templates/modal/modal-editContact.html', {
+            scope: $scope,
+            animation: 'slide-left-right',//'slide-left-right', 'slide-in-up', 'slide-right-left'
+            focusFirstInput: true
+        }).then(function (modal) {
+            $scope.mdleditcontact = modal;
+            console.log('Button clicked');
+            $scope.mdleditcontact.isEdit = false;
+            $scope.mdleditcontact.header = "Add Contact";
+            $scope.contact = {};
+            $scope.contact.LocationId = $rootScope.LocationId;
+            $scope.contact.LocationName = $rootScope.LocationName;
+            try {
+                $scope.mdleditcontact.show();
+            } catch (e) {
+                console.log(e.message);
+            }
+        });
     };
     $scope.saveContact = function () {
         $ionicLoading.show();
@@ -554,7 +557,7 @@ angular.module('IMS8Alert.controllers', [])
         getLocationAlertInfo(false);
     else
         $scope.headerimg.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
-  
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
