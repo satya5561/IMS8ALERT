@@ -5,9 +5,10 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.databeat.iAlert"
         version   = "1.0.0">
-<gap:plugin name="org.apache.cordova.core.camera" />
-<gap:plugin name="org.apache.cordova.core.geolocation" />
-<gap:plugin name="org.apache.cordova.core.dialogs" />
+<gap:plugin name="org.apache.cordova.camera" version="0.2.9" />
+<gap:plugin name="org.apache.cordova.dialogs" version="0.2.6" />
+<gap:plugin name="org.apache.cordova.geolocation" version="0.3.7" />
+
    
     <access origin="*"/> <!-- allow local pages -->
     <!--
