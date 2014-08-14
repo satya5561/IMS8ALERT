@@ -322,12 +322,12 @@ angular.module('IMS8Alert.controllers', [])
 .controller('ContactDetailCtrl', function ($scope, $state, list, $rootScope, $ionicModal, $ionicPopup, $ionicNavBarDelegate, $ionicLoading, iAdminServiceClient, $cordovaCamera) {
 
     if ($rootScope.platform == "Apple") {
-        consol.log("Apple");
         $scope.mapLink = "http://maps.apple.com/?q=" + $scope.contact.LocationName;
+        console.log("Apple", $scope.mapLink);
     }
     else {
-        consol.log("$rootScope.platform");
         $scope.mapLink = "http://maps.google.com/?q=" + $scope.contact.LocationName;
+        console.log($rootScope.platform, $scope.mapLink);
     }
 
     $scope.goBack = function () {
