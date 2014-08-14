@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gap:plugin name="org.apache.cordova.core.camera" />
+<gap:plugin name="org.apache.cordova.core.geolocation" />
+<gap:plugin name="org.apache.cordova.core.dialogs" />
