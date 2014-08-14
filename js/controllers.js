@@ -4,11 +4,11 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
-    $scope.headerimg.playercount = $rootScope.playercount;
-    $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    //$scope.headerimg.playercount = $rootScope.playercount;
+    //$scope.headerimg.alertplayercount = $rootScope.alertplayercount;
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
-        getLocationAlertInfo(false);
+    getLocationAlertInfo(false);
     //if (!$scope.headerimg.playercount)
     //    getLocationAlertInfo(false);
     //else
@@ -68,7 +68,7 @@ angular.module('IMS8Alert.controllers', [])
         }
     };
 
-   
+
 
     getLocationServiceHour();
 
@@ -225,11 +225,11 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
-    $scope.headerimg.playercount = $rootScope.playercount;
-    $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    //$scope.headerimg.playercount = $rootScope.playercount;
+    //$scope.headerimg.alertplayercount = $rootScope.alertplayercount;
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
-        getLocationAlertInfo(false);
+    getLocationAlertInfo(false);
     //if (!$scope.headerimg.playercount)
     //    getLocationAlertInfo(false);
     //else
@@ -321,11 +321,14 @@ angular.module('IMS8Alert.controllers', [])
 
 .controller('ContactDetailCtrl', function ($scope, $state, list, $rootScope, $ionicModal, $ionicPopup, $ionicNavBarDelegate, $ionicLoading, iAdminServiceClient, $cordovaCamera) {
 
-    if ($rootScope.platform == "Apple")
+    if ($rootScope.platform == "Apple") {
+        consol.log("Apple");
         $scope.mapLink = "http://maps.apple.com/?q=" + $scope.contact.LocationName;
-    else
+    }
+    else {
+        consol.log("$rootScope.platform");
         $scope.mapLink = "http://maps.google.com/?q=" + $scope.contact.LocationName;
-
+    }
 
     $scope.goBack = function () {
         $ionicNavBarDelegate.back();
@@ -426,11 +429,11 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
-    $scope.headerimg.playercount = $rootScope.playercount;
-    $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    //$scope.headerimg.playercount = $rootScope.playercount;
+    //$scope.headerimg.alertplayercount = $rootScope.alertplayercount;
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
-        getLocationAlertInfo(false);
+    getLocationAlertInfo(false);
     //if (!$scope.headerimg.playercount)
     //    getLocationAlertInfo(false);
     //else
@@ -520,7 +523,7 @@ angular.module('IMS8Alert.controllers', [])
         try {
             $scope.mdleditcontact.show();
         } catch (e) {
-            console.log(e.message,$scope.mdleditcontact.isEdit, $scope.mdleditcontact.header, $scope.mdleditcontact);
+            console.log(e.message, $scope.mdleditcontact.isEdit, $scope.mdleditcontact.header, $scope.mdleditcontact);
         }
     };
     $scope.saveContact = function () {
@@ -571,16 +574,16 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
-    $scope.headerimg.playercount = $rootScope.playercount;
-    $scope.headerimg.alertplayercount = $rootScope.alertplayercount;
+    //$scope.headerimg.playercount = $rootScope.playercount;
+    //$scope.headerimg.alertplayercount = $rootScope.alertplayercount;
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
-        getLocationAlertInfo(false);
+    getLocationAlertInfo(false);
     //if (!$scope.headerimg.playercount)
     //    getLocationAlertInfo(false);
     //else
     //    $scope.headerimg.alertChecked = ($rootScope.playercount == 0) ? false : (($rootScope.playercount == $rootScope.alertplayercount) ? true : false);
-  
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -765,7 +768,7 @@ angular.module('IMS8Alert.controllers', [])
     };
 })
 
-.controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading) {
+.controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
 
     getCustomers();
     if ($rootScope.CustomerName) {
