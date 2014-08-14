@@ -4335,7 +4335,7 @@ a.subdued {
     position: fixed;
     top: 50%;
     left: 50%;
-    z-index: 11;
+    z-index: 11001;
     padding: 20px;
     border-radius: 5px;
     /*background-color: rgba(0, 0, 0, 0.7);*/
@@ -5853,7 +5853,7 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
     .toggle .track .handleOf {
         display: block;
         left: 50px;
-        top: 8px;
+        top: 10px;
         position: absolute;
     }
 
@@ -5865,7 +5865,7 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
         display: none;
         left: 15px;
         position: absolute;
-        top: 8px;
+        top: 10px;
     }
 
     .toggle input:checked + .track .handleOn {

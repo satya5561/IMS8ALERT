@@ -50,6 +50,10 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
             this.$apply(fn);
         }
     };
+    $rootScope.getItemHeight = function (item, index) {
+        //Make evenly indexed items be 10px taller, for the sake of example
+        return (index % 2) === 0 ? 50 : 60;
+    };
 
 })
 
