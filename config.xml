@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
+<widget xmlns     = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.databeat.iAlert"
+        version   = "1.0.0">
 <gap:plugin name="org.apache.cordova.core.camera" />
 <gap:plugin name="org.apache.cordova.core.geolocation" />
 <gap:plugin name="org.apache.cordova.core.dialogs" />
+   
+    <access origin="*"/> <!-- allow local pages -->
+    <!--
+        <access origin="http://phonegap.com" />                    - allow any secure requests to http://phonegap.com/
+        <access origin="http://phonegap.com" subdomains="true" />  - same as above, but including subdomains, such as http://build.phonegap.com/
+        <access origin="http://phonegap.com" browserOnly="true" /> - only allows http://phonegap.com to be opened by the child browser.
+    -->
+
+</widget>
