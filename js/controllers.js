@@ -482,10 +482,10 @@ angular.module('IMS8Alert.controllers', [])
       });
     }
 
-    getLocationContacts($rootScope.CustomerID, $rootScope.groupID, $rootScope.MemberID);
+    getLocationContacts($rootScope.CustomerID, $rootScope.GroupID, $rootScope.MemberID);
     function getLocationContacts(customerId, groupId, memberId) {
         $ionicLoading.show();
-        iAdminServiceClient.getLocationContacts(customerId, groupId, memberId, 0)
+        iAdminServiceClient.getLocationContacts(customerId, groupId, memberId, $rootScope.LocationId)
             .success(function (data) {
                 var result = data.Location_GetLocationContactsResult;
                 $ionicLoading.hide();
@@ -956,7 +956,7 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
 
-    getLocationAddresses($rootScope.CustomerID, $rootScope.groupID, $rootScope.MemberID);
+    getLocationAddresses($rootScope.CustomerID, $rootScope.GroupID, $rootScope.MemberID);
     function getLocationAddresses(customerId, groupId, memberId) {
         $ionicLoading.show();
         iAdminServiceClient.getLocationAddresses(customerId, groupId, memberId, 0)
