@@ -1,4 +1,4 @@
-﻿<ion-view title="Service Hours" hide-nav-bar="false">
+﻿<ion-view title="" hide-nav-bar="false">
     <ion-nav-bar align-title="center" class="bar-stable nav-title-slide-ios7 bar bar-header nav-bar ">
         <div class="row addrhdr">
             <div class="col col33" ng-click="goBack()">
@@ -14,14 +14,14 @@
         </div>
     </ion-nav-bar>
 
-    <ion-content>
+    <ion-content style="bottom:65px;">
             <img-header></img-header>
           <div style="padding-top: 245px;">
  <div class=" listcol ">
             <a class="itemDays button button-icon icon ion-android-clock title-left" style="width:65%; text-align:left;"><span class="alertHeading" style="padding-left:10px; font-size:20px"> Service Hours</span> </a>
             <span class="itemValue" style="margin-top:10px;">
                 <dbr-toggle id="cbAllday" ng-model="serviceHour.Is24_7" data-on="ON" data-off="OFF" data-trackcss="track yellow" data-handlecss="handleYellow" ng-change="save24_7(serviceHour.Is24_7)"></dbr-toggle>
-            </span>
+   </span>
         </div>
         <div class="list" ng-show="!serviceHour.Is24_7">
             <a class="item itemDays listcol" ng-repeat="hrs in testHours | filter:searchText" ng-class="{ 'selected': $index == selectedLocationIndex }" ng-click="openModalTime(hrs,$index)">
