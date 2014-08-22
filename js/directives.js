@@ -52,11 +52,11 @@ angular.module('IMS8Alert.directives', [])
 '<div id="coverImage" class="row addrimg" style="margin-top: 5px; background-repeat: no-repeat; background: url({{headerimg.coverUrl}});">' +
 '<div id="logoImage" class="circle " style="background-repeat: no-repeat; background: url({{headerimg.logoUrl}});"></div>' +
 ' <div class="coltext " style="margin-top: 1.5em;">' +
-'  <div style="font-size: 20px; font-weight: bolder;" class="dotdot">{{headerimg.locName}}</div>' +
+'  <div style="font-size: 20px; font-weight: bolder; width: 160px;" class="dotdot">{{headerimg.locName}}</div>' +
 ' <div style="font-size: small;">NOLETV001SHD</div>' +
-'<div><span style="font-weight: bold;" class="dotdot">Group: </span><span>{{headerimg.groupName}}</span></div>' +
-' <div><span style="font-weight: bold;" class="dotdot">Region: </span><span>South</span></div>' +
-' <div><span style="font-weight: bold;" class="dotdot">Store type: </span><span>MegaStore</span></div>' +
+'<div class="dotdot" style="width: 160px;"><span style="font-weight: bold;">Group: </span><span>{{headerimg.groupName}}</span></div>' +
+' <div class="dotdot" style="width: 160px;"><span style="font-weight: bold;">Region: </span><span>South</span></div>' +
+' <div class="dotdot" style="width: 160px;"><span style="font-weight: bold;">Store type: </span><span>MegaStore</span></div>' +
 ' </div>' +
  '</div>' +
 '</div>'
