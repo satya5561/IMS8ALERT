@@ -364,21 +364,29 @@ angular.module('IMS8Alert.controllers', [])
                     });
     };
     $scope.deleteContact = function () {
-        if ($scope.contact) {
-            $ionicLoading.show();
-            iAdminServiceClient.saveLocationContacts($scope.contact, true)
-                       .success(function (data) {
-                           $ionicLoading.hide();
-                           var t = $scope.item;
-                           $scope.$destroy();
-                           $scope.mdleditcontact.hide();
-                           $scope.goBack();
-                       })
-                        .error(function (error, data) {
-                            $ionicLoading.hide();
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Alert Mode',
+            template: 'Are you sure want to delete ' + $scope.contact.Name + '?'
+        });
+        confirmPopup.then(function (res) {
+            if (res) {
+                if ($scope.contact) {
+                    $ionicLoading.show();
+                    iAdminServiceClient.saveLocationContacts($scope.contact, true)
+                               .success(function (data) {
+                                   $ionicLoading.hide();
+                                   $scope.mdleditcontact.hide();
+                                   $scope.goBack();
+                               })
+                                .error(function (error, data) {
+                                    $ionicLoading.hide();
 
-                        });
-        }
+                                });
+                }
+            }
+        });
+
+
     };
     $scope.cancelContact = function () {
         $scope.mdleditcontact.hide();
