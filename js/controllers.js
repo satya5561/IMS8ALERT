@@ -58,14 +58,15 @@ angular.module('IMS8Alert.controllers', [])
     }
 
     $scope.save24_7 = function (Is24_7) {
-        if (!Is24_7) {
-            $scope.serviceHour.Is24_7 = true;
-            $scope.SaveServiceHour();
-        }
-        else {
-            $scope.serviceHour.Is24_7 = false;
-            $scope.SaveServiceHour();
-        }
+         $scope.SaveServiceHour();
+        //if (!Is24_7) {
+        //    $scope.serviceHour.Is24_7 = true;
+        //    $scope.SaveServiceHour();
+        //}
+        //else {
+        //    $scope.serviceHour.Is24_7 = false;
+        //    $scope.SaveServiceHour();
+        //}
     };
 
 

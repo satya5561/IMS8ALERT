@@ -23,7 +23,7 @@
                 <dbr-toggle id="cbAllday" ng-model="serviceHour.Is24_7" data-on="ON" data-off="OFF" data-trackcss="track yellow" data-handlecss="handleYellow" ng-change="save24_7(serviceHour.Is24_7)"></dbr-toggle>
    </span>
         </div>
-        <div class="list" ng-show="!serviceHour.Is24_7">
+        <div class="list" ng-show="serviceHour.Is24_7">
             <a class="item itemDays listcol" ng-repeat="hrs in testHours | filter:searchText" ng-class="{ 'selected': $index == selectedLocationIndex }" ng-click="openModalTime(hrs,$index)">
                 <div class="serhrs">
                     <span>{{hrs.day}}</span>
