@@ -16,7 +16,7 @@
             <input type="search" placeholder="Search Country" ng-model="mdlcountry.searchText" style="align-self: center;">
         </label>
     </div>
-    <ion-content class="pane1" style="top: 88px;">
+    <ion-content class="pane1" style="top: 84px;">
         <div class="list">
             <ion-list>
                 <ion-item ng-repeat="country in countries | filter:mdlcountry.searchText " type="item-text-wrap" class="listcol" ng-click="applyModalCountry(country.Name)">

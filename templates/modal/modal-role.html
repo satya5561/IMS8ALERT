@@ -1,11 +1,11 @@
-<div class="modal"  style="animation:slide-left-right !important">
+<div class="modal" style="animation:slide-left-right !important">
     <ion-header-bar align-title="center" class="bar-stable nav-title-slide-ios7 bar bar-header nav-bar">
         <div class="row addrhdr">
             <div class="col col33">
                 <span class="yellow" style="float: left;" ng-click="cancelModalRole()">Cancel</span>
             </div>
             <div class="col col33" style="text-align:center;">
-                <span >Role</span>
+                <span>Role</span>
             </div>
             <div class="col col33">
                 <span class="yellow" style="float: right;" ng-click="doneModalRole()">Done</span>
@@ -13,15 +13,35 @@
         </div>
     </ion-header-bar>
     <ion-content class="pane1">
-         <div class="list" style="margin-top:20px;">
-             <ion-list>
-                     <ion-item class="listcol" style="padding: 0px;" type="item-text-wrap" ng-repeat="role in roles" ng-click="applyModalRole(role.name)">
-                         <db-checkbox ng-model="role.checked"
-                                      ng-checked="role.checked">
-                             {{role.name}}
-                         </db-checkbox>
+        <div class="list" style="margin-top:20px;">
+            <ion-list>
+                <ion-item class="listcol" style="padding: 0px;" type="item-text-wrap">
+                    <db-checkbox value="16" name="cbroles1" checked="{{mdlrole.RoleId | bitwiseAnd : 16}}"
+                                 ng-checked="{{mdlrole.RoleId | bitwiseAnd : 16}}">
+                        Contact
+                    </db-checkbox>
                 </ion-item>
-             </ion-list>
+                <ion-item class="listcol" style="padding: 0px;" type="item-text-wrap">
+                    <db-checkbox value="4" name="cbroles"
+                                 ng-checked="{{mdlrole.RoleId | bitwiseAnd : 4}}">
+                        Local Editor
+                    </db-checkbox>
+                </ion-item>
+                <ion-item class="listcol" style="padding: 0px;" type="item-text-wrap">
+                    <db-checkbox value="2" name="cbroles"
+                                 ng-checked="{{mdlrole.RoleId | bitwiseAnd : 2}}">
+                        Local Admin
+                    </db-checkbox>
+                </ion-item>
+                <ion-item class="listcol" style="padding: 0px;" type="item-text-wrap">
+                    <db-checkbox value="64" name="cbroles"
+                                 ng-checked="{{mdlrole.RoleId | bitwiseAnd : 64}}">
+                        Alert
+                    </db-checkbox>
+
+                </ion-item>
+            </ion-list>
+            <button ng-click="check()">click</button>
         </div>
     </ion-content>
 </div>

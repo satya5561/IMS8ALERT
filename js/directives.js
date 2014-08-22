@@ -122,15 +122,15 @@ angular.module('IMS8Alert.directives', [])
         require: '?ngModel',
         transclude: true,
         template: '<label class="item item-radio">' +
-             '<input type="checkbox">' +
+             '<input type="checkbox" />' +
             '<div class="item-content disable-pointer-events listcol" ng-transclude></div>' +
                       '<div class="radio-track"></div>' +
                       '<i class=" radio-icon ion-ios7-checkmark-empty"></i>' +
                   '</label>',
         compile: function (element, attr) {
-            var input = element.find('input');
+            var input = element.find('input[type="checkbox"]');
             forEach({
-                'name': attr.name,
+                'name':attr.name,
                 'ng-value': attr.ngValue,
                 'ng-model': attr.ngModel,
                 'ng-checked': attr.ngChecked,
@@ -146,7 +146,8 @@ angular.module('IMS8Alert.directives', [])
         }
 
     };
-}).directive('dbrToggle', [
+})
+    .directive('dbrToggle', [
   '$ionicGesture',
   '$timeout',
 function ($ionicGesture, $timeout) {
@@ -226,25 +227,31 @@ function ($ionicGesture, $timeout) {
 
     };
 }
-]).directive('camera', function () {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function (scope, elm, attrs, ctrl) {
-            elm.on('click', function () {
-                navigator.camera.getPicture(
-                    function (imageURI) {
-                        scope.$apply(function () {
-                            ctrl.$setViewValue(imageURI);
+    ]).directive('camera', function () {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, elm, attrs, ctrl) {
+                elm.on('click', function () {
+                    navigator.camera.getPicture(
+                        function (imageURI) {
+                            scope.$apply(function () {
+                                ctrl.$setViewValue(imageURI);
+                            });
+                        },
+                        function (err) {
+                            ctrl.$setValidity('error', false);
+                        }, {
+                            quality: 50,
+                            destinationType: Camera.DestinationType.FILE_URI
                         });
-                    },
-                    function (err) {
-                        ctrl.$setValidity('error', false);
-                    }, {
-                        quality: 50,
-                        destinationType: Camera.DestinationType.FILE_URI
-                    });
-            });
-        }
+                });
+            }
+        };
+    })
+.filter('bitwiseAnd', function () {
+    return function (firstNumber, secondNumber) {
+        return ((parseInt(firstNumber, 10) & parseInt(secondNumber, 10)) === parseInt(secondNumber, 10));
+        // return firstNumber % secondNumber > 0
     };
 });
