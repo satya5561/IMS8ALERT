@@ -7,7 +7,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
-
+  
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -53,8 +53,8 @@ angular.module('IMS8Alert.controllers', [])
 
     $scope.save24_7 = function (Is24_7) {
         $scope.serviceHour.Is24_7 = Is24_7;
-        $scope.SaveServiceHour();
-    };
+         $scope.SaveServiceHour();
+      };
     getLocationServiceHour();
 
     function getLocationServiceHour() {
@@ -212,7 +212,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
-
+ 
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -262,7 +262,7 @@ angular.module('IMS8Alert.controllers', [])
         iAdminServiceClient.getLocationMplayerList(LocationId)
         .success(function (data) {
             $ionicLoading.hide();
-            $scope.channels = data.Location_LocationPlayersGetResult;
+                $scope.channels = data.Location_LocationPlayersGetResult;
         })
         .error(function (error, data) {
             $ionicLoading.hide();
@@ -431,7 +431,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
-
+ 
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -584,7 +584,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
-
+  
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -939,11 +939,8 @@ angular.module('IMS8Alert.controllers', [])
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
     console.log("login Ctrl");
     try {
-
-        var type = $cordovaNetwork.getNetwork();
-
+       
         var isOnline = $cordovaNetwork.isOnline();
-
         var isOffline = $cordovaNetwork.isOffline();
         console.log("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
         alert("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
@@ -951,9 +948,14 @@ angular.module('IMS8Alert.controllers', [])
         console.log(e.message);
     }
     $scope.userinfo = {};
-    //if ($window.sessionStorage.token)
-    //    $state.go("page.home");
-
+    if ($window.sessionStorage.token)
+     $state.go("page.home");
+    if ($window.localStorage['username'] != null && $window.localStorage['password']!=null)
+    {
+       // alert('This is username: ' + $window.localStorage['username']);
+        $scope.userinfo.username = $window.localStorage['username'];
+        $scope.userinfo.password = $window.localStorage['password'];
+    }
     $scope.doLogin = function () {
         $ionicLoading.show();
         iAdminServiceClient.authorize($scope.userinfo)
@@ -961,6 +963,8 @@ angular.module('IMS8Alert.controllers', [])
                       var resultToken = data.DB_Rad_Authorize2Result;
                       if (resultToken > 0) {
                           $window.sessionStorage.token = resultToken;
+                          $window.localStorage['username'] = $scope.userinfo.username;
+                          $window.localStorage['password'] = $scope.userinfo.password;
                           $state.go("page.home");
                       }
                       else {
@@ -982,47 +986,47 @@ angular.module('IMS8Alert.controllers', [])
 
     }
 })
-    .controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
+.controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
 
-        getLocationAddresses($rootScope.CustomerID, $rootScope.GroupID, $rootScope.MemberID);
-        function getLocationAddresses(customerId, groupId, memberId) {
-            $ionicLoading.show();
-            iAdminServiceClient.getLocationAddresses(customerId, groupId, memberId, 0)
-                .success(function (data) {
-                    var result = data.Location_GetLocationAddressesResult;
-                    if (result) {
-                        //$scope.allLocations = result;
-                        $scope.locations = _.where(result, { AddressType: 'Visit' });
-                    }
-                    $ionicLoading.hide();
-                })
-             .error(function (error, data) {
-                 $ionicLoading.hide();
-             });
-        }
-
-        $scope.doNext = function () {
-            if ($scope.selectedId) {
-                if ($rootScope.LocationId != $scope.selectedId) {
-                    $rootScope.LocationId = $scope.selectedId;
-                    //$rootScope.visitAddress = _.where($scope.allLocations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
-                    //$rootScope.invoiceAddress = _.where($scope.allLocations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
+    getLocationAddresses($rootScope.CustomerID, $rootScope.GroupID, $rootScope.MemberID);
+    function getLocationAddresses(customerId, groupId, memberId) {
+        $ionicLoading.show();
+        iAdminServiceClient.getLocationAddresses(customerId, groupId, memberId, 0)
+            .success(function (data) {
+                var result = data.Location_GetLocationAddressesResult;
+                if (result) {
+                    //$scope.allLocations = result;
+                    $scope.locations = _.where(result, { AddressType: 'Visit' });
                 }
-                $state.go("tab.address");
-            }
+                $ionicLoading.hide();
+            })
+         .error(function (error, data) {
+             $ionicLoading.hide();
+         });
+    }
 
+    $scope.doNext = function () {
+        if ($scope.selectedId) {
+            if ($rootScope.LocationId != $scope.selectedId) {
+                $rootScope.LocationId = $scope.selectedId;
+                //$rootScope.visitAddress = _.where($scope.allLocations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
+                //$rootScope.invoiceAddress = _.where($scope.allLocations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
+            }
+            $state.go("tab.address");
         }
 
-        $scope.selectlocation = function (loc, idx) {
-            if ($scope.selectedLocationIndex != idx) {
-                $scope.selectedLocationIndex = idx;
-                $scope.selectedId = loc.LocationId;
-                $rootScope.LocationName = loc.LocationName;
-            }
+    }
+
+    $scope.selectlocation = function (loc, idx) {
+        if ($scope.selectedLocationIndex != idx) {
+            $scope.selectedLocationIndex = idx;
+            $scope.selectedId = loc.LocationId;
+            $rootScope.LocationName = loc.LocationName;
         }
+    }
 
-        $scope.goBack = function () {
-            $ionicNavBarDelegate.back();
-        };
+    $scope.goBack = function () {
+        $ionicNavBarDelegate.back();
+    };
 
-    });
+});
