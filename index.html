@@ -34,6 +34,13 @@
 
     <link href="css/mobiscroll.scroller.css" rel="stylesheet" />
     <link href="css/mobiscroll.animation.css" rel="stylesheet" />
+    <script>
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+            document.addEventListener("backbutton", onBackKeyDown, false); //Listen to the User clicking on the back button
+        }
+
+    </script>
 </head>
 <body ng-app="IMS8Alert" animation="slide-left-right-ios7" ng-controller="MainController">
 

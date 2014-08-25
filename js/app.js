@@ -7,7 +7,7 @@ function getThumb(id, what, isnodef) {
 
 }
 function isEmptyValue(value) { if (value == "" || value == 0 || value == undefined || value == null) { return true; } else { return false; } }
-
+function isEmpty(value) { if (value === "" || value == undefined) { return true; } else { return false; } }
 // Ionic Starter App
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'IMS8Alert' is the name of this angular module example (also set in a <body> attribute in index.html)

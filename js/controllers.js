@@ -7,7 +7,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
-  
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -52,9 +52,9 @@ angular.module('IMS8Alert.controllers', [])
     }
 
     $scope.save24_7 = function (Is24_7) {
-        $scope.serviceHour.Is24_7 = !Is24_7;
-         $scope.SaveServiceHour();
-      };
+        $scope.serviceHour.Is24_7 = Is24_7;
+        $scope.SaveServiceHour();
+    };
     getLocationServiceHour();
 
     function getLocationServiceHour() {
@@ -212,7 +212,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
- 
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -262,8 +262,7 @@ angular.module('IMS8Alert.controllers', [])
         iAdminServiceClient.getLocationMplayerList(LocationId)
         .success(function (data) {
             $ionicLoading.hide();
-            if (data.Location_LocationPlayersGetResult != null)
-                $scope.channels = data.Location_LocationPlayersGetResult;
+            $scope.channels = data.Location_LocationPlayersGetResult;
         })
         .error(function (error, data) {
             $ionicLoading.hide();
@@ -379,18 +378,24 @@ angular.module('IMS8Alert.controllers', [])
     $scope.openModalRole = function (roleId) {
         $scope.mdlrole.RoleId = roleId;
         $scope.mdlrole.show();
+        setTimeout(function () {
+            $("input[name=cbroles]").each(function () {
+                $(this).prop('checked', $(this).attr('ng-checked') == "true");
+            });
+        }, 500);
     };
-    $scope.applyModalRole = function (itmrole) {
-        $scope.contact.role = itmrole;
-    };
-    $scope.check = function () {
-        $("input[name=cbroles]").attr('checked', 'checked');
-    }
+
     $scope.doneModalRole = function () {
         var roleIdVal = 0;
         $("input[name=cbroles]:checked").each(function () {
             roleIdVal = roleIdVal | $(this).val();
         });
+        $scope.mdlrole.RoleId = roleIdVal;
+
+        if (isEmpty($scope.mdlrole.RoleId) || $scope.mdlrole.RoleId == 0)
+            $scope.mdlrole.RoleId = 16;
+
+        $scope.contact.RoleId = $scope.mdlrole.RoleId;
         $scope.mdlrole.hide();
     };
     $scope.cancelModalRole = function () {
@@ -426,7 +431,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
- 
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -477,8 +482,7 @@ angular.module('IMS8Alert.controllers', [])
             .success(function (data) {
                 var result = data.Location_GetLocationContactsResult;
                 $ionicLoading.hide();
-                if (result)
-                    $scope.contacts = result;
+                $scope.contacts = result;
             })
 
            .error(function (error, data) {
@@ -580,7 +584,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
-  
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -765,7 +769,19 @@ angular.module('IMS8Alert.controllers', [])
 })
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
+    function onBackKeyDown(e) {
+        e.preventDefault();
+        navigator.notification.confirm("Are you sure you want to exit ?", onConfirm, "Confirmation", "Yes,No");
+        // Prompt the user with the choice
+    }
 
+    function onConfirm(button) {
+        if (button == 2) {//If User selected No, then we just do nothing
+            return;
+        } else {
+            navigator.app.exitApp();// Otherwise we quit the app.
+        }
+    }
     getCustomers();
     if ($rootScope.CustomerName) {
         $scope.selectedcstomer = $rootScope.CustomerName;

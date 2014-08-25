@@ -122,7 +122,7 @@ angular.module('IMS8Alert.directives', [])
         require: '?ngModel',
         transclude: true,
         template: '<label class="item item-radio">' +
-             '<input type="checkbox" />' +
+             '<input type="checkbox"  />' +
             '<div class="item-content disable-pointer-events listcol" ng-transclude></div>' +
                       '<div class="radio-track"></div>' +
                       '<i class=" radio-icon ion-ios7-checkmark-empty"></i>' +
@@ -130,14 +130,16 @@ angular.module('IMS8Alert.directives', [])
         compile: function (element, attr) {
             var input = element.find('input[type="checkbox"]');
             forEach({
-                'name':attr.name,
+                'name': attr.name,
+                'value': attr.value,
                 'ng-value': attr.ngValue,
                 'ng-model': attr.ngModel,
                 'ng-checked': attr.ngChecked,
                 'ng-disabled': attr.ngDisabled,
                 'ng-true-value': attr.ngTrueValue,
                 'ng-false-value': attr.ngFalseValue,
-                'ng-change': attr.ngChange
+                'ng-change': attr.ngChange,
+                'checked': "checked"
             }, function (value, name) {
                 if (angular.isDefined(value)) {
                     input.attr(name, value);

@@ -16,7 +16,7 @@
         <div class="list" style="margin-top:20px;">
             <ion-list>
                 <ion-item class="listcol" style="padding: 0px;" type="item-text-wrap">
-                    <db-checkbox value="16" name="cbroles1" checked="{{mdlrole.RoleId | bitwiseAnd : 16}}"
+                    <db-checkbox value="16" name="cbroles" 
                                  ng-checked="{{mdlrole.RoleId | bitwiseAnd : 16}}">
                         Contact
                     </db-checkbox>
@@ -41,7 +41,6 @@
 
                 </ion-item>
             </ion-list>
-            <button ng-click="check()">click</button>
         </div>
     </ion-content>
 </div>

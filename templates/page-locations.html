@@ -23,7 +23,7 @@
         <div class="list">
             <a class="item listcol" ng-repeat="loc in locations | filter:searchText" ng-class="{ 'selected': $index == selectedLocationIndex }" ng-click="selectlocation(loc, $index)">
 
-                <span>{{loc.LocationName}} / {{loc.City}} , {{loc.Zip}}</span>
+                <span>{{loc.LocationName}} <span ng-show="loc.City">/</span> {{loc.City}} <span ng-show="loc.Zip">,</span> {{loc.Zip}}</span>
             </a>
         </div>
     </ion-content>
