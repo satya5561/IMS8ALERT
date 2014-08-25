@@ -936,7 +936,23 @@ angular.module('IMS8Alert.controllers', [])
         $rootScope.platform = "";
 
 })
-.controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera) {
+.controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
+    console.log("login Ctrl");
+
+    var type = $cordovaNetwork.getNetwork();
+    var isOnline = $cordovaNetwork.isOnline();
+    console.log(isOnline);
+    if (isOnline) {
+        $ionicPopup.confirm({
+            title: "Internet Disconnected",
+            content: "The internet is disconnected on your device."
+        })
+        .then(function (result) {
+            if (!result) {
+                ionic.Platform.exitApp();
+            }
+        });
+    }
     $scope.userinfo = {};
     //if ($window.sessionStorage.token)
     //    $state.go("page.home");

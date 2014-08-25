@@ -28,21 +28,6 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
             StatusBar.styleDefault();
         }
        
-
-        var type = $cordovaNetwork.getNetwork();
-        var isOnline = $cordovaNetwork.isOnline();
-        console.log(isOnline);
-        if (isOnline) {
-            $ionicPopup.confirm({
-                title: "Internet Disconnected",
-                content: "The internet is disconnected on your device."
-            })
-            .then(function (result) {
-                if (!result) {
-                    ionic.Platform.exitApp();
-                }
-            });
-        }
     });
 
     $rootScope.$on("$routeChangeSuccess", function () {
