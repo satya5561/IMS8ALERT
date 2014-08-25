@@ -938,94 +938,105 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
     console.log("login Ctrl");
+    checkConnection();
+    function checkConnection() { 
+        if(navigator.network.connection.type == Connection.NONE){
+            console.log("no connection");
+        }else{
+            console.log("You are connected.");
+        }
+        try {
 
-    var type = $cordovaNetwork.getNetwork();
-    var isOnline = $cordovaNetwork.isOnline();
-    console.log(isOnline);
-    if (isOnline) {
-        $ionicPopup.confirm({
-            title: "Internet Disconnected",
-            content: "The internet is disconnected on your device."
-        })
-        .then(function (result) {
-            if (!result) {
-                ionic.Platform.exitApp();
+            var type = $cordovaNetwork.getNetwork();
+            var isOnline = $cordovaNetwork.isOnline();
+            console.log(isOnline);
+            if (isOnline) {
+                $ionicPopup.confirm({
+                    title: "Internet Disconnected",
+                    content: "The internet is disconnected on your device."
+                })
+                .then(function (result) {
+                    if (!result) {
+                        ionic.Platform.exitApp();
+                    }
+                });
             }
-        });
-    }
-    $scope.userinfo = {};
-    //if ($window.sessionStorage.token)
-    //    $state.go("page.home");
+        } catch (e) {
+            console.log(e.message);
+        }
+        $scope.userinfo = {};
+        //if ($window.sessionStorage.token)
+        //    $state.go("page.home");
 
-    $scope.doLogin = function () {
-        $ionicLoading.show();
-        iAdminServiceClient.authorize($scope.userinfo)
-                  .success(function (data, status) {
-                      var resultToken = data.DB_Rad_Authorize2Result;
-                      if (resultToken > 0) {
-                          $window.sessionStorage.token = resultToken;
-                          $state.go("page.home");
-                      }
-                      else {
+        $scope.doLogin = function () {
+            $ionicLoading.show();
+            iAdminServiceClient.authorize($scope.userinfo)
+                      .success(function (data, status) {
+                          var resultToken = data.DB_Rad_Authorize2Result;
+                          if (resultToken > 0) {
+                              $window.sessionStorage.token = resultToken;
+                              $state.go("page.home");
+                          }
+                          else {
+                              var confirmPopup = $ionicPopup.alert({
+                                  title: 'Alert Mode',
+                                  template: 'Wrong username/password'
+                              });
+                          }
+                          $ionicLoading.hide();
+                      })
+                      .error(function (error, status) {
                           var confirmPopup = $ionicPopup.alert({
                               title: 'Alert Mode',
-                              template: 'Wrong username/password'
+                              template: 'Error in authentication'
                           });
-                      }
-                      $ionicLoading.hide();
-                  })
-                  .error(function (error, status) {
-                      var confirmPopup = $ionicPopup.alert({
-                          title: 'Alert Mode',
-                          template: 'Error in authentication'
+                          $ionicLoading.hide();
                       });
-                      $ionicLoading.hide();
-                  });
 
 
-    }
-})
-.controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
+        }
+    })
+    .controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
 
-    getLocationAddresses($rootScope.CustomerID, $rootScope.GroupID, $rootScope.MemberID);
-    function getLocationAddresses(customerId, groupId, memberId) {
-        $ionicLoading.show();
-        iAdminServiceClient.getLocationAddresses(customerId, groupId, memberId, 0)
-            .success(function (data) {
-                var result = data.Location_GetLocationAddressesResult;
-                if (result) {
-                    //$scope.allLocations = result;
-                    $scope.locations = _.where(result, { AddressType: 'Visit' });
+        getLocationAddresses($rootScope.CustomerID, $rootScope.GroupID, $rootScope.MemberID);
+        function getLocationAddresses(customerId, groupId, memberId) {
+            $ionicLoading.show();
+            iAdminServiceClient.getLocationAddresses(customerId, groupId, memberId, 0)
+                .success(function (data) {
+                    var result = data.Location_GetLocationAddressesResult;
+                    if (result) {
+                        //$scope.allLocations = result;
+                        $scope.locations = _.where(result, { AddressType: 'Visit' });
+                    }
+                    $ionicLoading.hide();
+                })
+             .error(function (error, data) {
+                 $ionicLoading.hide();
+             });
+        }
+
+        $scope.doNext = function () {
+            if ($scope.selectedId) {
+                if ($rootScope.LocationId != $scope.selectedId) {
+                    $rootScope.LocationId = $scope.selectedId;
+                    //$rootScope.visitAddress = _.where($scope.allLocations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
+                    //$rootScope.invoiceAddress = _.where($scope.allLocations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
                 }
-                $ionicLoading.hide();
-            })
-         .error(function (error, data) {
-             $ionicLoading.hide();
-         });
-    }
-
-    $scope.doNext = function () {
-        if ($scope.selectedId) {
-            if ($rootScope.LocationId != $scope.selectedId) {
-                $rootScope.LocationId = $scope.selectedId;
-                //$rootScope.visitAddress = _.where($scope.allLocations, { AddressType: 'Visit', LocationId: $scope.selectedId })[0];
-                //$rootScope.invoiceAddress = _.where($scope.allLocations, { AddressType: 'Invoice', LocationId: $scope.selectedId })[0];
+                $state.go("tab.address");
             }
-            $state.go("tab.address");
+
         }
 
-    }
-
-    $scope.selectlocation = function (loc, idx) {
-        if ($scope.selectedLocationIndex != idx) {
-            $scope.selectedLocationIndex = idx;
-            $scope.selectedId = loc.LocationId;
-            $rootScope.LocationName = loc.LocationName;
+        $scope.selectlocation = function (loc, idx) {
+            if ($scope.selectedLocationIndex != idx) {
+                $scope.selectedLocationIndex = idx;
+                $scope.selectedId = loc.LocationId;
+                $rootScope.LocationName = loc.LocationName;
+            }
         }
-    }
 
-    $scope.goBack = function () {
-        $ionicNavBarDelegate.back();
-    };
+        $scope.goBack = function () {
+            $ionicNavBarDelegate.back();
+        };
 
-});
+    });
