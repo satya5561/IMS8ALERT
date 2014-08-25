@@ -62,12 +62,12 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
         var isOnline = $cordovaNetwork.isOnline();
 
         var isOffline = $cordovaNetwork.isOffline();
-
+        console.log("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
+        alert("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
     } catch (e) {
         console.log(e.message);
     }
-    console.log("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
-    alert("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
+  
 
 })
 
