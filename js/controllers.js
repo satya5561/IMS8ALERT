@@ -768,11 +768,8 @@ angular.module('IMS8Alert.controllers', [])
     };
 })
 
-.controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate, $ionicPlatform) {
-    $ionicPlatform.onHardwareBackButton(function () {
-        e.stopPropagation();
-        alert('you sure you want to exit?');
-    });
+.controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
+
     getCustomers();
     if ($rootScope.CustomerName) {
         $scope.selectedcstomer = $rootScope.CustomerName;

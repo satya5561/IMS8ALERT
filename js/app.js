@@ -14,9 +14,9 @@ function isEmpty(value) { if (value === "" || value == undefined) { return true;
 // the 2nd parameter is an array of 'requires'
 // 'IMS8Alert.services' is found in services.js
 // 'IMS8Alert.controllers' is found in controllers.js
-angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.services', 'IMS8Alert.directives','ngCordova'])
+angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.services', 'IMS8Alert.directives', 'ngCordova'])
 
-.run(function ($ionicPlatform, $rootScope, $window, $location) {
+.run(function ($ionicPlatform, $rootScope, $window, $location, $state) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -54,7 +54,17 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
         //Make evenly indexed items be 10px taller, for the sake of example
         return (index % 2) === 0 ? 50 : 60;
     };
-
+    $ionicPlatform.onHardwareBackButton(function () {
+        if ($state.is('#/page/home')) { // here to check whether the home page, if yes, exit the application
+            alert('you sure you want to exit?'); //('System warning', 'are you sure you want to exit?',
+            //function () {
+            //    navigator.app.exitApp();
+            //},
+            //function () {
+            //    return;
+            //});
+        }
+    });
 })
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
