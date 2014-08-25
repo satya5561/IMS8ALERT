@@ -941,9 +941,10 @@ angular.module('IMS8Alert.controllers', [])
     try {
        
         var isOnline = $cordovaNetwork.isOnline();
+        console.log("login Ctrl3");
         var isOffline = $cordovaNetwork.isOffline();
-        console.log("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
-        alert("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
+        console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
+        alert("isOnline:" + isOnline + "isOffline" + isOffline);
     } catch (e) {
         console.log(e.message);
     }
