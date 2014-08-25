@@ -923,8 +923,8 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera) {
     $scope.userinfo = {};
-    if ($window.sessionStorage.token)
-        $state.go("page.home");
+    //if ($window.sessionStorage.token)
+    //    $state.go("page.home");
 
     $scope.doLogin = function () {
         $ionicLoading.show();
