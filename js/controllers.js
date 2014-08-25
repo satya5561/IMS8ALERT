@@ -938,27 +938,7 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
     console.log("login Ctrl");
-    checkConnection();
-    function checkConnection() {
-        console.log("check Connection");
-        if (navigator.network.connection.type == Connection.NONE) {
-            console.log("not connected Connection");
-            var confirmPopup = $ionicPopup.confirm({
-                title: 'Internet Disconnected',
-                template: "The internet is disconnected on your device."
-            });
-            confirmPopup.then(function (close) {
-                if (close) {
-                    // there is no back view, so close the app instead
-                    ionic.Platform.exitApp();
-                } // otherwise do nothing
-                console.log("User canceled exit.");
-            });
-
-        } else {
-            console.log("You are connected.");
-        }
-    }
+   
     $scope.userinfo = {};
     //if ($window.sessionStorage.token)
     //    $state.go("page.home");
