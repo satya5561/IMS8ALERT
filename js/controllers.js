@@ -939,63 +939,64 @@ angular.module('IMS8Alert.controllers', [])
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
     console.log("login Ctrl");
     checkConnection();
-    function checkConnection() { 
-        if(navigator.network.connection.type == Connection.NONE){
+    function checkConnection() {
+        if (navigator.network.connection.type == Connection.NONE) {
             console.log("no connection");
-        }else{
+        } else {
             console.log("You are connected.");
         }
-        try {
+    }
+    try {
 
-            var type = $cordovaNetwork.getNetwork();
-            var isOnline = $cordovaNetwork.isOnline();
-            console.log(isOnline);
-            if (isOnline) {
-                $ionicPopup.confirm({
-                    title: "Internet Disconnected",
-                    content: "The internet is disconnected on your device."
-                })
-                .then(function (result) {
-                    if (!result) {
-                        ionic.Platform.exitApp();
-                    }
-                });
-            }
-        } catch (e) {
-            console.log(e.message);
+        var type = $cordovaNetwork.getNetwork();
+        var isOnline = $cordovaNetwork.isOnline();
+        console.log(isOnline);
+        if (isOnline) {
+            $ionicPopup.confirm({
+                title: "Internet Disconnected",
+                content: "The internet is disconnected on your device."
+            })
+            .then(function (result) {
+                if (!result) {
+                    ionic.Platform.exitApp();
+                }
+            });
         }
-        $scope.userinfo = {};
-        //if ($window.sessionStorage.token)
-        //    $state.go("page.home");
+    } catch (e) {
+        console.log(e.message);
+    }
+    $scope.userinfo = {};
+    //if ($window.sessionStorage.token)
+    //    $state.go("page.home");
 
-        $scope.doLogin = function () {
-            $ionicLoading.show();
-            iAdminServiceClient.authorize($scope.userinfo)
-                      .success(function (data, status) {
-                          var resultToken = data.DB_Rad_Authorize2Result;
-                          if (resultToken > 0) {
-                              $window.sessionStorage.token = resultToken;
-                              $state.go("page.home");
-                          }
-                          else {
-                              var confirmPopup = $ionicPopup.alert({
-                                  title: 'Alert Mode',
-                                  template: 'Wrong username/password'
-                              });
-                          }
-                          $ionicLoading.hide();
-                      })
-                      .error(function (error, status) {
+    $scope.doLogin = function () {
+        $ionicLoading.show();
+        iAdminServiceClient.authorize($scope.userinfo)
+                  .success(function (data, status) {
+                      var resultToken = data.DB_Rad_Authorize2Result;
+                      if (resultToken > 0) {
+                          $window.sessionStorage.token = resultToken;
+                          $state.go("page.home");
+                      }
+                      else {
                           var confirmPopup = $ionicPopup.alert({
                               title: 'Alert Mode',
-                              template: 'Error in authentication'
+                              template: 'Wrong username/password'
                           });
-                          $ionicLoading.hide();
+                      }
+                      $ionicLoading.hide();
+                  })
+                  .error(function (error, status) {
+                      var confirmPopup = $ionicPopup.alert({
+                          title: 'Alert Mode',
+                          template: 'Error in authentication'
                       });
+                      $ionicLoading.hide();
+                  });
 
 
-        }
-    })
+    }
+})
     .controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
 
         getLocationAddresses($rootScope.CustomerID, $rootScope.GroupID, $rootScope.MemberID);
