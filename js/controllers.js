@@ -768,7 +768,22 @@ angular.module('IMS8Alert.controllers', [])
     };
 })
 
-.controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
+.controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate, $ionicPlatform, $ionicPopup) {
+    $ionicPlatform.registerBackButtonAction(function (e) {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Confirm Exit',
+            template: "Are you sure you want to close APPNAME?"
+        });
+        confirmPopup.then(function (close) {
+            if (close) {
+                // there is no back view, so close the app instead
+                ionic.Platform.exitApp();
+            } // otherwise do nothing
+            console.log("User canceled exit.");
+        });
+        e.preventDefault();
+        return false;
+    }, 101); // 1 more priority than back button
 
     getCustomers();
     if ($rootScope.CustomerName) {

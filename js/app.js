@@ -20,35 +20,16 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
-        //if (window.cordova && window.cordova.plugins.Keyboard) {
-        //    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        //}
-        //if (window.StatusBar) {
-        //    // org.apache.cordova.statusbar required
-        //    StatusBar.styleDefault();
-        //}
-        $ionicPlatform.registerBackButtonAction(function (e) {
-            if ($rootScope.$viewHistory.backView) {
-                $rootScope.$viewHistory.backView.go();
-            } else {
-                var confirmPopup = $ionicPopup.confirm({
-                    title: 'Confirm Exit',
-                    template: "Are you sure you want to close APPNAME?"
-                });
-                confirmPopup.then(function (close) {
-                    if (close) {
-                        // there is no back view, so close the app instead
-                        ionic.Platform.exitApp();
-                    } // otherwise do nothing
-                    console.log("User canceled exit.");
-                });
-            }
+        if (window.cordova && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        }
+        if (window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            StatusBar.styleDefault();
+        }
+       
 
-            e.preventDefault();
-            return false;
-        }, 101); // 1 more priority than back button
         var type = $cordovaNetwork.getNetwork();
-
         var isOnline = $cordovaNetwork.isOnline();
         console.log(isOnline);
         if (isOnline) {
