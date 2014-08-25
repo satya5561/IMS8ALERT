@@ -940,16 +940,21 @@ angular.module('IMS8Alert.controllers', [])
     console.log("login Ctrl");
     checkConnection();
     function checkConnection() {
+        console.log("check Connection");
         if (navigator.network.connection.type == Connection.NONE) {
-            $ionicPopup.confirm({
-                title: "Internet Disconnected",
-                content: "The internet is disconnected on your device."
-            })
-           .then(function (result) {
-               if (!result) {
-                   ionic.Platform.exitApp();
-               }
-           });
+            console.log("not connected Connection");
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Internet Disconnected',
+                template: "The internet is disconnected on your device."
+            });
+            confirmPopup.then(function (close) {
+                if (close) {
+                    // there is no back view, so close the app instead
+                    ionic.Platform.exitApp();
+                } // otherwise do nothing
+                console.log("User canceled exit.");
+            });
+
         } else {
             console.log("You are connected.");
         }
