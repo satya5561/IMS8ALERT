@@ -27,6 +27,40 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
+        $ionicPlatform.registerBackButtonAction(function (e) {
+            if ($rootScope.$viewHistory.backView) {
+                $rootScope.$viewHistory.backView.go();
+            } else {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Confirm Exit',
+                    template: "Are you sure you want to close APPNAME?"
+                });
+                confirmPopup.then(function (close) {
+                    if (close) {
+                        // there is no back view, so close the app instead
+                        ionic.Platform.exitApp();
+                    } // otherwise do nothing
+                    console.log("User canceled exit.");
+                });
+            }
+
+            e.preventDefault();
+            return false;
+        }, 101); // 1 more priority than back button
+
+        if (window.Connection) {
+            if (navigator.connection.type == Connection.NONE) {
+                $ionicPopup.confirm({
+                    title: "Internet Disconnected",
+                    content: "The internet is disconnected on your device."
+                })
+                .then(function (result) {
+                    if (!result) {
+                        ionic.Platform.exitApp();
+                    }
+                });
+            }
+        }
     });
 
     $rootScope.$on("$routeChangeSuccess", function () {
@@ -54,26 +88,7 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
         //Make evenly indexed items be 10px taller, for the sake of example
         return (index % 2) === 0 ? 50 : 60;
     };
-    $ionicPlatform.registerBackButtonAction(function (e) {
-        if ($rootScope.$viewHistory.backView) {
-            $rootScope.$viewHistory.backView.go();
-        } else {
-            var confirmPopup = $ionicPopup.confirm({
-                title: 'Confirm Exit',
-                template: "Are you sure you want to close APPNAME?"
-            });
-            confirmPopup.then(function (close) {
-                if (close) {
-                    // there is no back view, so close the app instead
-                    ionic.Platform.exitApp();
-                } // otherwise do nothing
-                console.log("User canceled exit.");
-            });
-        }
-
-        e.preventDefault();
-        return false;
-    }, 101); // 1 more priority than back button
+   
 
 })
 
