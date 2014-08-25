@@ -16,17 +16,17 @@ function isEmpty(value) { if (value === "" || value == undefined) { return true;
 // 'IMS8Alert.controllers' is found in controllers.js
 angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.services', 'IMS8Alert.directives', 'ngCordova'])
 
-.run(function ($ionicPlatform, $rootScope, $window, $location, $state, $ionicPopup) {
+.run(function ($ionicPlatform, $rootScope, $window, $location, $state, $ionicPopup, $cordovaNetwork) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        }
-        if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
-        }
+        //if (window.cordova && window.cordova.plugins.Keyboard) {
+        //    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        //}
+        //if (window.StatusBar) {
+        //    // org.apache.cordova.statusbar required
+        //    StatusBar.styleDefault();
+        //}
         $ionicPlatform.registerBackButtonAction(function (e) {
             if ($rootScope.$viewHistory.backView) {
                 $rootScope.$viewHistory.backView.go();
@@ -47,19 +47,19 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
             e.preventDefault();
             return false;
         }, 101); // 1 more priority than back button
+        var type = $cordovaNetwork.getNetwork();
 
-        if (window.Connection) {
-            if (navigator.connection.type == Connection.NONE) {
-                $ionicPopup.confirm({
-                    title: "Internet Disconnected",
-                    content: "The internet is disconnected on your device."
-                })
-                .then(function (result) {
-                    if (!result) {
-                        ionic.Platform.exitApp();
-                    }
-                });
-            }
+        var isOnline = $cordovaNetwork.isOnline();
+        if (isOnline) {
+            $ionicPopup.confirm({
+                title: "Internet Disconnected",
+                content: "The internet is disconnected on your device."
+            })
+            .then(function (result) {
+                if (!result) {
+                    ionic.Platform.exitApp();
+                }
+            });
         }
     });
 
@@ -88,7 +88,7 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
         //Make evenly indexed items be 10px taller, for the sake of example
         return (index % 2) === 0 ? 50 : 60;
     };
-   
+
 
 })
 
