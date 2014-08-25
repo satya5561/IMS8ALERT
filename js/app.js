@@ -50,6 +50,7 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
         var type = $cordovaNetwork.getNetwork();
 
         var isOnline = $cordovaNetwork.isOnline();
+        console.log(isOnline);
         if (isOnline) {
             $ionicPopup.confirm({
                 title: "Internet Disconnected",
