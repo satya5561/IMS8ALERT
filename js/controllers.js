@@ -7,7 +7,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
-  
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -53,8 +53,8 @@ angular.module('IMS8Alert.controllers', [])
 
     $scope.save24_7 = function (Is24_7) {
         $scope.serviceHour.Is24_7 = Is24_7;
-         $scope.SaveServiceHour();
-      };
+        $scope.SaveServiceHour();
+    };
     getLocationServiceHour();
 
     function getLocationServiceHour() {
@@ -212,7 +212,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
- 
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -262,7 +262,7 @@ angular.module('IMS8Alert.controllers', [])
         iAdminServiceClient.getLocationMplayerList(LocationId)
         .success(function (data) {
             $ionicLoading.hide();
-                $scope.channels = data.Location_LocationPlayersGetResult;
+            $scope.channels = data.Location_LocationPlayersGetResult;
         })
         .error(function (error, data) {
             $ionicLoading.hide();
@@ -369,7 +369,7 @@ angular.module('IMS8Alert.controllers', [])
         $scope.mdleditcontact.hide();
     };
 
-    $scope.roles = list.allRoles();
+
     $ionicModal.fromTemplateUrl('templates/modal/modal-role.html', {
         scope: $scope,
         animation: 'slide-left-right',//'slide-left-right', 'slide-in-up', 'slide-right-left'
@@ -422,6 +422,10 @@ angular.module('IMS8Alert.controllers', [])
             // An error occured. Show a message to the user
         });
     }
+    $scope.$on('$destroy', function () {
+        $scope.mdlrole.remove();
+    });
+
 })
 
 .controller('ContactCtrl', function ($scope, list, $state, $ionicModal, $ionicPopup, $ionicNavBarDelegate, $rootScope, iAdminServiceClient, $ionicLoading) {
@@ -431,7 +435,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
- 
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -584,7 +588,7 @@ angular.module('IMS8Alert.controllers', [])
     $scope.headerimg.coverUrl = getThumb($rootScope.LocationId, "LOCATIONCOVER", 1);
     $scope.headerimg.logoUrl = getThumb($rootScope.LocationId, "LOCATIONLOGO", 1);
     getLocationAlertInfo(false);
-  
+
     $scope.showConfirm = function (m) {
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
@@ -772,14 +776,13 @@ angular.module('IMS8Alert.controllers', [])
     $ionicPlatform.registerBackButtonAction(function (e) {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Confirm Exit',
-            template: "Are you sure you want to close APPNAME?"
+            template: "Are you sure you want to close iAlert?"
         });
         confirmPopup.then(function (close) {
             if (close) {
                 // there is no back view, so close the app instead
                 ionic.Platform.exitApp();
             } // otherwise do nothing
-            console.log("User canceled exit.");
         });
         e.preventDefault();
         return false;
@@ -937,25 +940,25 @@ angular.module('IMS8Alert.controllers', [])
 
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
-    console.log("login Ctrl");
-    try {
-       
-        var isOnline = $cordovaNetwork.isOnline();
-        console.log("login Ctrl3");
-        var isOffline = $cordovaNetwork.isOffline();
-        console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
-        alert("isOnline:" + isOnline + "isOffline" + isOffline);
-    } catch (e) {
-        console.log(e.message);
-    }
+    //console.log("login Ctrl");
+    //try {
+
+    //    var isOnline = $cordovaNetwork.isOnline();
+    //    console.log("login Ctrl3");
+    //    var isOffline = $cordovaNetwork.isOffline();
+    //    console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
+    //    alert("isOnline:" + isOnline + "isOffline" + isOffline);
+    //} catch (e) {
+    //    console.log(e.message);
+    //}
     $scope.userinfo = {};
-    if ($window.sessionStorage.token)
-     $state.go("page.home");
-    if ($window.localStorage['username'] != null && $window.localStorage['password']!=null)
-    {
-       // alert('This is username: ' + $window.localStorage['username']);
-        $scope.userinfo.username = $window.localStorage['username'];
-        $scope.userinfo.password = $window.localStorage['password'];
+    if ($window.localStorage['token']) {
+        $ionicLoading.show();
+        setTimeout(function () {
+            $window.sessionStorage.token = $window.localStorage['token'];
+            $state.go("page.home");
+            $ionicLoading.hide();
+        }, 5000);
     }
     $scope.doLogin = function () {
         $ionicLoading.show();
@@ -964,13 +967,12 @@ angular.module('IMS8Alert.controllers', [])
                       var resultToken = data.DB_Rad_Authorize2Result;
                       if (resultToken > 0) {
                           $window.sessionStorage.token = resultToken;
-                          $window.localStorage['username'] = $scope.userinfo.username;
-                          $window.localStorage['password'] = $scope.userinfo.password;
+                          $window.localStorage['token'] = $window.sessionStorage.token;
                           $state.go("page.home");
                       }
                       else {
                           var confirmPopup = $ionicPopup.alert({
-                              title: 'Alert Mode',
+                              title: 'Error',
                               template: 'Wrong username/password'
                           });
                       }
@@ -978,7 +980,7 @@ angular.module('IMS8Alert.controllers', [])
                   })
                   .error(function (error, status) {
                       var confirmPopup = $ionicPopup.alert({
-                          title: 'Alert Mode',
+                          title: 'Error',
                           template: 'Error in authentication'
                       });
                       $ionicLoading.hide();

@@ -205,7 +205,7 @@
 
 .alertheader {
     background-color: #f74a33 !important;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
     .alertheader a {
