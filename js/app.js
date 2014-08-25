@@ -54,19 +54,27 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
         //Make evenly indexed items be 10px taller, for the sake of example
         return (index % 2) === 0 ? 50 : 60;
     };
-    $ionicPlatform.onHardwareBackButton(function () {
-        if ($state.is('#/page/home')) { // here to check whether the home page, if yes, exit the application
-            alert("back button press");
-            $ionicPopup.confirm({
-                title: 'Quit TechForum 2014 app',
-                content: 'Do you want to close TechForum app ?'
-            }).then(function (res) {
-                if (res) {
-                    $ionicPlatform.exitApp();
-                }
+    $ionicPlatform.registerBackButtonAction(function (e) {
+        if ($rootScope.$viewHistory.backView) {
+            $rootScope.$viewHistory.backView.go();
+        } else {
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Confirm Exit',
+                template: "Are you sure you want to close APPNAME?"
+            });
+            confirmPopup.then(function (close) {
+                if (close) {
+                    // there is no back view, so close the app instead
+                    ionic.Platform.exitApp();
+                } // otherwise do nothing
+                console.log("User canceled exit.");
             });
         }
-    });
+
+        e.preventDefault();
+        return false;
+    }, 101); // 1 more priority than back button
+
 })
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
