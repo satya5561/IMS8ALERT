@@ -16,7 +16,7 @@ function isEmpty(value) { if (value === "" || value == undefined) { return true;
 // 'IMS8Alert.controllers' is found in controllers.js
 angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.services', 'IMS8Alert.directives', 'ngCordova'])
 
-.run(function ($ionicPlatform, $rootScope, $window, $location, $state) {
+.run(function ($ionicPlatform, $rootScope, $window, $location, $state, $ionicPopup) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -56,13 +56,15 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
     };
     $ionicPlatform.onHardwareBackButton(function () {
         if ($state.is('#/page/home')) { // here to check whether the home page, if yes, exit the application
-            alert('you sure you want to exit?'); //('System warning', 'are you sure you want to exit?',
-            //function () {
-            //    navigator.app.exitApp();
-            //},
-            //function () {
-            //    return;
-            //});
+            alert("back button press");
+            $ionicPopup.confirm({
+                title: 'Quit TechForum 2014 app',
+                content: 'Do you want to close TechForum app ?'
+            }).then(function (res) {
+                if (res) {
+                    $ionicPlatform.exitApp();
+                }
+            });
         }
     });
 })
