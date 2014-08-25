@@ -941,29 +941,18 @@ angular.module('IMS8Alert.controllers', [])
     checkConnection();
     function checkConnection() {
         if (navigator.network.connection.type == Connection.NONE) {
-            console.log("no connection");
-        } else {
-            console.log("You are connected.");
-        }
-    }
-    try {
-
-        var type = $cordovaNetwork.getNetwork();
-        var isOnline = $cordovaNetwork.isOnline();
-        console.log(isOnline);
-        if (isOnline) {
             $ionicPopup.confirm({
                 title: "Internet Disconnected",
                 content: "The internet is disconnected on your device."
             })
-            .then(function (result) {
-                if (!result) {
-                    ionic.Platform.exitApp();
-                }
-            });
+           .then(function (result) {
+               if (!result) {
+                   ionic.Platform.exitApp();
+               }
+           });
+        } else {
+            console.log("You are connected.");
         }
-    } catch (e) {
-        console.log(e.message);
     }
     $scope.userinfo = {};
     //if ($window.sessionStorage.token)
