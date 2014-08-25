@@ -27,7 +27,7 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-       
+
     });
 
     $rootScope.$on("$routeChangeSuccess", function () {
@@ -55,11 +55,17 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
         //Make evenly indexed items be 10px taller, for the sake of example
         return (index % 2) === 0 ? 50 : 60;
     };
-    var type = $cordovaNetwork.getNetwork();
+    try {
 
-    var isOnline = $cordovaNetwork.isOnline();
+        var type = $cordovaNetwork.getNetwork();
 
-    var isOffline = $cordovaNetwork.isOffline();
+        var isOnline = $cordovaNetwork.isOnline();
+
+        var isOffline = $cordovaNetwork.isOffline();
+
+    } catch (e) {
+        console.log(e.message);
+    }
     console.log("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
     alert("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
 
