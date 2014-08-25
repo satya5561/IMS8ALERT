@@ -55,20 +55,7 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
         //Make evenly indexed items be 10px taller, for the sake of example
         return (index % 2) === 0 ? 50 : 60;
     };
-    try {
-
-        var type = $cordovaNetwork.getNetwork();
-
-        var isOnline = $cordovaNetwork.isOnline();
-
-        var isOffline = $cordovaNetwork.isOffline();
-        console.log("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
-        alert("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
-    } catch (e) {
-        console.log(e.message);
-    }
-  
-
+   
 })
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {

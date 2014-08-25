@@ -938,7 +938,18 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
     console.log("login Ctrl");
-   
+    try {
+
+        var type = $cordovaNetwork.getNetwork();
+
+        var isOnline = $cordovaNetwork.isOnline();
+
+        var isOffline = $cordovaNetwork.isOffline();
+        console.log("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
+        alert("type:" + type + "isOnline:" + isOnline + "isOffline" + isOffline);
+    } catch (e) {
+        console.log(e.message);
+    }
     $scope.userinfo = {};
     //if ($window.sessionStorage.token)
     //    $state.go("page.home");
