@@ -926,6 +926,30 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('MainController', function ($rootScope, $scope, $location) {
  
+ 
+   $scope.showActionSheet = function () {
+
+        $ionicActionSheet.show({
+            buttons: [
+             { text: 'SingOut' },
+           
+            ],
+            cancelText: 'Cancel',
+            cancel: function () {
+                console.log('CANCELLED');
+            },
+            buttonClicked: function (index) {
+                var txt = 'first';
+                console.log('BUTTON CLICKED', index);
+                return true;
+            },
+        });
+    };
+    document.addEventListener("menubutton", onMenuKeyDown, false);
+
+function onMenuKeyDown() {
+	$scope.showActionSheet();
+};
     $scope.isSpecificPage = function () {
         var path;
         return path = $location.path(), _.contains(["/404", "/login", "/signin", "/"], path)
