@@ -1,5 +1,5 @@
 var baseURL = "";//iSignage.svc/";
-baseURL = "http://beta.databeat.net/ims8wcf/"; //iSignage.svc/"; //dbp8
+baseURL = "http://beta.databeat.net/ims8qcwcf/"; //iSignage.svc/"; //dbp8
 apiUrl = baseURL + "iSignage.svc/";
 function getThumb(id, what, isnodef) {
     var s = isEmptyValue(isnodef) ? '' : 1;

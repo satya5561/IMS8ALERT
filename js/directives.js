@@ -168,7 +168,7 @@ function ($ionicGesture, $timeout) {
         transclude: true,
         template: '<div><label class="toggle">' +
                       '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()" ng-disabled="ngDisabled">' +
-                      '<div class="track ">' +
+                      '<div class="track">' +
                         '<div class="pull-left handleOn">ON</div>' +
                     '<div class="pull-right handleOf">Off</div>' +
                     '<div class="handle "></div>' +
