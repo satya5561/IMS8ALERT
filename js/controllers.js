@@ -951,9 +951,7 @@ angular.module('IMS8Alert.controllers', [])
     //} catch (e) {
     //    console.log(e.message);
     //}
-     $scope.toggleLeftSideMenu = function() {
-    $ionicSideMenuDelegate.toggleLeft();
-  };
+  
     $scope.userinfo = {};
     if ($window.localStorage['token']) {
         $ionicLoading.show();
