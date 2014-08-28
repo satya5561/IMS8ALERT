@@ -925,11 +925,7 @@ angular.module('IMS8Alert.controllers', [])
 .controller('AccountCtrl', function ($scope) {
 })
 .controller('MainController', function ($rootScope, $scope, $location) {
-    document.addEventListener("menubutton", onMenuKeyDown, false);
-
-function onMenuKeyDown() {
-alert("hello iAlert");
-};
+ 
     $scope.isSpecificPage = function () {
         var path;
         return path = $location.path(), _.contains(["/404", "/login", "/signin", "/"], path)
