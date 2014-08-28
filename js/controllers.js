@@ -928,21 +928,27 @@ angular.module('IMS8Alert.controllers', [])
  
  
    $scope.showActionSheet = function () {
-
-        $ionicActionSheet.show({
-            buttons: [
-             { text: 'SingOut' }
-            ],
-            cancelText: 'Cancel',
-            cancel: function () {
-                console.log('CANCELLED');
-            },
-            buttonClicked: function (index) {
-                var txt = 'first';
-                console.log('BUTTON CLICKED', index);
-                return true;
-            },
-        });
+$ionicActionSheet.show({
+      titleText: 'ActionSheet Example',
+      buttons: [
+        { text: 'Share <i class="icon ion-share"></i>' },
+        { text: 'Move <i class="icon ion-arrow-move"></i>' },
+      ],
+      destructiveText: 'Delete',
+      cancelText: 'Cancel',
+      cancel: function() {
+        console.log('CANCELLED');
+      },
+      buttonClicked: function(index) {
+        console.log('BUTTON CLICKED', index);
+        return true;
+      },
+      destructiveButtonClicked: function() {
+        console.log('DESTRUCT');
+        return true;
+      }
+    });
+       
     };
 document.addEventListener("menubutton", onMenuKeyDown, false);
 
