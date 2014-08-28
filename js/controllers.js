@@ -924,15 +924,14 @@ angular.module('IMS8Alert.controllers', [])
 
 .controller('AccountCtrl', function ($scope) {
 })
-.controller('MainController', function ($rootScope, $scope, $location) {
+.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet) {
  
  
    $scope.showActionSheet = function () {
 
         $ionicActionSheet.show({
             buttons: [
-             { text: 'SingOut' },
-           
+             { text: 'SingOut' }
             ],
             cancelText: 'Cancel',
             cancel: function () {
@@ -945,7 +944,7 @@ angular.module('IMS8Alert.controllers', [])
             },
         });
     };
-    document.addEventListener("menubutton", onMenuKeyDown, false);
+document.addEventListener("menubutton", onMenuKeyDown, false);
 
 function onMenuKeyDown() {
 	$scope.showActionSheet();
