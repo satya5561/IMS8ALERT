@@ -924,37 +924,29 @@ angular.module('IMS8Alert.controllers', [])
 
 .controller('AccountCtrl', function ($scope) {
 })
-.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet) {
- 
- 
-   $scope.showActionSheet = function () {
-$ionicActionSheet.show({
-      titleText: 'ActionSheet Example',
-      buttons: [
-        { text: 'Share <i class="icon ion-share"></i>' },
-        { text: 'Move <i class="icon ion-arrow-move"></i>' },
-      ],
-      destructiveText: 'Delete',
-      cancelText: 'Cancel',
-      cancel: function() {
-        console.log('CANCELLED');
-      },
-      buttonClicked: function(index) {
-        console.log('BUTTON CLICKED', index);
-        return true;
-      },
-      destructiveButtonClicked: function() {
-        console.log('DESTRUCT');
-        return true;
-      }
-    });
-       
-    };
-document.addEventListener("menubutton", onMenuKeyDown, false);
+.controller('MainController', function ($rootScope, $scope, $location,$ionicActionSheet) {
+    $scope.showActionSheet = function () {
 
-function onMenuKeyDown() {
-	$scope.showActionSheet();
-};
+        $ionicActionSheet.show({
+            buttons: [
+             { text: 'SingOut' }
+            ],
+            cancelText: 'Cancel',
+            cancel: function () {
+                console.log('CANCELLED');
+            },
+            buttonClicked: function (index) {
+                var txt = 'first';
+                console.log('BUTTON CLICKED', index);
+                return true;
+            },
+        });
+    };
+    document.addEventListener("menubutton", onMenuKeyDown, false);
+
+    function onMenuKeyDown() {
+        $scope.showActionSheet();
+    };
     $scope.isSpecificPage = function () {
         var path;
         return path = $location.path(), _.contains(["/404", "/login", "/signin", "/"], path)
@@ -981,7 +973,6 @@ function onMenuKeyDown() {
     //} catch (e) {
     //    console.log(e.message);
     //}
-  
     $scope.userinfo = {};
     if ($window.localStorage['token']) {
         $ionicLoading.show();
