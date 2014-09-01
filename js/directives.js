@@ -45,7 +45,7 @@ angular.module('IMS8Alert.directives', [])
         restrict: 'E',
         scope: false,
         template: ' <div class="bar bar-subheader " style="padding: 5px 0px 0px; top:0px;" ng-class="{alertheader:headerimg.alertChecked ,alertheaderOff:!headerimg.alertChecked}">' +
-'<a class="ion-information-circled" style="font-size: 20px; margin-left: 10px;"><span class="alertHeading"> Alert Mode ({{headerimg.alertplayercount}} of {{headerimg.playercount}})</span></a>' +
+'<a class="ion-information-circled" style="font-size: 20px; margin-left: 10px;"><span class="alertHeading" style="color: #ffffff !important;"> Alert Mode ({{headerimg.alertplayercount}} of {{headerimg.playercount}})</span></a>' +
 ' <span class="itemValue">' +
 '      <dbr-toggle id="cbAlertMode" ng-model="headerimg.alertChecked" data-on="ON" data-off="OFF" data-trackcss="white" data-handlecss="handleWhite" ng-change="showConfirm(headerimg.alertChecked)"></dbr-toggle> ' +
 ' </span>' +
@@ -167,8 +167,8 @@ function ($ionicGesture, $timeout) {
         },
         transclude: true,
         template: '<div><label class="toggle">' +
-                      '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()" ng-disabled="ngDisabled">' +
-                      '<div class="track">' +
+                      '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()" ng-disabled="ngDisabled" on-touch="onTouch()">' +
+                      '<div class="track" style="color: #ffffff !important;">' +
                         '<div class="pull-left handleOn">ON</div>' +
                     '<div class="pull-right handleOf">Off</div>' +
                     '<div class="handle "></div>' +
@@ -218,7 +218,7 @@ function ($ionicGesture, $timeout) {
                             ngModelController.$setViewValue(false);
                         }
                         $scope.$apply();
-                    }
+                    }   
                 });
 
                 $scope.$on('$destroy', function () {

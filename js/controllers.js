@@ -924,26 +924,38 @@ angular.module('IMS8Alert.controllers', [])
 
 .controller('AccountCtrl', function ($scope) {
 })
-.controller('MainController', function ($rootScope, $scope, $location,$ionicActionSheet) {
-    $scope.showActionSheet = function () {
+.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform) {
 
+    $scope.showActionSheet = function () {
         $ionicActionSheet.show({
             buttons: [
-             { text: 'SingOut' }
+             { text: '<b> SingOut </b>' }
             ],
             cancelText: 'Cancel',
             cancel: function () {
                 console.log('CANCELLED');
+                //alert('I press Cancel Button');
             },
             buttonClicked: function (index) {
                 var txt = 'first';
                 console.log('BUTTON CLICKED', index);
+
+                $window.sessionStorage.removeItem("token");
+                $window.localStorage.removeItem("token");
+                ionic.Platform.exitApp();
                 return true;
             },
         });
     };
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        document.addEventListener("online", onOnline, false);
     document.addEventListener("menubutton", onMenuKeyDown, false);
-
+    }
+    // Handle the online event
+    function onOnline() {
+        alert("online");
+    }
     function onMenuKeyDown() {
         $scope.showActionSheet();
     };
@@ -974,7 +986,7 @@ angular.module('IMS8Alert.controllers', [])
     //    console.log(e.message);
     //}
     $scope.userinfo = {};
-    if ($window.localStorage['token']) {
+    if ($window.localStorage['token'] != null) {
         $ionicLoading.show();
         setTimeout(function () {
             $window.sessionStorage.token = $window.localStorage['token'];
