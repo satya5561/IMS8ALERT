@@ -246,9 +246,11 @@ angular.module('IMS8Alert.controllers', [])
         .success(function (data) {
             $ionicLoading.hide();
             if (data) {
-                $scope.headerimg.playercount = data.Location_AlertServiceResult.TotalPlayerCount
-                $scope.headerimg.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
-                $scope.headerimg.alertChecked = ($scope.headerimg.playercount == 0) ? false : (($scope.headerimg.playercount == $scope.headerimg.alertplayercount) ? true : false);
+                $rootScope.safeApply(function () {
+                    $scope.headerimg.playercount = data.Location_AlertServiceResult.TotalPlayerCount
+                    $scope.headerimg.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
+                    $scope.headerimg.alertChecked = ($scope.headerimg.playercount == 0) ? false : (($scope.headerimg.playercount == $scope.headerimg.alertplayercount) ? true : false);
+                });
             }
         })
       .error(function (error, data) {
@@ -950,9 +952,9 @@ angular.module('IMS8Alert.controllers', [])
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
         alert("device Ready ");
-    document.addEventListener("menubutton", onMenuKeyDown, false);
+        document.addEventListener("menubutton", onMenuKeyDown, false);
     }
-   
+
     function onMenuKeyDown() {
         alert("MenuKeyDown");
         $scope.showActionSheet();
