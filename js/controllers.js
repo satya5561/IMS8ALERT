@@ -949,14 +949,12 @@ angular.module('IMS8Alert.controllers', [])
     };
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
-        document.addEventListener("online", onOnline, false);
+        alert("device Ready ");
     document.addEventListener("menubutton", onMenuKeyDown, false);
     }
-    // Handle the online event
-    function onOnline() {
-        alert("online");
-    }
+   
     function onMenuKeyDown() {
+        alert("MenuKeyDown");
         $scope.showActionSheet();
     };
     $scope.isSpecificPage = function () {
