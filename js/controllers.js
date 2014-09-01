@@ -926,14 +926,14 @@ angular.module('IMS8Alert.controllers', [])
 
 .controller('AccountCtrl', function ($scope) {
 })
-.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform) {
+.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform, $ionicLoading) {
 
     $scope.count = 0;
     $scope.showActionSheet = function () {
         if ($scope.count == 0) {
             $ionicActionSheet.show({
                 buttons: [
-                 { text: '<b> SingOut </b>' }
+                 { text: '<b> SignOut </b>' }
                 ],
                 cancelText: 'Cancel',
                 cancel: function () {
@@ -948,6 +948,7 @@ angular.module('IMS8Alert.controllers', [])
                     $window.sessionStorage.removeItem("token");
                     $window.localStorage.removeItem("token");
                     ionic.Platform.exitApp();
+                    $window.close();
                     //
                     if (navigator.app) {
                         navigator.app.exitApp();
@@ -960,10 +961,16 @@ angular.module('IMS8Alert.controllers', [])
         }
     };
     document.addEventListener("menubutton", onMenuKeyDown, false);
+
     function onMenuKeyDown() {
-        alert("MenuKeyDown");
-        $scope.showActionSheet();
+        if (!$location.path("/page/login")) {
+            //alert("MenuKeyDown");
+            $ionicLoading.show();
+            $scope.showActionSheet();
+            $ionicLoading.hide();
+        }
     };
+
     $scope.isSpecificPage = function () {
         var path;
         return path = $location.path(), _.contains(["/404", "/login", "/signin", "/"], path)
