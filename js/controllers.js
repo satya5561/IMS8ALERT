@@ -225,7 +225,7 @@ angular.module('IMS8Alert.controllers', [])
                 }
                 else {
                     $scope.headerimg.alertChecked = true;
-                    getLocationAlertInfo($scope.headerimg.alertChecked);
+                    getLocationAlertInfo(true);
                 }
             });
         }
@@ -247,7 +247,7 @@ angular.module('IMS8Alert.controllers', [])
             $ionicLoading.hide();
             if (data) {
                 $rootScope.safeApply(function () {
-                    $scope.headerimg.playercount = data.Location_AlertServiceResult.TotalPlayerCount
+                    $scope.headerimg.playercount = data.Location_AlertServiceResult.TotalPlayerCount;
                     $scope.headerimg.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
                     $scope.headerimg.alertChecked = ($scope.headerimg.playercount == 0) ? false : (($scope.headerimg.playercount == $scope.headerimg.alertplayercount) ? true : false);
                 });
@@ -928,33 +928,38 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform) {
 
+    $scope.count = 0;
     $scope.showActionSheet = function () {
-        $ionicActionSheet.show({
-            buttons: [
-             { text: '<b> SingOut </b>' }
-            ],
-            cancelText: 'Cancel',
-            cancel: function () {
-                console.log('CANCELLED');
-                //alert('I press Cancel Button');
-            },
-            buttonClicked: function (index) {
-                var txt = 'first';
-                console.log('BUTTON CLICKED', index);
+        if ($scope.count == 0) {
+            $ionicActionSheet.show({
+                buttons: [
+                 { text: '<b> SingOut </b>' }
+                ],
+                cancelText: 'Cancel',
+                cancel: function () {
+                    console.log('CANCELLED');
+                    //alert('I press Cancel Button');
+                    $scope.count = 0;
+                },
+                buttonClicked: function (index) {
+                    var txt = 'first';
+                    console.log('BUTTON CLICKED', index);
 
-                $window.sessionStorage.removeItem("token");
-                $window.localStorage.removeItem("token");
-                ionic.Platform.exitApp();
-                return true;
-            },
-        });
+                    $window.sessionStorage.removeItem("token");
+                    $window.localStorage.removeItem("token");
+                    ionic.Platform.exitApp();
+                    //
+                    if (navigator.app) {
+                        navigator.app.exitApp();
+                    } else if (navigator.device) {
+                        navigator.device.exitApp();
+                    }
+                    return true;
+                },
+            });
+        }
     };
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-        alert("device Ready ");
-        document.addEventListener("menubutton", onMenuKeyDown, false);
-    }
-
+    document.addEventListener("menubutton", onMenuKeyDown, false);
     function onMenuKeyDown() {
         alert("MenuKeyDown");
         $scope.showActionSheet();
