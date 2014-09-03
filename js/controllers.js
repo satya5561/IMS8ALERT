@@ -930,7 +930,7 @@ angular.module('IMS8Alert.controllers', [])
 
 .controller('AccountCtrl', function ($scope) {
 })
-.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform, $ionicLoading) {
+.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform, $ionicLoading,$cordovaNetwork) {
 
     $scope.count = 0;
     $scope.showActionSheet = function () {
@@ -967,7 +967,7 @@ angular.module('IMS8Alert.controllers', [])
     document.addEventListener("menubutton", onMenuKeyDown, false);
 
     function onMenuKeyDown() {
-            alert("MenuKeyDown");
+        //    alert("MenuKeyDown");
             $scope.showActionSheet();
     };
 
@@ -984,19 +984,20 @@ angular.module('IMS8Alert.controllers', [])
     else
         $rootScope.platform = "";
 
-})
-.controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
-    //console.log("login Ctrl");
     try {
 
         var isOnline = $cordovaNetwork.isOnline();
         console.log("login Ctrl3");
         var isOffline = $cordovaNetwork.isOffline();
-        console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
+        console.log("isOnline:" + isOnline + "isOffline" + isOffline);
         alert("isOnline:" + isOnline + "isOffline" + isOffline);
     } catch (e) {
         console.log(e.message);
     }
+})
+.controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
+    //console.log("login Ctrl");
+  
     $scope.userinfo = {};
     if ($window.localStorage['token'] != null) {
         $ionicLoading.show();
