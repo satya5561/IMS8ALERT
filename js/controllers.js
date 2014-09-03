@@ -964,7 +964,7 @@ angular.module('IMS8Alert.controllers', [])
 
     function onMenuKeyDown() {
         if (!$location.path("/page/login")) {
-            //alert("MenuKeyDown");
+            alert("MenuKeyDown");
             $ionicLoading.show();
             $scope.showActionSheet();
             $ionicLoading.hide();
