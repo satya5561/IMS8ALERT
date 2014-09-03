@@ -205,7 +205,7 @@ angular.module('IMS8Alert.controllers', [])
 
 })
 
-.controller('ChannelsCtrl', function ($scope, $ionicPopup, $ionicActionSheet, $ionicNavBarDelegate, $rootScope, iAdminServiceClient, $ionicLoading) {
+.controller('ChannelsCtrl', function ($scope, $ionicPopup, $ionicActionSheet, $ionicNavBarDelegate, $rootScope, iAdminServiceClient, $ionicLoading, $ionicScrollDelegate) {
     $scope.headerimg = {};
     $scope.headerimg.locName = $rootScope.LocationName;
     $scope.headerimg.groupName = $rootScope.groupName;
@@ -226,12 +226,14 @@ angular.module('IMS8Alert.controllers', [])
                 else {
                     $scope.headerimg.alertChecked = true;
                     getLocationAlertInfo(true);
+                    $scope.scrollTop();
                 }
             });
         }
         else {
             $scope.headerimg.alertChecked = false;
             getLocationAlertInfo(true);
+            $scope.scrollTop();
         }
     };
 
@@ -271,7 +273,9 @@ angular.module('IMS8Alert.controllers', [])
 
         });
     }
-
+    $scope.scrollTop = function () {
+        $ionicScrollDelegate.scrollTop();
+    };
     $scope.goBack = function () {
         $ionicNavBarDelegate.back();
     };
@@ -963,12 +967,8 @@ angular.module('IMS8Alert.controllers', [])
     document.addEventListener("menubutton", onMenuKeyDown, false);
 
     function onMenuKeyDown() {
-        if (!$location.path("/page/login")) {
             alert("MenuKeyDown");
-            $ionicLoading.show();
             $scope.showActionSheet();
-            $ionicLoading.hide();
-        }
     };
 
     $scope.isSpecificPage = function () {
@@ -987,16 +987,16 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
     //console.log("login Ctrl");
-    //try {
+    try {
 
-    //    var isOnline = $cordovaNetwork.isOnline();
-    //    console.log("login Ctrl3");
-    //    var isOffline = $cordovaNetwork.isOffline();
-    //    console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
-    //    alert("isOnline:" + isOnline + "isOffline" + isOffline);
-    //} catch (e) {
-    //    console.log(e.message);
-    //}
+        var isOnline = $cordovaNetwork.isOnline();
+        console.log("login Ctrl3");
+        var isOffline = $cordovaNetwork.isOffline();
+        console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
+        alert("isOnline:" + isOnline + "isOffline" + isOffline);
+    } catch (e) {
+        console.log(e.message);
+    }
     $scope.userinfo = {};
     if ($window.localStorage['token'] != null) {
         $ionicLoading.show();
