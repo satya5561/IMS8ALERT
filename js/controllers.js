@@ -948,9 +948,12 @@ angular.module('IMS8Alert.controllers', [])
                 buttonClicked: function (index) {
                     var txt = 'first';
                     console.log('BUTTON CLICKED', index);
-
-                    $window.sessionStorage.removeItem("token");
-                    $window.localStorage.removeItem("token");
+                    delete $window.localStorage["token"];
+                    delete $window.sessionStorage["token"];
+                    //$window.sessionStorage.removeItem('token');
+                    //$window.localStorage.removeItem('token');
+                    //$window.localStorage.clear();
+                    //alert("App Closed");
                     ionic.Platform.exitApp();
                     $window.close();
                     //
@@ -985,17 +988,17 @@ angular.module('IMS8Alert.controllers', [])
         $rootScope.platform = "";
 
 })
-.controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
+.controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $ionicPlatform, $cordovaCamera, $cordovaNetwork) {
     //console.log("login Ctrl");
-
-    //    var isOnline = $cordovaNetwork.isOnline();
-    //    console.log("login Ctrl3");
-    //    var isOffline = $cordovaNetwork.isOffline();
-    //    console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
-    //    alert("isOnline:" + isOnline + "isOffline" + isOffline);
-    //} catch (e) {
-    //    console.log(e.message);
-    //}     
+   try {
+     var isOnline = $cordovaNetwork.isOnline();
+        console.log("login Ctrl3");
+        var isOffline = $cordovaNetwork.isOffline();
+        console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
+        alert("isOnline:" + isOnline + "isOffline" + isOffline);
+    } catch (e) {
+        console.log(e.message);
+    }     
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -1018,7 +1021,12 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.CELL] = 'Cell generic connection';
         states[Connection.NONE] = 'No network connection';
 
+        //alert('Connection type: ' + states[networkState]);
+        if (states[networkState] == "No network connection") {
         alert('Connection type: ' + states[networkState]);
+            ionic.Platform.exitApp();
+            $window.close();
+        }
     }
 
     $scope.userinfo = {};

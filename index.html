@@ -38,36 +38,13 @@
         document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady() {
             document.addEventListener("backbutton", onBackKeyDown, false); //Listen to the User clicking on the back button
-            checkConnection();
-
-        }
-
-        function checkConnection(){
-            var networkState = navigator.network.connection.type;
-            if (networkState == "undefined")
-            {
-                alert("Connect to Internet Connection");
-            }
-            else {
-                var states = {};
-                states[Connection.UNKNOWN] = 'Unknown connection';
-                states[Connection.ETHERNET] = 'Ethernet connection';
-                states[Connection.WIFI] = 'WiFi connection';
-                states[Connection.CELL_2G] = 'Cell 2G connection';
-                states[Connection.CELL_3G] = 'Cell 3G connection';
-                states[Connection.CELL_4G] = 'Cell 4G connection';
-                states[Connection.CELL] = 'Cell generic connection';
-                states[Connection.NONE] = 'No network connection';
-
-                alert('Connection type: ' + states[networkState]);
-            }
         }
 
 
     </script>
 </head>
-<body ng-app="IMS8Alert" animation="slide-left-right-ios7" >
+<body ng-app="IMS8Alert" animation="slide-left-right-ios7" ng-controller="MainController">
 
-    <ion-nav-view ng-controller="MainController"></ion-nav-view>
+    <ion-nav-view></ion-nav-view>
 </body>
 </html>

@@ -212,14 +212,12 @@ function ($ionicGesture, $timeout, $compile) {
                     checkbox: checkbox,
                     handle: handle,
                     onChange: function () {
-                        if (checkbox.checked) {
-                            $scope.$apply(function(){
-                                ngModelController.$setViewValue(true)});
-                        } else {
-                            $scope.$apply(function(){
-                                ngModelController.$setViewValue(false)});
+                        if (checkbox.checked) {                        
+                                ngModelController.$setViewValue(true);
+                        } else {                           
+                                ngModelController.$setViewValue(false);
                         }
-                        
+                        $scope.$apply();
                     }   
                 });
 

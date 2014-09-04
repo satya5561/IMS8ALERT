@@ -28,7 +28,7 @@ angular.module('IMS8Alert', ['ionic', 'IMS8Alert.controllers', 'IMS8Alert.servic
             StatusBar.styleDefault();
         }
 
-    });
+    });   
 
     $rootScope.$on("$routeChangeSuccess", function () {
         $rootScope.loading = false;
