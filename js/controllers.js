@@ -931,8 +931,7 @@ angular.module('IMS8Alert.controllers', [])
 .controller('AccountCtrl', function ($scope) {
 })
 .controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform, $ionicLoading) {
-
-    $scope.count = 0;
+     $scope.count = 0;
     $scope.showActionSheet = function () {
         if ($scope.count == 0) {
             $ionicActionSheet.show({
@@ -952,7 +951,7 @@ angular.module('IMS8Alert.controllers', [])
                     delete $window.sessionStorage["token"];
                     //$window.sessionStorage.removeItem('token');
                     //$window.localStorage.removeItem('token');
-                    //$window.localStorage.clear();
+                   // $window.localStorage.clear();
                     //alert("App Closed");
                     ionic.Platform.exitApp();
                     $window.close();
@@ -970,8 +969,8 @@ angular.module('IMS8Alert.controllers', [])
     document.addEventListener("menubutton", onMenuKeyDown, false);
 
     function onMenuKeyDown() {
-        //    alert("MenuKeyDown");
-            $scope.showActionSheet();
+        //    alert("MenuKeyDown");            
+            $scope.showActionSheet();  
     };
 
     $scope.isSpecificPage = function () {
@@ -990,15 +989,15 @@ angular.module('IMS8Alert.controllers', [])
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $ionicPlatform, $cordovaCamera, $cordovaNetwork) {
     //console.log("login Ctrl");
-   try {
-     var isOnline = $cordovaNetwork.isOnline();
-        console.log("login Ctrl3");
-        var isOffline = $cordovaNetwork.isOffline();
-        console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
-        alert("isOnline:" + isOnline + "isOffline" + isOffline);
-    } catch (e) {
-        console.log(e.message);
-    }     
+   //try {
+   //  var isOnline = $cordovaNetwork.isOnline();
+   //     console.log("login Ctrl3");
+   //     var isOffline = $cordovaNetwork.isOffline();
+   //     console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
+   //     alert("isOnline:" + isOnline + "isOffline" + isOffline);
+   // } catch (e) {
+   //     console.log(e.message);
+   // }     
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -1022,7 +1021,7 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.NONE] = 'No network connection';
 
         //alert('Connection type: ' + states[networkState]);
-        if (states[networkState] == "No network connection") {
+        if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
         alert('Connection type: ' + states[networkState]);
             ionic.Platform.exitApp();
             $window.close();
