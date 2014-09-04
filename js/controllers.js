@@ -930,7 +930,7 @@ angular.module('IMS8Alert.controllers', [])
 
 .controller('AccountCtrl', function ($scope) {
 })
-.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform, $ionicLoading,$cordovaNetwork) {
+.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform, $ionicLoading) {
 
     $scope.count = 0;
     $scope.showActionSheet = function () {
@@ -984,58 +984,81 @@ angular.module('IMS8Alert.controllers', [])
     else
         $rootScope.platform = "";
 
-    try {
-
-        var isOnline = $cordovaNetwork.isOnline();
-        console.log("login Ctrl3");
-        var isOffline = $cordovaNetwork.isOffline();
-        console.log("isOnline:" + isOnline + "isOffline" + isOffline);
-        alert("isOnline:" + isOnline + "isOffline" + isOffline);
-    } catch (e) {
-        console.log(e.message);
-    }
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $cordovaCamera, $cordovaNetwork) {
     //console.log("login Ctrl");
-  
-    $scope.userinfo = {};
-    if ($window.localStorage['token'] != null) {
-        $ionicLoading.show();
-        setTimeout(function () {
-            $window.sessionStorage.token = $window.localStorage['token'];
-            $state.go("page.home");
-            $ionicLoading.hide();
-        }, 5000);
+
+    //    var isOnline = $cordovaNetwork.isOnline();
+    //    console.log("login Ctrl3");
+    //    var isOffline = $cordovaNetwork.isOffline();
+    //    console.log( "isOnline:" + isOnline + "isOffline" + isOffline);
+    //    alert("isOnline:" + isOnline + "isOffline" + isOffline);
+    //} catch (e) {
+    //    console.log(e.message);
+    //}     
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is loaded and it is now safe to make calls Cordova methods
+    //
+    function onDeviceReady() {
+        $scope.checkConnection();
     }
-    $scope.doLogin = function () {
-        $ionicLoading.show();
-        iAdminServiceClient.authorize($scope.userinfo)
-                  .success(function (data, status) {
-                      var resultToken = data.DB_Rad_Authorize2Result;
-                      if (resultToken > 0) {
-                          $window.sessionStorage.token = resultToken;
-                          $window.localStorage['token'] = $window.sessionStorage.token;
-                          $state.go("page.home");
-                      }
-                      else {
+
+    $scope.checkConnection=function() {
+        var networkState = navigator.connection.type;
+
+        var states = {};
+        states[Connection.UNKNOWN] = 'Unknown connection';
+        states[Connection.ETHERNET] = 'Ethernet connection';
+        states[Connection.WIFI] = 'WiFi connection';
+        states[Connection.CELL_2G] = 'Cell 2G connection';
+        states[Connection.CELL_3G] = 'Cell 3G connection';
+        states[Connection.CELL_4G] = 'Cell 4G connection';
+        states[Connection.CELL] = 'Cell generic connection';
+        states[Connection.NONE] = 'No network connection';
+
+        alert('Connection type: ' + states[networkState]);
+    }
+
+    $scope.userinfo = {};
+        if ($window.localStorage['token'] != null) {
+            $ionicLoading.show();
+            setTimeout(function () {
+                $window.sessionStorage.token = $window.localStorage['token'];
+                $state.go("page.home");
+                $ionicLoading.hide();
+            }, 5000);
+        }
+        $scope.doLogin = function () {
+            $ionicLoading.show();
+            iAdminServiceClient.authorize($scope.userinfo)
+                      .success(function (data, status) {
+                          var resultToken = data.DB_Rad_Authorize2Result;
+                          if (resultToken > 0) {
+                              $window.sessionStorage.token = resultToken;
+                              $window.localStorage['token'] = $window.sessionStorage.token;
+                              $state.go("page.home");
+                          }
+                          else {
+                              var confirmPopup = $ionicPopup.alert({
+                                  title: 'Error',
+                                  template: 'Wrong username/password'
+                              });
+                          }
+                          $ionicLoading.hide();
+                      })
+                      .error(function (error, status) {
                           var confirmPopup = $ionicPopup.alert({
                               title: 'Error',
-                              template: 'Wrong username/password'
+                              template: 'Error in authentication'
                           });
-                      }
-                      $ionicLoading.hide();
-                  })
-                  .error(function (error, status) {
-                      var confirmPopup = $ionicPopup.alert({
-                          title: 'Error',
-                          template: 'Error in authentication'
+                          $ionicLoading.hide();
                       });
-                      $ionicLoading.hide();
-                  });
 
 
-    }
-})
+        }
+    })
 .controller('LocationsCtrl', function ($scope, $state, $rootScope, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate) {
 
     getLocationAddresses($rootScope.CustomerID, $rootScope.GroupID, $rootScope.MemberID);
