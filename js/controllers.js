@@ -941,6 +941,7 @@ angular.module('IMS8Alert.controllers', [])
      $scope.count = 0;
     $scope.showActionSheet = function () {
         if ($scope.count == 0) {
+            $ionicLoading.show();
             $ionicActionSheet.show({
                 buttons: [
                  { text: '<b> SignOut </b>' }
@@ -950,6 +951,7 @@ angular.module('IMS8Alert.controllers', [])
                     console.log('CANCELLED');
                     //alert('I press Cancel Button');
                     $scope.count = 0;
+                    $ionicLoading.hide();
                 },
                 buttonClicked: function (index) {
                     var txt = 'first';
@@ -971,6 +973,7 @@ angular.module('IMS8Alert.controllers', [])
                     return true;
                 },
             });
+             $ionicLoading.hide();
         }
     };
     document.addEventListener("menubutton", onMenuKeyDown, false);
