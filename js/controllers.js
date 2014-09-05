@@ -214,6 +214,8 @@ angular.module('IMS8Alert.controllers', [])
     getLocationAlertInfo(false);
 
     $scope.showConfirm = function (m) {
+    //Updated for $scope
+      $ionicLoading.show();
         if (!m) {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Alert Mode',
@@ -235,6 +237,7 @@ angular.module('IMS8Alert.controllers', [])
             getLocationAlertInfo(true);
             $scope.scrollTop();
         }
+          $ionicLoading.hide();
     };
 
     function getLocationAlertInfo(isSave) {
@@ -969,8 +972,10 @@ angular.module('IMS8Alert.controllers', [])
     document.addEventListener("menubutton", onMenuKeyDown, false);
 
     function onMenuKeyDown() {
-        //    alert("MenuKeyDown");            
+        //    alert("MenuKeyDown");    
+         if ($window.localStorage['token'] != null) {
             $scope.showActionSheet();  
+            }
     };
 
     $scope.isSpecificPage = function () {
@@ -1033,8 +1038,8 @@ angular.module('IMS8Alert.controllers', [])
             $ionicLoading.show();
             setTimeout(function () {
                 $window.sessionStorage.token = $window.localStorage['token'];
+                  $ionicLoading.hide();
                 $state.go("page.home");
-                $ionicLoading.hide();
             }, 5000);
         }
         $scope.doLogin = function () {
