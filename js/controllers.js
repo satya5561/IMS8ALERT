@@ -984,22 +984,32 @@ angular.module('IMS8Alert.controllers', [])
             $scope.showActionSheet();  
             }
     };
+   $scope.bc = 0;
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
         document.addEventListener("backbutton", onBackButtonPress, false);
     };
-    function onBackButtonPress() {
-        setTimeout(function () { document.addEventListener("backbutton", onBackButtonPress2, false); }, 3000);
-                     
-    };
-    $scope.bc=0;
-    function onBackButtonPress2(){
-          $scope.bc++;
-          if($scope.bc==3){
-              ionic.Platform.exitApp();
-                $window.close();
-          }
-    };
+   
+    function onBackButtonPress() {     
+        $scope.bc++;
+        if ($scope.bc == 2) {           
+            $ionicPlatform.registerBackButtonAction(function (e) {
+                    var confirmPopup = $ionicPopup.confirm({
+                        title: 'Confirm Exit',
+                        template: "Are you sure you want to close iAlert?"
+                    });
+                    confirmPopup.then(function (close) {
+                        if (close) {
+                            // there is no back view, so close the app instead
+                            ionic.Platform.exitApp();
+                            $window.close();
+                        } // otherwise do nothing
+                    });
+                    e.preventDefault();
+                    return false;
+            }, 101); // 1 more priority than back button
+            }
+    };  
     $scope.isSpecificPage = function () {
         var path;
         return path = $location.path(), _.contains(["/404", "/login", "/signin", "/"], path)
