@@ -224,11 +224,13 @@ angular.module('IMS8Alert.controllers', [])
             confirmPopup.then(function (res) {
                 if (!res) {
                     $scope.headerimg.alertChecked = false;
+                    $scope.$apply();
                 }
                 else {
                     $scope.headerimg.alertChecked = true;
                     getLocationAlertInfo(true);
                     $scope.scrollTop();
+                    $scope.$apply();
                 }
             });
         }
@@ -236,6 +238,7 @@ angular.module('IMS8Alert.controllers', [])
             $scope.headerimg.alertChecked = false;
             getLocationAlertInfo(true);
             $scope.scrollTop();
+            $scope.$apply();
         }
           $ionicLoading.hide();
     };
@@ -249,13 +252,14 @@ angular.module('IMS8Alert.controllers', [])
         $ionicLoading.show();
         iAdminServiceClient.location_AlertService(locationAlertDTO, isSave)
         .success(function (data) {
-            $ionicLoading.hide();
             if (data) {
                 $rootScope.safeApply(function () {
                     $scope.headerimg.playercount = data.Location_AlertServiceResult.TotalPlayerCount;
                     $scope.headerimg.alertplayercount = data.Location_AlertServiceResult.AlertPlayerCount;
                     $scope.headerimg.alertChecked = ($scope.headerimg.playercount == 0) ? false : (($scope.headerimg.playercount == $scope.headerimg.alertplayercount) ? true : false);
                 });
+        $scope.$apply();
+        $ionicLoading.hide();
             }
         })
       .error(function (error, data) {
@@ -782,7 +786,7 @@ angular.module('IMS8Alert.controllers', [])
 })
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate, $ionicPlatform, $ionicPopup) {
-    $ionicPlatform.registerBackButtonAction(function (e) {
+    /*$ionicPlatform.registerBackButtonAction(function (e) {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Confirm Exit',
             template: "Are you sure you want to close iAlert?"
@@ -795,7 +799,7 @@ angular.module('IMS8Alert.controllers', [])
         });
         e.preventDefault();
         return false;
-    }, 101); // 1 more priority than back button
+    }, 101); // 1 more priority than back button*/
 
     getCustomers();
     if ($rootScope.CustomerName) {
@@ -977,7 +981,22 @@ angular.module('IMS8Alert.controllers', [])
             $scope.showActionSheet();  
             }
     };
-
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        document.addEventListener("backbutton", onBackButtonPress, false);
+    };
+    function onBackButtonPress() {
+        setTimeout(function () { document.addEventListener("backbutton", onBackButtonPress2, false); }, 3000);
+                     
+    };
+    $scope.bc=0;
+    function onBackButtonPress2(){
+          $scope.bc++;
+          if($scope.bc==3){
+              ionic.Platform.exitApp();
+                $window.close();
+          }
+    };
     $scope.isSpecificPage = function () {
         var path;
         return path = $location.path(), _.contains(["/404", "/login", "/signin", "/"], path)
