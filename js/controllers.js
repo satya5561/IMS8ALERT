@@ -937,10 +937,11 @@ angular.module('IMS8Alert.controllers', [])
 
 .controller('AccountCtrl', function ($scope) {
 })
-.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform, $ionicLoading) {
+.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform, $ionicLoading, $ionicPopup) {
      $scope.count = 0;
     $scope.showActionSheet = function () {
         if ($scope.count == 0) {
+            $scope.count++;
             $ionicLoading.show();
             $ionicActionSheet.show({
                 buttons: [
@@ -964,6 +965,7 @@ angular.module('IMS8Alert.controllers', [])
                     //alert("App Closed");
                     ionic.Platform.exitApp();
                     $window.close();
+                    $scope.count = 0;
                     //
                     if (navigator.app) {
                         navigator.app.exitApp();
@@ -980,36 +982,32 @@ angular.module('IMS8Alert.controllers', [])
 
     function onMenuKeyDown() {
         //    alert("MenuKeyDown");    
-         if ($window.localStorage['token'] != null) {
-            $scope.showActionSheet();  
+         if ($scope.count == 0) {
+            if ($window.localStorage['token'] != null) {
+                $scope.showActionSheet();
             }
+        }
     };
    $scope.bc = 0;
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
         document.addEventListener("backbutton", onBackButtonPress, false);
     };
-   
-    function onBackButtonPress() {     
-        $scope.bc++;
-        if ($scope.bc == 2) {           
-            $ionicPlatform.registerBackButtonAction(function (e) {
-                    var confirmPopup = $ionicPopup.confirm({
-                        title: 'Confirm Exit',
-                        template: "Are you sure you want to close iAlert?"
-                    });
-                    confirmPopup.then(function (close) {
-                        if (close) {
-                            // there is no back view, so close the app instead
-                            ionic.Platform.exitApp();
-                            $window.close();
-                        } // otherwise do nothing
-                    });
-                    e.preventDefault();
-                    return false;
-            }, 101); // 1 more priority than back button
+    function onBackButtonPress()   {
+        if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Confirm Exit',
+                    template: "Are you sure you want to close iAlert?"
+                });
+                confirmPopup.then(function (close) {
+                    if (close) {
+                        // there is no back view, so close the app instead
+                        ionic.Platform.exitApp();
+                        $window.close();
+                    } // otherwise do nothing
+                });
             }
-    };  
+    };
     $scope.isSpecificPage = function () {
         var path;
         return path = $location.path(), _.contains(["/404", "/login", "/signin", "/"], path)
@@ -1023,7 +1021,7 @@ angular.module('IMS8Alert.controllers', [])
     else
         $rootScope.platform = "";
         
-         setTimeout(function () {
+        setInterval(function () {
         var networkState = navigator.connection.type;
         var states = {};
         states[Connection.UNKNOWN] = 'Unknown connection';
@@ -1038,15 +1036,14 @@ angular.module('IMS8Alert.controllers', [])
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
             alert('Connection type: ' + states[networkState]);
             ionic.Platform.exitApp();
-            window.close();
+            $window.close();
             if (navigator.app) {
                 navigator.app.exitApp();
             } else if (navigator.device) {
                 navigator.device.exitApp();
             }
-        }     
-
-    }, 5000);
+        }
+    }, 10000);
 
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $ionicPlatform, $cordovaCamera, $cordovaNetwork) {
@@ -1066,28 +1063,6 @@ angular.module('IMS8Alert.controllers', [])
     // Cordova is loaded and it is now safe to make calls Cordova methods
     //
     function onDeviceReady() {
-        $scope.checkConnection();
-    }
-
-    $scope.checkConnection=function() {
-        var networkState = navigator.connection.type;
-
-        var states = {};
-        states[Connection.UNKNOWN] = 'Unknown connection';
-        states[Connection.ETHERNET] = 'Ethernet connection';
-        states[Connection.WIFI] = 'WiFi connection';
-        states[Connection.CELL_2G] = 'Cell 2G connection';
-        states[Connection.CELL_3G] = 'Cell 3G connection';
-        states[Connection.CELL_4G] = 'Cell 4G connection';
-        states[Connection.CELL] = 'Cell generic connection';
-        states[Connection.NONE] = 'No network connection';
-
-        //alert('Connection type: ' + states[networkState]);
-        if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-        alert('Connection type: ' + states[networkState]);
-            ionic.Platform.exitApp();
-            $window.close();
-        }
     }
 
     $scope.userinfo = {};
