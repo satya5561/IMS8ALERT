@@ -56,7 +56,7 @@
 
             //alert('Connection type: ' + states[networkState]);
             if (states[networkState] == "No network connection" || states[networkState] =="undefined") {
-                alert('Connection type: ' + states[networkState]);
+               alert('No network connection. Please Enable your Mobile data or Wifi');
                 ionic.Platform.exitApp();
                 window.close();
                 if (navigator.app) {
