@@ -820,9 +820,7 @@ angular.module('IMS8Alert.controllers', [])
                             navigator.device.exitApp();
                         }
                     } // otherwise do nothing
-                    else {
-                        $scope.count = 0;
-                    }
+                     $scope.count = 0;
                 });
             }
     };
@@ -1073,7 +1071,9 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.NONE] = 'No network connection';
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
+            $ionicLoading.show();
         $scope.showActionSheet1();
+        $ionicLoading.hide();
         } 
     }, 10000);
 
@@ -1092,7 +1092,9 @@ angular.module('IMS8Alert.controllers', [])
             states[Connection.NONE] = 'No network connection';
             //alert('Connection type: ' + states[networkState]);
             if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
+                $ionicLoading.show();
                 $scope.showActionSheet1();
+                $ionicLoading.hide();
             } else {
                 $scope.showAlert1();
             }
@@ -1174,9 +1176,7 @@ angular.module('IMS8Alert.controllers', [])
                             navigator.device.exitApp();
                         }
                     } // otherwise do nothing
-                    else {
-                        $scope.count = 0;
-                    }
+                  $scope.count = 0;
                 });
             }
     };
