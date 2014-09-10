@@ -994,8 +994,10 @@ angular.module('IMS8Alert.controllers', [])
     function onDeviceReady() {
         document.addEventListener("backbutton", onBackButtonPress, false);
     };
-    function onBackButtonPress()   {
+     function onBackButtonPress()   {
         if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
+            if ($scope.count == 0) {
+                $scope.count++;
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Confirm Exit',
                     template: "Are you sure you want to close iAlert?"
@@ -1005,9 +1007,18 @@ angular.module('IMS8Alert.controllers', [])
                         // there is no back view, so close the app instead
                         ionic.Platform.exitApp();
                         $window.close();
+                        if (navigator.app) {
+                            navigator.app.exitApp();
+                        } else if (navigator.device) {
+                            navigator.device.exitApp();
+                        }
                     } // otherwise do nothing
+                    else {
+                        $scope.count = 0;
+                    }
                 });
             }
+        }
     };
     $scope.isSpecificPage = function () {
         var path;
@@ -1022,7 +1033,7 @@ angular.module('IMS8Alert.controllers', [])
     else
         $rootScope.platform = "";
         
-        setInterval("netconnection()", 10000);
+        setInterval("netconnection();", 10000);
     $scope.showActionSheet1 = function () {
         if ($scope.count == 0) {
             $scope.count++;
