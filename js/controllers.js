@@ -979,6 +979,7 @@ angular.module('IMS8Alert.controllers', [])
         }
     };
     document.addEventListener("menubutton", onMenuKeyDown, false);
+     document.addEventListener("backbutton", onBackButtonPress, false);
 
     function onMenuKeyDown() {
         //    alert("MenuKeyDown");    
@@ -1021,7 +1022,34 @@ angular.module('IMS8Alert.controllers', [])
     else
         $rootScope.platform = "";
         
-        setInterval(function () {
+        setInterval("netconnection()", 10000);
+    $scope.showActionSheet1 = function () {
+        if ($scope.count == 0) {
+            $scope.count++;
+            $ionicLoading.show();
+            $ionicActionSheet.show({
+                buttons: [
+                 { text: '<b> Try Again </b>' }
+                ],
+                cancelText: 'Cancel',
+                cancel: function () {
+                    console.log('CANCELLED');
+                    //alert('I press Cancel Button');
+                    $scope.count = 0;
+                    $ionicLoading.hide();
+                },
+                buttonClicked: function (index) {
+                    var txt = 'first';
+                    console.log('BUTTON CLICKED', index);
+                    netconnection();
+                        $scope.count = 0;
+                        return true;
+                    },
+                    });
+            $ionicLoading.hide();
+        }
+    };
+    function netconnection(){
         var networkState = navigator.connection.type;
         var states = {};
         states[Connection.UNKNOWN] = 'Unknown connection';
@@ -1034,16 +1062,20 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.NONE] = 'No network connection';
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-            alert('Connection type: ' + states[networkState]);
-            ionic.Platform.exitApp();
-            $window.close();
-            if (navigator.app) {
-                navigator.app.exitApp();
-            } else if (navigator.device) {
-                navigator.device.exitApp();
-            }
+            $scope.showActionSheet1();
+        } else {
+            showAlert1();
         }
-    }, 10000);
+    };
+    function showAlert1() {
+        var alertPopup = $ionicPopup.alert({
+            title: 'Internet Connection',
+            template: 'The Application is now Connected !'
+        });
+        alertPopup.then(function (res) {
+            console.log('The Application is now Connected.');
+        });
+    };
 
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $ionicPlatform, $cordovaCamera, $cordovaNetwork) {
