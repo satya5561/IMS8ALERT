@@ -800,7 +800,32 @@ angular.module('IMS8Alert.controllers', [])
         e.preventDefault();
         return false;
     }, 101); // 1 more priority than back button*/
-
+ document.addEventListener("backbutton", onBackButtonPress, false);
+ $scope.count =0;
+    function onBackButtonPress() {
+            if ($scope.count == 0) {
+                $scope.count++;
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Confirm Exit',
+                    template: "Are you sure you want to close iAlert?"
+                });
+                confirmPopup.then(function (close) {
+                    if (close) {
+                        // there is no back view, so close the app instead
+                        ionic.Platform.exitApp();
+                        $window.close();
+                        if (navigator.app) {
+                            navigator.app.exitApp();
+                        } else if (navigator.device) {
+                            navigator.device.exitApp();
+                        }
+                    } // otherwise do nothing
+                    else {
+                        $scope.count = 0;
+                    }
+                });
+            }
+    };
     getCustomers();
     if ($rootScope.CustomerName) {
         $scope.selectedcstomer = $rootScope.CustomerName;
@@ -979,9 +1004,9 @@ angular.module('IMS8Alert.controllers', [])
         }
     };
     document.addEventListener("menubutton", onMenuKeyDown, false);
-    if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
+   /* if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
      document.addEventListener("backbutton", onBackButtonPress, false);
-    }
+    }*/
 
     function onMenuKeyDown() {
         //    alert("MenuKeyDown");    
@@ -996,7 +1021,7 @@ angular.module('IMS8Alert.controllers', [])
     function onDeviceReady() {
         document.addEventListener("backbutton", onBackButtonPress, false);
     };
-     function onBackButtonPress()   {
+    /* function onBackButtonPress()   {
         if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
             if ($scope.count == 0) {
                 $scope.count++;
@@ -1021,7 +1046,7 @@ angular.module('IMS8Alert.controllers', [])
                 });
             }
         }
-    };
+    };*/
     $scope.isSpecificPage = function () {
         var path;
         return path = $location.path(), _.contains(["/404", "/login", "/signin", "/"], path)
@@ -1035,34 +1060,7 @@ angular.module('IMS8Alert.controllers', [])
     else
         $rootScope.platform = "";
         
-        setInterval("$scope.netconnection()", 10000);
-    $scope.showActionSheet1 = function () {
-        if ($scope.count == 0) {
-            $scope.count++;
-            $ionicLoading.show();
-            $ionicActionSheet.show({
-                buttons: [
-                 { text: '<b> Try Again </b>' }
-                ],
-                cancelText: 'Cancel',
-                cancel: function () {
-                    console.log('CANCELLED');
-                    //alert('I press Cancel Button');
-                    $scope.count = 0;
-                    $ionicLoading.hide();
-                },
-                buttonClicked: function (index) {
-                    var txt = 'first';
-                    console.log('BUTTON CLICKED', index);
-                    $scope.netconnection();
-                        $scope.count = 0;
-                        return true;
-                    },
-                    });
-            $ionicLoading.hide();
-        }
-    };
-    $scope.netconnection = function (){
+         setInterval(function () {
         var networkState = navigator.connection.type;
         var states = {};
         states[Connection.UNKNOWN] = 'Unknown connection';
@@ -1073,20 +1071,67 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.CELL_4G] = 'Cell 4G connection';
         states[Connection.CELL] = 'Cell generic connection';
         states[Connection.NONE] = 'No network connection';
-        //alert('Connection type: ' + states[networkState]);
+        alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-            $scope.showActionSheet1();
-        } else {
-             $scope.showAlert1();
+        $scope.showActionSheet1();
+        } 
+    }, 10000);
+
+    $scope.netconnection = function () {
+        if ($scope.count == 0) {
+            $scope.count++;
+            var networkState = navigator.connection.type;
+            var states = {};
+            states[Connection.UNKNOWN] = 'Unknown connection';
+            states[Connection.ETHERNET] = 'Ethernet connection';
+            states[Connection.WIFI] = 'WiFi connection';
+            states[Connection.CELL_2G] = 'Cell 2G connection';
+            states[Connection.CELL_3G] = 'Cell 3G connection';
+            states[Connection.CELL_4G] = 'Cell 4G connection';
+            states[Connection.CELL] = 'Cell generic connection';
+            states[Connection.NONE] = 'No network connection';
+            alert('Connection type: ' + states[networkState]);
+            if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
+                $scope.showActionSheet1();
+            } else {
+                $scope.showAlert1();
+            }
         }
     };
-     $scope.showAlert1 = function () {
+        $scope.showActionSheet1 = function () {
+            if ($scope.count == 0) {
+                $scope.count++;
+                $ionicLoading.show();
+                $ionicActionSheet.show({
+                    buttons: [
+                     { text: '<b> Try Again </b>' }
+                    ],
+                    cancelText: 'Cancel',
+                    cancel: function () {
+                        console.log('CANCELLED');
+                        //alert('I press Cancel Button');
+                        $scope.count = 0;
+                        $ionicLoading.hide();
+                    },
+                    buttonClicked: function (index) {
+                        var txt = 'first';
+                        console.log('BUTTON CLICKED', index);
+                        $scope.netconnection();
+                        $scope.count = 0;
+                        return true;
+                    },
+                });
+                $ionicLoading.hide();
+            }
+        };
+    $scope.showAlert1=function() {
         var alertPopup = $ionicPopup.alert({
             title: 'Internet Connection',
             template: 'The Application is now Connected !'
         });
         alertPopup.then(function (res) {
             console.log('The Application is now Connected.');
+           
         });
     };
 
@@ -1109,6 +1154,32 @@ angular.module('IMS8Alert.controllers', [])
     //
     function onDeviceReady() {
     }
+     document.addEventListener("backbutton", onBackButtonPress, false);
+     $scope.count = 0;
+    function onBackButtonPress() {
+            if ($scope.count == 0) {
+                $scope.count++;
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Confirm Exit',
+                    template: "Are you sure you want to close iAlert?"
+                });
+                confirmPopup.then(function (close) {
+                    if (close) {
+                        // there is no back view, so close the app instead
+                        ionic.Platform.exitApp();
+                        $window.close();
+                        if (navigator.app) {
+                            navigator.app.exitApp();
+                        } else if (navigator.device) {
+                            navigator.device.exitApp();
+                        }
+                    } // otherwise do nothing
+                    else {
+                        $scope.count = 0;
+                    }
+                });
+            }
+    };
 
     $scope.userinfo = {};
         if ($window.localStorage['token'] != null) {
