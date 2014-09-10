@@ -800,8 +800,9 @@ angular.module('IMS8Alert.controllers', [])
         e.preventDefault();
         return false;
     }, 101); // 1 more priority than back button*/
+     $scope.count =0;
  document.addEventListener("backbutton", onBackButtonPress, false);
- $scope.count =0;
+
     function onBackButtonPress() {
             if ($scope.count == 0) {
                 $scope.count++;
@@ -1071,9 +1072,7 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.NONE] = 'No network connection';
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-            $ionicLoading.show();
-        $scope.showActionSheet1();
-        $ionicLoading.hide();
+           $scope.showAlert1();
         } 
     }, 10000);
 
@@ -1092,10 +1091,6 @@ angular.module('IMS8Alert.controllers', [])
             states[Connection.NONE] = 'No network connection';
             //alert('Connection type: ' + states[networkState]);
             if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-                $ionicLoading.show();
-                $scope.showActionSheet1();
-                $ionicLoading.hide();
-            } else {
                 $scope.showAlert1();
             }
         }
@@ -1133,7 +1128,9 @@ angular.module('IMS8Alert.controllers', [])
         });
         alertPopup.then(function (res) {
             console.log('The Application is now Connected.');
-           
+            $ionicLoading.show();
+            $scope.showActionSheet1();
+            $ionicLoading.hide();
         });
     };
 
@@ -1149,7 +1146,7 @@ angular.module('IMS8Alert.controllers', [])
    // } catch (e) {
    //     console.log(e.message);
    // }     
-
+    $scope.count = 0;
     document.addEventListener("deviceready", onDeviceReady, false);
 
     // Cordova is loaded and it is now safe to make calls Cordova methods
@@ -1157,7 +1154,7 @@ angular.module('IMS8Alert.controllers', [])
     function onDeviceReady() {
     }
      document.addEventListener("backbutton", onBackButtonPress, false);
-     $scope.count = 0;
+ 
     function onBackButtonPress() {
             if ($scope.count == 0) {
                 $scope.count++;
