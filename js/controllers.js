@@ -1033,7 +1033,7 @@ angular.module('IMS8Alert.controllers', [])
     else
         $rootScope.platform = "";
         
-        setInterval("netconnection();", 10000);
+        setInterval("$scope.netconnection()", 10000);
     $scope.showActionSheet1 = function () {
         if ($scope.count == 0) {
             $scope.count++;
@@ -1052,7 +1052,7 @@ angular.module('IMS8Alert.controllers', [])
                 buttonClicked: function (index) {
                     var txt = 'first';
                     console.log('BUTTON CLICKED', index);
-                    netconnection();
+                    $scope.netconnection();
                         $scope.count = 0;
                         return true;
                     },
@@ -1060,7 +1060,7 @@ angular.module('IMS8Alert.controllers', [])
             $ionicLoading.hide();
         }
     };
-    function netconnection(){
+    $scope.netconnection = function (){
         var networkState = navigator.connection.type;
         var states = {};
         states[Connection.UNKNOWN] = 'Unknown connection';
@@ -1075,10 +1075,10 @@ angular.module('IMS8Alert.controllers', [])
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
             $scope.showActionSheet1();
         } else {
-            showAlert1();
+             $scope.showAlert1();
         }
     };
-    function showAlert1() {
+     $scope.showAlert1 = function () {
         var alertPopup = $ionicPopup.alert({
             title: 'Internet Connection',
             template: 'The Application is now Connected !'
