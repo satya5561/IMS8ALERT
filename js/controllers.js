@@ -1071,7 +1071,7 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.CELL_4G] = 'Cell 4G connection';
         states[Connection.CELL] = 'Cell generic connection';
         states[Connection.NONE] = 'No network connection';
-        alert('Connection type: ' + states[networkState]);
+        //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
         $scope.showActionSheet1();
         } 
@@ -1090,7 +1090,7 @@ angular.module('IMS8Alert.controllers', [])
             states[Connection.CELL_4G] = 'Cell 4G connection';
             states[Connection.CELL] = 'Cell generic connection';
             states[Connection.NONE] = 'No network connection';
-            alert('Connection type: ' + states[networkState]);
+            //alert('Connection type: ' + states[networkState]);
             if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
                 $scope.showActionSheet1();
             } else {
