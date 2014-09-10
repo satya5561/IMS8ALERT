@@ -979,7 +979,9 @@ angular.module('IMS8Alert.controllers', [])
         }
     };
     document.addEventListener("menubutton", onMenuKeyDown, false);
+    if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
      document.addEventListener("backbutton", onBackButtonPress, false);
+    }
 
     function onMenuKeyDown() {
         //    alert("MenuKeyDown");    
