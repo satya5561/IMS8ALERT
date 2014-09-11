@@ -1014,8 +1014,7 @@ angular.module('IMS8Alert.controllers', [])
                 $scope.showActionSheet();
             }
         }
-    };
-   $scope.bc = 0;
+    }
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
         document.addEventListener("backbutton", onBackButtonPress, false);
@@ -1072,7 +1071,9 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.NONE] = 'No network connection';
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
+              $ionicLoading.show();
            $scope.showAlert1();
+             $ionicLoading.hide();
         } 
     }, 10000);
 
@@ -1091,7 +1092,9 @@ angular.module('IMS8Alert.controllers', [])
             states[Connection.NONE] = 'No network connection';
             //alert('Connection type: ' + states[networkState]);
             if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
+                  $ionicLoading.show();
                 $scope.showAlert1();
+                  $ionicLoading.hide();
             }
         }
     };
@@ -1124,10 +1127,10 @@ angular.module('IMS8Alert.controllers', [])
     $scope.showAlert1=function() {
         var alertPopup = $ionicPopup.alert({
             title: 'Internet Connection',
-            template: 'The Application is now Connected !'
+            template: 'Internet is not available. Please Enable Mobile Data or Wifi !'
         });
         alertPopup.then(function (res) {
-            console.log('The Application is now Connected.');
+            console.log('Internet is not available. Please Enable Mobile Data or Wifi !');
             $ionicLoading.show();
             $scope.showActionSheet1();
             $ionicLoading.hide();
