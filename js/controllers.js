@@ -806,9 +806,7 @@ angular.module('IMS8Alert.controllers', [])
     function onBackButtonPress() {
             if ($scope.count == 0) {
                 $scope.count++;
-                alert('state path'+$state.path);
-                if($state.path=="page.home"){
-                 $ionicLoading.show();
+                if($state.current.name=="page.home"){
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Confirm Exit',
                     template: "Are you sure you want to close iAlert?"
@@ -827,8 +825,6 @@ angular.module('IMS8Alert.controllers', [])
                     else
                     {// otherwise do nothing
                      $scope.count = 0;
-                      $ionicLoading.hide();
-                        
                     }
                 });
             }
@@ -1081,9 +1077,7 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.NONE] = 'No network connection';
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-             $ionicLoading.show();
              $scope.showAlert1();
-             $ionicLoading.hide();
         } 
     }, 10000);
 
@@ -1102,9 +1096,7 @@ angular.module('IMS8Alert.controllers', [])
             states[Connection.NONE] = 'No network connection';
             //alert('Connection type: ' + states[networkState]);
             if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-                  $ionicLoading.show();
                 $scope.showAlert1();
-                  $ionicLoading.hide();
             }
         }
     };
@@ -1126,8 +1118,8 @@ angular.module('IMS8Alert.controllers', [])
                     buttonClicked: function (index) {
                         var txt = 'first';
                         console.log('BUTTON CLICKED', index);
-                        $scope.netconnection();
                         $scope.count = 0;
+                        $scope.netconnection();
                         return true;
                     },
                 });
