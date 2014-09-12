@@ -993,7 +993,7 @@ angular.module('IMS8Alert.controllers', [])
     }
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
-        document.addEventListener("backbutton", onBackButtonPress, false);
+        //document.addEventListener("backbutton", onBackButtonPress, false);
     };
   if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
          document.addEventListener("backbutton", onBackButtonPress, false);
@@ -1070,9 +1070,27 @@ function onBackButtonPress()   {
             //alert('Connection type: ' + states[networkState]);
             if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
                // $ionicLoading.show();
-                //$scope.showAlert1();
+               $scope.count=0;
+                $scope.showAlert1();
                 //$ionicLoading.hide();
             }
+        }
+    };
+     $scope.showAlert1=function() {
+        if($scope.count == 0){
+            $scope.count++;
+        var alertPopup = $ionicPopup.alert({
+            title: 'Internet Connection',
+            template: 'Internet is not available. Please Enable Mobile Data or Wifi !'
+        });
+        alertPopup.then(function (res) {
+            console.log('Internet is not available. Please Enable Mobile Data or Wifi !');
+            //$ionicLoading.show();
+            $scope.count=0;
+            $scope.showActionSheet1();
+           //$ionicLoading.hide();
+           
+        });
         }
     };
         $scope.showActionSheet1 = function () {
@@ -1095,29 +1113,15 @@ function onBackButtonPress()   {
                         console.log('BUTTON CLICKED', index);
                         $scope.count = 0;
                         $scope.netconnection();
+                        $ionicLoading.hide();
                         return true;
+                        
                     },
                 });
                 $ionicLoading.hide();
             }
         };
-    $scope.showAlert1=function() {
-        if($scope.count == 0){
-            $scope.count++;
-        var alertPopup = $ionicPopup.alert({
-            title: 'Internet Connection',
-            template: 'Internet is not available. Please Enable Mobile Data or Wifi !'
-        });
-        alertPopup.then(function (res) {
-            console.log('Internet is not available. Please Enable Mobile Data or Wifi !');
-            //$ionicLoading.show();
-            $scope.count =0;
-            $scope.showActionSheet1();
-           //$ionicLoading.hide();
-           
-        });
-        }
-    };
+    
 
 })
 .controller('LoginCtrl', function ($scope, $state, iAdminServiceClient, $window, $ionicPopup, $ionicLoading, $ionicPlatform, $cordovaCamera, $cordovaNetwork) {
