@@ -993,7 +993,9 @@ angular.module('IMS8Alert.controllers', [])
     }
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
-        //document.addEventListener("backbutton", onBackButtonPress, false);
+ if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
+         document.addEventListener("backbutton", onBackButtonPress, false);
+    }
     };
   if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
          document.addEventListener("backbutton", onBackButtonPress, false);
