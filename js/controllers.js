@@ -800,37 +800,7 @@ angular.module('IMS8Alert.controllers', [])
         e.preventDefault();
         return false;
     }, 101); // 1 more priority than back button*/
-     $scope.count =0;
- document.addEventListener("backbutton", onBackButtonPress, false);
-
-    function onBackButtonPress() {
-            if ($scope.count == 0) {
-                $scope.count++;
-                if($state.current.name=="page.home"){
-                var confirmPopup = $ionicPopup.confirm({
-                    title: 'Confirm Exit',
-                    template: "Are you sure you want to close iAlert?"
-                });
-                confirmPopup.then(function (close) {
-                    if (close) {
-                        // there is no back view, so close the app instead
-                        ionic.Platform.exitApp();
-                        $window.close();
-                        if (navigator.app) {
-                            navigator.app.exitApp();
-                        } else if (navigator.device) {
-                            navigator.device.exitApp();
-                        }
-                    }
-                    else
-                    {// otherwise do nothing
-                     $scope.count = 0;
-                    }
-                });
-            }
-                
-            }
-    };
+   
     getCustomers();
     if ($rootScope.CustomerName) {
         $scope.selectedcstomer = $rootScope.CustomerName;
@@ -1025,7 +995,8 @@ angular.module('IMS8Alert.controllers', [])
     function onDeviceReady() {
         document.addEventListener("backbutton", onBackButtonPress, false);
     };
-    /* function onBackButtonPress()   {
+    document.addEventListener("backbutton", onBackButtonPress, false);
+function onBackButtonPress()   {
         if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
             if ($scope.count == 0) {
                 $scope.count++;
@@ -1050,7 +1021,7 @@ angular.module('IMS8Alert.controllers', [])
                 });
             }
         }
-    };*/
+    }
     $scope.isSpecificPage = function () {
         var path;
         return path = $location.path(), _.contains(["/404", "/login", "/signin", "/"], path)
@@ -1077,7 +1048,9 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.NONE] = 'No network connection';
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
+            $ionicLoading.show();
              $scope.showAlert1();
+             $ionicLoading.hide();
         } 
     }, 10000);
 
@@ -1096,7 +1069,9 @@ angular.module('IMS8Alert.controllers', [])
             states[Connection.NONE] = 'No network connection';
             //alert('Connection type: ' + states[networkState]);
             if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
+                $ionicLoading.show();
                 $scope.showAlert1();
+                $ionicLoading.hide();
             }
         }
     };
@@ -1135,7 +1110,7 @@ angular.module('IMS8Alert.controllers', [])
             console.log('Internet is not available. Please Enable Mobile Data or Wifi !');
             //$ionicLoading.show();
             $scope.showActionSheet1();
-           // $ionicLoading.hide();
+           //$ionicLoading.hide();
         });
     };
 
@@ -1150,43 +1125,15 @@ angular.module('IMS8Alert.controllers', [])
    //     alert("isOnline:" + isOnline + "isOffline" + isOffline);
    // } catch (e) {
    //     console.log(e.message);
-   // }     
-    $scope.count = 0;
+   // } 
     document.addEventListener("deviceready", onDeviceReady, false);
 
     // Cordova is loaded and it is now safe to make calls Cordova methods
     //
     function onDeviceReady() {
     }
-     document.addEventListener("backbutton", onBackButtonPress, false);
- 
-    function onBackButtonPress() {
-            if ($scope.count == 0) {
-                $scope.count++;
-                var confirmPopup = $ionicPopup.confirm({
-                    title: 'Confirm Exit',
-                    template: "Are you sure you want to close iAlert?"
-                });
-                confirmPopup.then(function (close) {
-                    if (close) {
-                        // there is no back view, so close the app instead
-                        ionic.Platform.exitApp();
-                        $window.close();
-                        if (navigator.app) {
-                            navigator.app.exitApp();
-                        } else if (navigator.device) {
-                            navigator.device.exitApp();
-                        }
-                    }else{
-                        $scope.count = 0;
-                    } // otherwise do nothing
-                  
-                });
-             
-            }
-    };
 
-    $scope.userinfo = {};
+$scope.userinfo = {};
         if ($window.localStorage['token'] != null) {
             $ionicLoading.show();
             setTimeout(function () {
