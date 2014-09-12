@@ -1146,40 +1146,7 @@ angular.module('IMS8Alert.controllers', [])
 
     // Cordova is loaded and it is now safe to make calls Cordova methods
     //
-     $scope.count=0;
-   function onDeviceReady() {
-   }
-   if ($state.current.name == "page.home" || $state.current.name == "page.login") {
-            document.addEventListener("backbutton", onBackButtonPress, false);
-        }
-        else {
-            document.addEventListener("backbutton", onBackButtonPress, true);
-        }
-    function onBackButtonPress() {
-        if ($scope.count == 0) {
-            $scope.count++;
-            var confirmPopup = $ionicPopup.confirm({
-                title: 'Confirm Exit',
-                template: "Are you sure you want to close iAlert?"
-            });
-            confirmPopup.then(function (close) {
-                if (close) {
-                    // there is no back view, so close the app instead
-                    ionic.Platform.exitApp();
-                    $window.close();
-                    if (navigator.app) {
-                        navigator.app.exitApp();
-                    } else if (navigator.device) {
-                        navigator.device.exitApp();
-                    }
-                } // otherwise do nothing
-                else {
-                    $scope.count = 0;
-                }
-            });
-        }
-    }
-$scope.userinfo = {};
+  $scope.userinfo = {};
         if ($window.localStorage['token'] != null) {
             $ionicLoading.show();
             setTimeout(function () {
