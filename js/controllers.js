@@ -823,9 +823,13 @@ angular.module('IMS8Alert.controllers', [])
                         } else if (navigator.device) {
                             navigator.device.exitApp();
                         }
-                    } // otherwise do nothing
+                    }
+                    else
+                    {// otherwise do nothing
                      $scope.count = 0;
                       $ionicLoading.hide();
+                        
+                    }
                 });
             }
                 
@@ -1137,9 +1141,9 @@ angular.module('IMS8Alert.controllers', [])
         });
         alertPopup.then(function (res) {
             console.log('Internet is not available. Please Enable Mobile Data or Wifi !');
-            $ionicLoading.show();
+            //$ionicLoading.show();
             $scope.showActionSheet1();
-            $ionicLoading.hide();
+           // $ionicLoading.hide();
         });
     };
 
@@ -1181,9 +1185,12 @@ angular.module('IMS8Alert.controllers', [])
                         } else if (navigator.device) {
                             navigator.device.exitApp();
                         }
+                    }else{
+                        $scope.count = 0;
                     } // otherwise do nothing
-                  $scope.count = 0;
+                  
                 });
+             
             }
     };
 
