@@ -786,7 +786,8 @@ angular.module('IMS8Alert.controllers', [])
 })
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate, $ionicPlatform, $ionicPopup) {
-    /*$ionicPlatform.registerBackButtonAction(function (e) {
+    $ionicPlatform.registerBackButtonAction(function (e) {
+        if ($state.current.name == "page.home" || $state.current.name == "page.login"){
         var confirmPopup = $ionicPopup.confirm({
             title: 'Confirm Exit',
             template: "Are you sure you want to close iAlert?"
@@ -800,7 +801,7 @@ angular.module('IMS8Alert.controllers', [])
         e.preventDefault();
         return false;
     }, 101); // 1 more priority than back button*/
-   
+    }
     getCustomers();
     if ($rootScope.CustomerName) {
         $scope.selectedcstomer = $rootScope.CustomerName;
@@ -937,7 +938,7 @@ angular.module('IMS8Alert.controllers', [])
 
 .controller('AccountCtrl', function ($scope) {
 })
-.controller('MainController', function ($rootScope, $scope, $location, $ionicActionSheet, $window, $ionicPlatform, $ionicLoading, $ionicPopup) {
+.controller('MainController', function ($rootScope, $scope, $ionicActionSheet, $window, $ionicPlatform, $ionicLoading, $ionicPopup) {
      $scope.count = 0;
     $scope.showActionSheet = function () {
         if ($scope.count == 0) {
@@ -1080,6 +1081,7 @@ angular.module('IMS8Alert.controllers', [])
      $scope.showAlert1=function() {
         if($scope.count == 0){
             $scope.count++;
+            $ionicLoading.show();
         var alertPopup = $ionicPopup.alert({
             title: 'Internet Connection',
             template: 'Internet is not available. Please Enable Mobile Data or Wifi !'
@@ -1088,10 +1090,11 @@ angular.module('IMS8Alert.controllers', [])
             console.log('Internet is not available. Please Enable Mobile Data or Wifi !');
             //$ionicLoading.show();
             $scope.count=0;
-            $scope.showActionSheet1();
-           //$ionicLoading.hide();
+           $ionicLoading.hide();
+           $scope.showActionSheet1();
            
         });
+         $ionicLoading.hide();
         }
     };
         $scope.showActionSheet1 = function () {
