@@ -1102,6 +1102,7 @@ function onBackButtonPress()   {
             }
         };
     $scope.showAlert1=function() {
+        alert('showAlert1 is calling');
         var alertPopup = $ionicPopup.alert({
             title: 'Internet Connection',
             template: 'Internet is not available. Please Enable Mobile Data or Wifi !'
