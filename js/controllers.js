@@ -1055,7 +1055,7 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.NONE] = 'No network connection';
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-            $ionicLoading.show();
+            //$ionicLoading.show();
             //alert('showAlert1 Called');
              $scope.showAlert1();
             // $ionicLoading.hide();
@@ -1095,12 +1095,8 @@ angular.module('IMS8Alert.controllers', [])
             console.log('Internet is not available. Please Enable Mobile Data or Wifi !');
                 //$ionicLoading.show();
             $scope.count=0;
-            $ionicLoading.hide();
             $scope.showActionSheet1();
-           
         });
-        $ionicLoading.hide();
-            
         }
 };
         $scope.showActionSheet1 = function () {
