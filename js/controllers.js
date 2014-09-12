@@ -806,6 +806,9 @@ angular.module('IMS8Alert.controllers', [])
     function onBackButtonPress() {
             if ($scope.count == 0) {
                 $scope.count++;
+                alert('state path'+$state.path);
+                if($state.path=="page.home"){
+                 $ionicLoading.show();
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Confirm Exit',
                     template: "Are you sure you want to close iAlert?"
@@ -822,7 +825,10 @@ angular.module('IMS8Alert.controllers', [])
                         }
                     } // otherwise do nothing
                      $scope.count = 0;
+                      $ionicLoading.hide();
                 });
+            }
+                
             }
     };
     getCustomers();
@@ -1071,8 +1077,8 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.NONE] = 'No network connection';
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-              $ionicLoading.show();
-           $scope.showAlert1();
+             $ionicLoading.show();
+             $scope.showAlert1();
              $ionicLoading.hide();
         } 
     }, 10000);
