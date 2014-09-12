@@ -996,7 +996,7 @@ angular.module('IMS8Alert.controllers', [])
         document.addEventListener("backbutton", onBackButtonPress, false);
     };
   if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
-        document.addEventListener("deviceready", onDeviceReady, false);
+         document.addEventListener("backbutton", onBackButtonPress, false);
     }
 function onBackButtonPress()   {
        if ($scope.count == 0) {
@@ -1070,7 +1070,7 @@ function onBackButtonPress()   {
             //alert('Connection type: ' + states[networkState]);
             if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
                // $ionicLoading.show();
-                $scope.showAlert1();
+                //$scope.showAlert1();
                 //$ionicLoading.hide();
             }
         }
@@ -1102,7 +1102,8 @@ function onBackButtonPress()   {
             }
         };
     $scope.showAlert1=function() {
-        $scope.count = 0;
+        if($scope.count == 0){
+            $scope.count++;
         var alertPopup = $ionicPopup.alert({
             title: 'Internet Connection',
             template: 'Internet is not available. Please Enable Mobile Data or Wifi !'
@@ -1110,9 +1111,12 @@ function onBackButtonPress()   {
         alertPopup.then(function (res) {
             console.log('Internet is not available. Please Enable Mobile Data or Wifi !');
             //$ionicLoading.show();
+            $scope.count =0;
             $scope.showActionSheet1();
            //$ionicLoading.hide();
+           
         });
+        }
     };
 
 })
