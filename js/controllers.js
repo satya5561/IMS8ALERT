@@ -801,12 +801,11 @@ angular.module('IMS8Alert.controllers', [])
         e.preventDefault();
         return false;
     }, 101);} // 1 more priority than back button*/
-     $scope.count = 0;
     document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-       
-    };
-     if ($state.current.name == "page.home" || $state.current.name == "page.login") {
+   $scope.count=0;
+   function onDeviceReady() {
+   }
+   if ($state.current.name == "page.home" || $state.current.name == "page.login") {
             document.addEventListener("backbutton", onBackButtonPress, false);
         }
         else {
@@ -836,7 +835,7 @@ angular.module('IMS8Alert.controllers', [])
             });
         }
     }
-    
+  
     getCustomers();
     if ($rootScope.CustomerName) {
         $scope.selectedcstomer = $rootScope.CustomerName;
@@ -1056,8 +1055,8 @@ angular.module('IMS8Alert.controllers', [])
         states[Connection.NONE] = 'No network connection';
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-            //$ionicLoading.show();
-            alert('showAlert1 Called');
+            $ionicLoading.show();
+            //alert('showAlert1 Called');
              $scope.showAlert1();
             // $ionicLoading.hide();
         } 
@@ -1088,7 +1087,6 @@ angular.module('IMS8Alert.controllers', [])
      $scope.showAlert1=function() {
         if($scope.count == 0){
             $scope.count++;
-            $ionicLoading.show();
         var alertPopup = $ionicPopup.alert({
             title: 'Internet Connection',
             template: 'Internet is not available. Please Enable Mobile Data or Wifi !'
