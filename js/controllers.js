@@ -995,10 +995,11 @@ angular.module('IMS8Alert.controllers', [])
     function onDeviceReady() {
         document.addEventListener("backbutton", onBackButtonPress, false);
     };
-    document.addEventListener("backbutton", onBackButtonPress, false);
+  if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
 function onBackButtonPress()   {
-        if ($location.$$path == "/page/home" || $location.$$path == "/page/login") {
-            if ($scope.count == 0) {
+       if ($scope.count == 0) {
                 $scope.count++;
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Confirm Exit',
@@ -1019,7 +1020,6 @@ function onBackButtonPress()   {
                         $scope.count = 0;
                     }
                 });
-            }
         }
     }
     $scope.isSpecificPage = function () {
@@ -1048,9 +1048,9 @@ function onBackButtonPress()   {
         states[Connection.NONE] = 'No network connection';
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-            $ionicLoading.show();
+            //$ionicLoading.show();
              $scope.showAlert1();
-             $ionicLoading.hide();
+            // $ionicLoading.hide();
         } 
     }, 10000);
 
@@ -1069,9 +1069,9 @@ function onBackButtonPress()   {
             states[Connection.NONE] = 'No network connection';
             //alert('Connection type: ' + states[networkState]);
             if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
-                $ionicLoading.show();
+               // $ionicLoading.show();
                 $scope.showAlert1();
-                $ionicLoading.hide();
+                //$ionicLoading.hide();
             }
         }
     };
