@@ -1057,6 +1057,7 @@ angular.module('IMS8Alert.controllers', [])
         //alert('Connection type: ' + states[networkState]);
         if (states[networkState] == "No network connection" || states[networkState] == "undefined") {
             //$ionicLoading.show();
+            alert('showAlert1 Called');
              $scope.showAlert1();
             // $ionicLoading.hide();
         } 
@@ -1146,10 +1147,12 @@ angular.module('IMS8Alert.controllers', [])
    // } catch (e) {
    //     console.log(e.message);
    // } 
+  
     document.addEventListener("deviceready", onDeviceReady, false);
 
     // Cordova is loaded and it is now safe to make calls Cordova methods
     //
+     $scope.count=0;
    function onDeviceReady() {
    }
    if ($state.current.name == "page.home" || $state.current.name == "page.login") {
