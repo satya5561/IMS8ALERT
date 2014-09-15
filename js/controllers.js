@@ -1089,9 +1089,19 @@ angular.module('IMS8Alert.controllers', [])
      $scope.showAlert1=function() {
         if($scope.count == 0){
             $scope.count++;
-       alert('Internet is not available. Please Enable Mobile Data or Wifi !');
+              var alertPopup = $ionicPopup.alert({
+                title: 'Internet Connection',
+                template: 'Internet is not available. Please Enable Mobile Data or Wifi !'
+            });
+            alertPopup.then(function (res) {
+                console.log('Internet is not available. Please Enable Mobile Data or Wifi !');
+                //$ionicLoading.show();
                 $scope.count = 0;
                 $scope.showActionSheet1();
+            });
+       /*alert('Internet is not available. Please Enable Mobile Data or Wifi !');
+                $scope.count = 0;
+                $scope.showActionSheet1();*/
         }
 };
         $scope.showActionSheet1 = function () {
