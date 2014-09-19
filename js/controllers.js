@@ -809,7 +809,7 @@ angular.module('IMS8Alert.controllers', [])
             document.addEventListener("backbutton", onBackButtonPress, false);
         }
         else {
-            document.addEventListener("backbutton", onBackButtonPress1, true);
+            document.addEventListener("backbutton", onBackButtonPress1, false);
         }
     function onBackButtonPress() {
         if ($scope.count == 0) {
