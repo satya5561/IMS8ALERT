@@ -786,7 +786,7 @@ angular.module('IMS8Alert.controllers', [])
 })
 
 .controller('HomeCtrl', function ($scope, $rootScope, $ionicModal, $state, iAdminServiceClient, $ionicLoading, $ionicNavBarDelegate, $ionicPlatform, $ionicPopup) {
-   /* $ionicPlatform.registerBackButtonAction(function (e) {
+   $ionicPlatform.registerBackButtonAction(function (e) {
         if ($state.current.name == "page.home" || $state.current.name == "page.login"){
         var confirmPopup = $ionicPopup.confirm({
             title: 'Confirm Exit',
@@ -796,48 +796,19 @@ angular.module('IMS8Alert.controllers', [])
             if (close) {
                 // there is no back view, so close the app instead
                 ionic.Platform.exitApp();
+                navigator.app.exitApp();
             } // otherwise do nothing
         });
         e.preventDefault();
         return false;
-    }, 101);} // 1 more priority than back button*/
+    }
+       else {
+      navigator.app.backHistory();
+    }
+   }, 101); // 1 more priority than back button*/
     document.addEventListener("deviceready", onDeviceReady, false);
-   $scope.count=0;
    function onDeviceReady() {
    }
-   if ($state.current.name == "page.home" || $state.current.name == "page.login") {
-            document.addEventListener("backbutton", onBackButtonPress, false);
-        }
-        else {
-            document.addEventListener("backbutton", onBackButtonPress1, false);
-        }
-    function onBackButtonPress() {
-        if ($scope.count == 0) {
-            $scope.count++;
-            var confirmPopup = $ionicPopup.confirm({
-                title: 'Confirm Exit',
-                template: "Are you sure you want to close iAlert?"
-            });
-            confirmPopup.then(function (close) {
-                if (close) {
-                    // there is no back view, so close the app instead
-                    ionic.Platform.exitApp();
-                    $window.close();
-                    if (navigator.app) {
-                        navigator.app.exitApp();
-                    } else if (navigator.device) {
-                        navigator.device.exitApp();
-                    }
-                } // otherwise do nothing
-                else {
-                    $scope.count = 0;
-                }
-            });
-        }
-    }
-    function onBackButtonPress1() {
-        $ionicNavBarDelegate.back();
-    }
     getCustomers();
     if ($rootScope.CustomerName) {
         $scope.selectedcstomer = $rootScope.CustomerName;
